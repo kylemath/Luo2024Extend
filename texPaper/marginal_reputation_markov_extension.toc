@@ -35,12 +35,20 @@
 \contentsline {subsection}{\numberline {7.3}The Interpolation}{18}{subsection.7.3}%
 \contentsline {subsection}{\numberline {7.4}New Economic Content}{18}{subsection.7.4}%
 \contentsline {section}{\numberline {8}Extension to Behaviorally Confounded Strategies (Theorem 2)}{19}{section.8}%
-\contentsline {section}{\numberline {9}Discussion and Open Questions}{19}{section.9}%
-\contentsline {subsection}{\numberline {9.1}Summary of Results}{19}{subsection.9.1}%
-\contentsline {subsection}{\numberline {9.2}Potential Concerns and Caveats}{19}{subsection.9.2}%
-\contentsline {subsection}{\numberline {9.3}Open Questions}{21}{subsection.9.3}%
-\contentsline {section}{\numberline {10}Conclusion}{21}{section.10}%
-\contentsline {section}{\numberline {A}Verification of Key Claims}{22}{appendix.A}%
-\contentsline {subsection}{\numberline {A.1}The KL Chain Rule Does Not Require Independence}{22}{subsection.A.1}%
-\contentsline {subsection}{\numberline {A.2}Filter Stability for Ergodic HMMs}{22}{subsection.A.2}%
-\contentsline {section}{\numberline {B}Work Distribution}{23}{appendix.B}%
+\contentsline {section}{\numberline {9}Methodology: Multi-Agent AI Collaboration}{19}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Timeline and Context}{19}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Agent Architecture and Task Decomposition}{19}{subsection.9.2}%
+\contentsline {subsection}{\numberline {9.3}Step-by-Step Workflow}{20}{subsection.9.3}%
+\contentsline {subsection}{\numberline {9.4}Key Insights from the Multi-Agent Approach}{23}{subsection.9.4}%
+\contentsline {subsection}{\numberline {9.5}Comparison to Human-Only Workflow}{23}{subsection.9.5}%
+\contentsline {subsection}{\numberline {9.6}Methodological Implications for AI-Assisted Research}{24}{subsection.9.6}%
+\contentsline {subsection}{\numberline {9.7}Reproducibility and Artifacts}{24}{subsection.9.7}%
+\contentsline {section}{\numberline {10}Discussion and Open Questions}{25}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Summary of Results}{25}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Potential Concerns and Caveats}{26}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}Open Questions}{27}{subsection.10.3}%
+\contentsline {section}{\numberline {11}Conclusion}{27}{section.11}%
+\contentsline {section}{\numberline {A}Verification of Key Claims}{28}{appendix.A}%
+\contentsline {subsection}{\numberline {A.1}The KL Chain Rule Does Not Require Independence}{28}{subsection.A.1}%
+\contentsline {subsection}{\numberline {A.2}Filter Stability for Ergodic HMMs}{29}{subsection.A.2}%
+\contentsline {section}{\numberline {B}Work Distribution}{29}{appendix.B}%
