@@ -1,0 +1,121 @@
+<div class="intro-content">
+    <h2>The Challenge: Extending Marginal Reputation to Markovian States</h2>
+    
+    <div class="result-box">
+        <div class="box-title">📱 The Twitter Challenge (Feb 16, 2026)</div>
+        <p><strong>Daniel Luo (MIT):</strong> <em>"I will pay you $500 if you can figure out how to extend the main result to allow for persistent/markovian states (something we suspect is possible but never did) in &lt;5 hours of time."</em></p>
+    </div>
+
+    <h3>Overview of the Problem</h3>
+    
+    <p>The paper <strong>"Marginal Reputation"</strong> by Luo & Wolitzky (2024) establishes a groundbreaking connection between reputation theory in repeated games and optimal transport theory. Their main result shows that a patient long-run player can secure her <em>commitment payoff</em> if her strategy satisfies two key properties:</p>
+    
+    <ul>
+        <li><strong>Confound-defeating:</strong> The strategy is uniquely optimal in the induced optimal transport problem</li>
+        <li><strong>Not behaviorally confounded:</strong> The strategy is distinguishable from alternatives based on observable behavior</li>
+    </ul>
+
+    <h3>The Setting</h3>
+    
+    <p>A <strong>long-run player</strong> (patient, with discount factor δ) faces a sequence of <strong>myopic short-run players</strong> in a repeated game:</p>
+    
+    <ol>
+        <li>Each period, a <strong>private signal</strong> θ<sub>t</sub> is drawn — the long-run player observes it, short-run players do not</li>
+        <li>The long-run player chooses an action a<sub>1</sub> based on θ<sub>t</sub></li>
+        <li>Short-run players observe the <strong>history of actions</strong> but <strong>not</strong> the history of signals</li>
+    </ol>
+
+    <p>The long-run player is either <strong>rational</strong> or one of many <strong>commitment types</strong> that play fixed strategies.</p>
+
+    <div class="theorem-box">
+        <div class="box-title">Theorem 1 (Original — i.i.d. case)</div>
+        <p>If the Stackelberg strategy s₁* is <strong>confound-defeating</strong> and <strong>not behaviorally confounded</strong>, then:</p>
+        <div class="equation-block">
+            $$\liminf_{\delta \to 1} \underline{U}_1(\delta) \geq V(s_1^*)$$
+        </div>
+        <p>where V(s₁*) is the commitment payoff.</p>
+    </div>
+
+    <h3>The Key Insight: Optimal Transport</h3>
+    
+    <p>The confound-defeating property is characterized by <strong>strict cyclical monotonicity</strong> of the strategy's support in the signal-action space. This establishes a deep connection to classical optimal transport theory.</p>
+
+    <div class="equation-block">
+        <div class="equation-label">Optimal Transport Problem:</div>
+        $$\text{OT}(\rho, \phi; \alpha_2): \max_{\gamma \in \Delta(Y_0 \times A_1)} \int u_1(y_0, a_1, \alpha_2)\, d\gamma$$
+        <p style="margin-top: 0.5rem;">subject to: π<sub>Y₀</sub>(γ) = ρ and π<sub>A₁</sub>(γ) = φ</p>
+    </div>
+
+    <h3>The Extension Challenge</h3>
+    
+    <p>The original paper assumes states are drawn <strong>i.i.d. across periods</strong>. The challenge is to extend the result to <strong>Markovian states</strong> where:</p>
+    
+    <div class="equation-block">
+        $$\theta_t \sim F(\cdot \mid \theta_{t-1})$$
+    </div>
+
+    <p>This interpolates between the i.i.d. framework (Luo-Wolitzky) and the perfectly persistent framework (Pei 2020).</p>
+
+    <div class="extension-box">
+        <div class="box-title">✅ The Solution: Lifted State Construction</div>
+        <p>The key insight is to define a <strong>lifted state</strong>:</p>
+        <div class="equation-block">
+            $$\tilde{\theta}_t = (\theta_t, \theta_{t-1}) \in \tilde{\Theta} = \Theta \times \Theta$$
+        </div>
+        <p>Under ergodicity, this lifted state has a fixed stationary distribution, and the optimal transport framework applies on the expanded space!</p>
+    </div>
+
+    <h3>Navigation Guide</h3>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Tab</th>
+                <th>Content</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Original (i.i.d.)</strong></td>
+                <td>Interactive exploration of the original result with i.i.d. states</td>
+            </tr>
+            <tr>
+                <td><strong>Markovian Extension</strong></td>
+                <td>The lifted-state construction and extended theorem</td>
+            </tr>
+            <tr>
+                <td><strong>Comparison</strong></td>
+                <td>Side-by-side comparison of key proof steps</td>
+            </tr>
+            <tr>
+                <td><strong>Deterrence Example</strong></td>
+                <td>Worked example: deterrence game with Markov attacks</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Key Results at a Glance</h3>
+    
+    <div class="comparison-grid">
+        <div class="comparison-card">
+            <h4>Original (i.i.d.)</h4>
+            <ul>
+                <li>States θ<sub>t</sub> drawn i.i.d. from π</li>
+                <li>Confound-defeating ⟺ cyclically monotone</li>
+                <li>Supermodular case: monotonicity</li>
+                <li>KL bound: $\bar{T} = -2\log\mu_0 / \eta^2$</li>
+            </ul>
+        </div>
+        <div class="comparison-card">
+            <h4>Markovian Extension</h4>
+            <ul>
+                <li>States θ<sub>t</sub> follow Markov chain F</li>
+                <li>Lifted state: θ̃<sub>t</sub> = (θ<sub>t</sub>, θ<sub>t-1</sub>)</li>
+                <li>Same KL bound — <strong>no mixing correction!</strong></li>
+                <li>Additional assumption: ergodicity</li>
+            </ul>
+        </div>
+    </div>
+
+    <p class="text-center mt-2"><em>Explore the tabs above to dive into the mathematics and interactive visualizations!</em></p>
+</div>

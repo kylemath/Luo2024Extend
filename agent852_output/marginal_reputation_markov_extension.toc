@@ -1,0 +1,46 @@
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Main Contributions}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Outline}{4}{subsection.1.2}%
+\contentsline {section}{\numberline {2}The Extended Model}{4}{section.2}%
+\contentsline {subsection}{\numberline {2.1}State Process}{4}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Lifted State Space}{4}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Stage Game}{5}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Joint Distribution and Marginals}{6}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Commitment Types}{6}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Repeated Game}{6}{subsection.2.6}%
+\contentsline {section}{\numberline {3}Extended Theorem 1}{6}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Definitions on the Expanded State Space}{6}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}The Extended Theorem}{7}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Proof of Extended Theorem 1}{7}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Overview: Where i.i.d.\ Was Actually Used}{7}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Step 0: The OT / Confound-Defeating Extension}{8}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Step 1: Lemma 1 --- Equilibrium Implications}{8}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Step 2: Lemma 2 --- The KL-Divergence Counting Bound}{9}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Step 3: Lemma 3 --- Martingale Convergence}{10}{subsection.4.5}%
+\contentsline {subsection}{\numberline {4.6}Step 4: Lemma 4 --- Combining the Pieces}{12}{subsection.4.6}%
+\contentsline {subsection}{\numberline {4.7}Step 5: The Payoff Bound}{12}{subsection.4.7}%
+\contentsline {section}{\numberline {5}The Supermodular Case}{13}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Extended Proposition 7}{13}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}When Payoffs Depend Only on $\theta _t$}{13}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Extended Lower and Upper Bounds}{13}{subsection.5.3}%
+\contentsline {section}{\numberline {6}Worked Example: Deterrence Game with Markov Attacks}{14}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Setup}{14}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Lifted State}{14}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Result}{15}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Concrete Numerical Example}{15}{subsection.6.4}%
+\contentsline {subsection}{\numberline {6.5}Limiting Cases of the Deterrence Example}{16}{subsection.6.5}%
+\contentsline {section}{\numberline {7}Limiting Cases and Interpolation}{16}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Recovery of i.i.d.\ (Luo--Wolitzky 2024)}{16}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Connection to Pei (2020) --- Perfect Persistence}{16}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}The Interpolation}{17}{subsection.7.3}%
+\contentsline {subsection}{\numberline {7.4}New Economic Content}{17}{subsection.7.4}%
+\contentsline {section}{\numberline {8}Extension to Behaviorally Confounded Strategies (Theorem 2)}{18}{section.8}%
+\contentsline {section}{\numberline {9}Discussion and Open Questions}{18}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Summary of Results}{18}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Potential Concerns and Caveats}{19}{subsection.9.2}%
+\contentsline {subsection}{\numberline {9.3}Open Questions}{20}{subsection.9.3}%
+\contentsline {section}{\numberline {10}Conclusion}{20}{section.10}%
+\contentsline {section}{\numberline {A}Verification of Key Claims}{21}{appendix.A}%
+\contentsline {subsection}{\numberline {A.1}The KL Chain Rule Does Not Require Independence}{21}{subsection.A.1}%
+\contentsline {subsection}{\numberline {A.2}Filter Stability for Ergodic HMMs}{22}{subsection.A.2}%
+\contentsline {section}{\numberline {B}Work Distribution}{22}{appendix.B}%
