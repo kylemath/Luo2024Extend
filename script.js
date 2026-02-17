@@ -40,6 +40,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 initComparisonTab();
             } else if (tabName === 'example') {
                 initExampleTab();
+            } else if (tabName === 'prompt-history') {
+                initPromptHistoryTab();
             }
             
             // Re-render MathJax
@@ -667,4 +669,351 @@ function plotExamplePersistence() {
     };
     
     Plotly.newPlot('ex-persistence-plot', [trace1, trace2], layout);
+}
+
+// ===============================================
+// Prompt History Tab Functionality
+// ===============================================
+
+const PROMPT_FILES = [
+    { id: '00db3062-78f8-43af-84b0-1d7bfab41c15', size: '39K' },
+    { id: '0415a79b-369d-49ea-813a-d86501b1afae', size: '24K' },
+    { id: '05901914-1f2f-41ff-b7fc-2d454c04c8a9', size: '77K' },
+    { id: '14f9ea16-84d3-4de0-83bd-aeeb7b4c0098', size: '2.0K' },
+    { id: '37c9635e-ffa1-45dc-bf2d-db130079dcbe', size: '97K' },
+    { id: '439ed1fc-6ac2-4b22-8a46-245d71b90f96', size: '66K' },
+    { id: '67b86cd4-146c-42a1-aa17-5d027ed88b38', size: '44K' },
+    { id: '8f39fab3-3f8d-486b-802d-8744444c6f2e', size: '86K' },
+    { id: '94eb98ad-3e42-4d4d-9e32-65f01fc2416d', size: '23K' },
+    { id: 'b540e723-991b-4036-89f9-28a860364864', size: '69K' },
+    { id: 'c5083db6-e06c-42e4-80a4-80f954d8d282', size: '60K' },
+    { id: 'cd01fc35-7e6d-47e9-943f-b1362eded047', size: '149K' }
+];
+
+function initPromptHistoryTab() {
+    const cardsGrid = document.getElementById('prompt-cards-grid');
+    const modal = document.getElementById('transcript-modal');
+    const modalClose = document.querySelector('.modal-close');
+    
+    // Clear existing cards
+    cardsGrid.innerHTML = '';
+    
+    // Load each prompt file
+    PROMPT_FILES.forEach((file, index) => {
+        loadPromptCard(file, index, cardsGrid);
+    });
+    
+    // Close modal handlers
+    modalClose.addEventListener('click', () => {
+        modal.classList.remove('active');
+    });
+    
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('active');
+        }
+    });
+}
+
+async function loadPromptCard(file, index, container) {
+    try {
+        const response = await fetch(`promptHistory/${file.id}.md`);
+        const content = await response.text();
+        
+        // Extract summary and metadata
+        const metadata = extractMetadata(content, file.id);
+        
+        // Create card
+        const card = document.createElement('div');
+        card.className = 'prompt-card';
+        card.innerHTML = `
+            <div class="prompt-card-header">
+                <div>
+                    <div class="prompt-card-title">Agent Session ${index + 1}</div>
+                    <div class="prompt-card-id">${file.id.substring(0, 8)}...</div>
+                </div>
+                <div class="prompt-card-size">${file.size}</div>
+            </div>
+            <div class="prompt-card-summary">${metadata.summary}</div>
+            <div class="prompt-card-meta">
+                <div class="prompt-card-stat">
+                    <span class="prompt-card-stat-icon">💬</span>
+                    <span>${metadata.messageCount} messages</span>
+                </div>
+                <div class="prompt-card-stat">
+                    <span class="prompt-card-stat-icon">🔧</span>
+                    <span>${metadata.toolCalls} tool calls</span>
+                </div>
+                <div class="prompt-card-stat">
+                    <span class="prompt-card-stat-icon">📝</span>
+                    <span>${metadata.filesChanged} files</span>
+                </div>
+            </div>
+        `;
+        
+        card.addEventListener('click', () => {
+            openTranscriptModal(file, content, index);
+        });
+        
+        container.appendChild(card);
+    } catch (error) {
+        console.error(`Error loading prompt file ${file.id}:`, error);
+    }
+}
+
+function extractMetadata(content, fileId) {
+    // Count messages
+    const userMatches = content.match(/^user:/gm) || [];
+    const assistantMatches = content.match(/^assistant:/gm) || [];
+    const messageCount = userMatches.length + assistantMatches.length;
+    
+    // Count tool calls
+    const toolCallMatches = content.match(/\[Tool call\]/g) || [];
+    const toolCalls = toolCallMatches.length;
+    
+    // Extract files changed (look for Write, StrReplace, etc.)
+    const writeMatches = content.match(/path: ([^\n]+)/g) || [];
+    const uniqueFiles = new Set(writeMatches.map(m => m.replace('path: ', '').trim()));
+    const filesChanged = uniqueFiles.size;
+    
+    // Extract summary from first user message
+    const firstUserMatch = content.match(/user:\s*\n?(.*?)(?=\nassistant:|$)/s);
+    let summary = 'Agent chat transcript';
+    
+    if (firstUserMatch) {
+        const userContent = firstUserMatch[1].trim();
+        // Remove image tags and other metadata
+        const cleanContent = userContent
+            .replace(/<image_files>[\s\S]*?<\/image_files>/g, '')
+            .replace(/<user_query>([\s\S]*?)<\/user_query>/g, '$1')
+            .replace(/\[Image\]/g, '')
+            .replace(/\n{2,}/g, ' ')
+            .trim();
+        
+        // Get first meaningful text (up to 200 chars)
+        if (cleanContent.length > 0) {
+            summary = cleanContent.substring(0, 200) + (cleanContent.length > 200 ? '...' : '');
+        }
+    }
+    
+    // Determine agent name if present
+    const agentMatch = content.match(/You are agent (\d+)/i);
+    if (agentMatch) {
+        summary = `Agent ${agentMatch[1]}: ${summary}`;
+    }
+    
+    return {
+        summary,
+        messageCount,
+        toolCalls,
+        filesChanged
+    };
+}
+
+function openTranscriptModal(file, content, index) {
+    const modal = document.getElementById('transcript-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalBody = document.getElementById('modal-body');
+    
+    modalTitle.textContent = `Agent Session ${index + 1} - ${file.id.substring(0, 8)}...`;
+    
+    // Parse and format the transcript
+    const formattedContent = formatTranscript(content);
+    modalBody.innerHTML = formattedContent;
+    
+    modal.classList.add('active');
+}
+
+function formatTranscript(content) {
+    let html = '';
+    
+    // Split by user/assistant messages
+    const lines = content.split('\n');
+    let currentRole = null;
+    let currentContent = [];
+    let inThinking = false;
+    let inToolCall = false;
+    let inToolResult = false;
+    let filesChanged = new Set();
+    
+    function flushMessage() {
+        if (currentRole && currentContent.length > 0) {
+            const messageContent = currentContent.join('\n').trim();
+            if (messageContent) {
+                html += formatMessage(currentRole, messageContent);
+            }
+            currentContent = [];
+        }
+    }
+    
+    for (let line of lines) {
+        // Detect role changes
+        if (line === 'user:') {
+            flushMessage();
+            currentRole = 'user';
+            continue;
+        } else if (line === 'assistant:') {
+            flushMessage();
+            currentRole = 'assistant';
+            continue;
+        }
+        
+        currentContent.push(line);
+        
+        // Track file changes
+        if (line.includes('path:')) {
+            const pathMatch = line.match(/path: (.+)/);
+            if (pathMatch) {
+                filesChanged.add(pathMatch[1].trim());
+            }
+        }
+    }
+    
+    flushMessage();
+    
+    // Add files changed summary at the top
+    if (filesChanged.size > 0) {
+        html = formatFilesChanged(Array.from(filesChanged)) + html;
+    }
+    
+    return html;
+}
+
+function formatMessage(role, content) {
+    let html = `<div class="chat-message ${role}">`;
+    html += `<div class="chat-message-header">`;
+    html += `<span class="chat-role">${role === 'user' ? '👤 User' : '🤖 Assistant'}</span>`;
+    html += `</div>`;
+    html += `<div class="chat-content">`;
+    
+    // Parse special sections
+    const sections = parseMessageContent(content);
+    sections.forEach(section => {
+        if (section.type === 'thinking') {
+            html += `<div class="chat-thinking">
+                <div class="chat-thinking-header">💭 Thinking</div>
+                ${escapeHtml(section.content || '')}
+            </div>`;
+        } else if (section.type === 'tool-call') {
+            html += `<div class="chat-tool-call">
+                <div class="tool-call-header">🔧 Tool Call: ${section.tool || 'Unknown'}</div>
+                <div class="tool-call-params">${formatToolParams(section.params || '')}</div>
+            </div>`;
+        } else if (section.type === 'tool-result') {
+            const resultContent = section.content || '';
+            const preview = resultContent.length > 200 ? resultContent.substring(0, 200) + '...' : resultContent;
+            html += `<div class="chat-tool-result">
+                <div class="tool-result-header">📋 Tool Result</div>
+                ${preview ? escapeHtml(preview) : '<em>No output</em>'}
+            </div>`;
+        } else {
+            const textContent = section.content || '';
+            if (textContent.trim()) {
+                html += `<p>${formatText(textContent)}</p>`;
+            }
+        }
+    });
+    
+    html += `</div></div>`;
+    return html;
+}
+
+function parseMessageContent(content) {
+    const sections = [];
+    const lines = content.split('\n');
+    let currentSection = { type: 'text', content: '' };
+    
+    for (let line of lines) {
+        if (line.startsWith('[Thinking]')) {
+            if (currentSection.content && currentSection.content.trim()) {
+                sections.push(currentSection);
+            }
+            currentSection = { type: 'thinking', content: line.replace('[Thinking]', '').trim() };
+        } else if (line.startsWith('[Tool call]')) {
+            if (currentSection.content && currentSection.content.trim()) {
+                sections.push(currentSection);
+            } else if (currentSection.type === 'tool-call') {
+                sections.push(currentSection);
+            }
+            const toolMatch = line.match(/\[Tool call\] (\w+)/);
+            currentSection = { 
+                type: 'tool-call', 
+                tool: toolMatch ? toolMatch[1] : 'Unknown',
+                params: '',
+                content: '' // Add content property
+            };
+        } else if (line.startsWith('  ') && currentSection.type === 'tool-call') {
+            currentSection.params += line.trim() + '\n';
+        } else if (line.startsWith('[Tool result]')) {
+            if ((currentSection.content && currentSection.content.trim()) || currentSection.type === 'tool-call') {
+                sections.push(currentSection);
+            }
+            currentSection = { type: 'tool-result', content: '' };
+        } else if (line.startsWith('<user_query>') || line.startsWith('<image_files>')) {
+            // Skip metadata tags
+            continue;
+        } else {
+            if (currentSection.type === 'thinking' || currentSection.type === 'tool-result') {
+                currentSection.content += line + '\n';
+            } else if (currentSection.type === 'text') {
+                currentSection.content += line + '\n';
+            } else if (currentSection.type === 'tool-call') {
+                // Continue accumulating params for tool calls
+                currentSection.params += line.trim() + '\n';
+            } else {
+                if (currentSection.content && currentSection.content.trim()) {
+                    sections.push(currentSection);
+                }
+                currentSection = { type: 'text', content: line + '\n' };
+            }
+        }
+    }
+    
+    // Final flush - check content exists before calling trim
+    if (currentSection.type === 'tool-call' || (currentSection.content && currentSection.content.trim())) {
+        sections.push(currentSection);
+    }
+    
+    return sections;
+}
+
+function formatToolParams(params) {
+    return `<pre style="margin: 0.5rem 0; white-space: pre-wrap; word-wrap: break-word;">${escapeHtml(params)}</pre>`;
+}
+
+function formatFilesChanged(files) {
+    if (files.length === 0) return '';
+    
+    let html = '<div class="files-changed-section">';
+    html += '<div class="files-changed-title">📁 Files Accessed in This Session:</div>';
+    html += '<div>';
+    
+    files.forEach(file => {
+        // Determine file operation type
+        let badgeClass = 'file-read';
+        if (file.includes('Write') || file.includes('output')) {
+            badgeClass = 'file-created';
+        } else if (file.includes('StrReplace') || file.includes('Edit')) {
+            badgeClass = 'file-modified';
+        }
+        
+        html += `<span class="file-change-badge ${badgeClass}">${escapeHtml(file)}</span>`;
+    });
+    
+    html += '</div></div>';
+    return html;
+}
+
+function formatText(text) {
+    if (!text) return '';
+    return escapeHtml(text)
+        .replace(/\n\n+/g, '</p><p>')
+        .replace(/\n/g, '<br>');
+}
+
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = String(text);
+    return div.innerHTML;
 }
