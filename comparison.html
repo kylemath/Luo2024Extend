@@ -1,39 +1,63 @@
 <div class="comparison-content">
-    <h2>Comparison: i.i.d. vs. Markovian</h2>
+    <h2>Comparison: Three Regimes of Reputation with Markov States</h2>
     
     <h3>Framework Comparison</h3>
     
     <div class="comparison-grid">
         <div class="comparison-card">
-            <h4>Original (i.i.d.)</h4>
+            <h4>i.i.d. (Luo &amp; Wolitzky)</h4>
             <div class="equation-block">
                 $$\theta_t \sim \pi(\cdot) \quad \text{i.i.d.}$$
             </div>
-            <p><strong>State space:</strong> Θ</p>
-            <p><strong>Strategy:</strong> s₁: Θ → Δ(A₁)</p>
-            <p><strong>Stationary dist.:</strong> π (exogenous)</p>
-            <p><strong>Assumptions:</strong></p>
-            <ul>
-                <li>Confound-defeating</li>
-                <li>Not behaviorally confounded</li>
-            </ul>
+            <p><strong>State space:</strong> \(\Theta\)</p>
+            <p><strong>Strategy:</strong> \(s_1: \Theta \to \Delta(A_1)\)</p>
+            <p><strong>SR belief:</strong> Always \(\pi\)</p>
+            <p><strong>Payoff bound:</strong> \(V(s_1^*)\)</p>
         </div>
         <div class="comparison-card">
             <h4>Markovian Extension</h4>
             <div class="equation-block">
                 $$\theta_t \sim F(\cdot \mid \theta_{t-1})$$
             </div>
-            <p><strong>State space:</strong> Θ̃ = Θ × Θ</p>
-            <p><strong>Strategy:</strong> s₁: Θ̃ → Δ(A₁)</p>
-            <p><strong>Stationary dist.:</strong> ρ̃ (derived from π and F)</p>
-            <p><strong>Assumptions:</strong></p>
-            <ul>
-                <li>Confound-defeating on Θ̃</li>
-                <li>Not behaviorally confounded</li>
-                <li><strong>+ Ergodicity</strong></li>
-            </ul>
+            <p><strong>State space:</strong> \(\tilde\Theta = \Theta \times \Theta\)</p>
+            <p><strong>Strategy:</strong> \(s_1: \tilde\Theta \to \Delta(A_1)\)</p>
+            <p><strong>SR belief:</strong> \(F(\cdot|\theta_t) \neq \pi\)</p>
+            <p><strong>Payoff bound:</strong> depends on belief-robustness</p>
         </div>
     </div>
+
+    <h3>The Three Regimes</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Regime</th>
+                <th>SR Belief About \(\theta_{t+1}\)</th>
+                <th>SR Behavior</th>
+                <th>Payoff Bound</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>i.i.d.</strong></td>
+                <td>\(\pi\) (stationary)</td>
+                <td>Static</td>
+                <td>\(V(s_1^*)\)</td>
+            </tr>
+            <tr style="background: rgba(46, 204, 113, 0.08);">
+                <td><strong>Markov (belief-robust)</strong></td>
+                <td>\(F(\cdot|\theta_t)\) but irrelevant</td>
+                <td>Static (same \(\forall \theta\))</td>
+                <td>\(V(s_1^*)\) (same!)</td>
+            </tr>
+            <tr style="background: rgba(231, 76, 60, 0.08);">
+                <td><strong>Markov (general)</strong></td>
+                <td>\(F(\cdot|\theta_t)\) and relevant</td>
+                <td>State-contingent</td>
+                <td>\(V_{\mathrm{Markov}} \leq V(s_1^*)\)</td>
+            </tr>
+        </tbody>
+    </table>
 
     <h3>Proof Step Comparison</h3>
     
@@ -41,28 +65,28 @@
         <thead>
             <tr>
                 <th>Component</th>
-                <th>i.i.d. Version</th>
-                <th>Markovian Version</th>
+                <th>i.i.d. (Luo &amp; Wolitzky)</th>
+                <th>Markov (This Paper)</th>
                 <th>Change?</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td><strong>OT Problem</strong></td>
-                <td>OT(ρ, φ; α₂) on Y₀ × A₁</td>
-                <td>OT(ρ̃, φ; α₂) on Θ̃ × A₁</td>
+                <td>\(\text{OT}(\rho, \phi; \alpha_2)\) on \(Y_0 \times A_1\)</td>
+                <td>\(\text{OT}(\tilde\rho, \phi; \alpha_2)\) on \(\tilde\Theta \times A_1\)</td>
                 <td>Notation only</td>
             </tr>
             <tr>
                 <td><strong>Cyclical Monotonicity</strong></td>
-                <td>On Θ × A₁</td>
-                <td>On Θ̃ × A₁</td>
+                <td>On \(\Theta \times A_1\)</td>
+                <td>On \(\tilde\Theta \times A_1\) (first-coord order)</td>
                 <td>Expanded space</td>
             </tr>
             <tr>
                 <td><strong>KL Bound</strong></td>
-                <td>$\bar{T} = -2\log\mu_0/\eta^2$</td>
-                <td>$\bar{T} = -2\log\mu_0/\eta^2$</td>
+                <td>\(\bar{T} = -2\log\mu_0/\eta^2\)</td>
+                <td>\(\bar{T} = -2\log\mu_0/\eta^2\)</td>
                 <td><strong>No change!</strong></td>
             </tr>
             <tr>
@@ -71,35 +95,40 @@
                 <td>Martingale + filter stability</td>
                 <td>+Ergodicity</td>
             </tr>
-            <tr>
-                <td><strong>Commitment Payoff</strong></td>
-                <td>$V(s_1^*)$</td>
-                <td>$V(s_1^*)$</td>
-                <td>No change</td>
+            <tr style="background: rgba(231,76,60,0.08);">
+                <td><strong>Equilibrium (Step 1)</strong></td>
+                <td>Continuation value independent of \(\theta_t\)</td>
+                <td>Continuation value depends on \(\theta_t\)</td>
+                <td><strong>New: supermodularity absorbs</strong></td>
+            </tr>
+            <tr style="background: rgba(231,76,60,0.08);">
+                <td><strong>Payoff Bound (Step 5)</strong></td>
+                <td>\(V(s_1^*)\) &mdash; SR behavior static</td>
+                <td>Belief-robust: \(V(s_1^*)\)<br>General: \(V_{\mathrm{Markov}} \leq V(s_1^*)\)</td>
+                <td><strong>New: belief-robustness splits cases</strong></td>
             </tr>
         </tbody>
     </table>
 
-    <div class="result-box">
-        <div class="box-title">⚠️ Caveat: Continuation Value (General Case Only)</div>
-        <p>In the Markov case, the continuation value depends on θ<sub>t</sub>, changing the one-shot deviation objective from u₁ to u₁ + δg(θ<sub>t</sub>, a₁). This does <strong>not</strong> affect the supermodular case (where all applications fall), but requires additional care for the general theorem. See <a href="agent852_output/marginal_reputation_markov_extension.pdf" style="color: var(--secondary-color);">full paper, Remark 4.5</a>.</p>
-    </div>
+    <h3>The Cost of Persistence</h3>
 
-    <h3>The Surprise: Where i.i.d. Was NOT Used</h3>
-    
-    <div class="extension-box">
-        <div class="box-title">🔍 Initial Expectation vs. Reality</div>
-        <p><strong>Initial conjecture:</strong> The KL bound would need a mixing-time correction factor τ<sub>mix</sub>, giving:</p>
+    <div class="result-box" style="border-left: 4px solid #e67e22;">
+        <div class="box-title" style="color: #e67e22;">New Economic Object</div>
+        <p>The gap \(V(s_1^*) - V_{\mathrm{Markov}}\) is the <strong>cost of persistence in reputation games</strong>. It quantifies exactly how much the long-run player loses because state persistence enables short-run players to condition behavior on the revealed state.</p>
         <div class="equation-block">
-            $$\bar{T}(\eta, \mu_0, \tau_{\text{mix}}) \approx \frac{-2\log\mu_0}{\eta^2} \cdot \tau_{\text{mix}}$$
+            $$\text{Cost of persistence} = V(s_1^*) - V_{\mathrm{Markov}}(s_1^*) = \sum_\theta \pi(\theta)\left[\inf_{B(s_1^*,\pi)} u_1 - \inf_{B(s_1^*, F(\cdot|\theta))} u_1\right]$$
         </div>
-        <p><strong>Actual result:</strong> NO correction needed! The bound is identical.</p>
-        <p><strong>Why:</strong> The KL chain rule and Bayesian updating work for general stochastic processes.</p>
+        <p>Properties:</p>
+        <ul>
+            <li>Equals <strong>zero</strong> if and only if the game is belief-robust</li>
+            <li><strong>Vanishes continuously</strong> as \(\alpha + \beta \to 1\) (the i.i.d. limit)</li>
+            <li><strong>Increasing</strong> in the persistence parameter \(|1-\alpha-\beta|\)</li>
+        </ul>
     </div>
 
     <h3>Interactive Comparison: Deterrence Game</h3>
     
-    <p>Compare the commitment payoff in the i.i.d. case vs. the Markovian case with varying persistence.</p>
+    <p>Compare the commitment payoff across persistence levels. Note: when the Markov and i.i.d. cases share the same \(\pi(G)\), the <em>stationary</em> commitment payoff is identical &mdash; but the <em>realized</em> payoff may differ if belief-robustness fails.</p>
 
     <div class="controls">
         <h4>Comparison Parameters</h4>
@@ -110,12 +139,12 @@
         </div>
 
         <div class="control-group">
-            <label>Markov α (G→B): <span class="slider-value" id="comp-alpha-value">0.30</span></label>
+            <label>Markov \(\alpha\) (G&rarr;B): <span class="slider-value" id="comp-alpha-value">0.30</span></label>
             <input type="range" id="comp-alpha-slider" min="0.05" max="0.95" step="0.05" value="0.3">
         </div>
 
         <div class="control-group">
-            <label>Markov β (B→G): <span class="slider-value" id="comp-beta-value">0.50</span></label>
+            <label>Markov \(\beta\) (B&rarr;G): <span class="slider-value" id="comp-beta-value">0.50</span></label>
             <input type="range" id="comp-beta-slider" min="0.05" max="0.95" step="0.05" value="0.5">
         </div>
     </div>
@@ -126,8 +155,8 @@
             <thead>
                 <tr>
                     <th>Case</th>
-                    <th>Stationary π(G)</th>
-                    <th>V(s₁*)</th>
+                    <th>Stationary \(\pi(G)\)</th>
+                    <th>\(V(s_1^*)\)</th>
                 </tr>
             </thead>
             <tbody>
@@ -148,6 +177,7 @@
                 </tr>
             </tbody>
         </table>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;"><em>Note: These values show the stationary commitment payoff \(V(s_1^*)\). The actual bound for non-belief-robust games is \(V_{\mathrm{Markov}} \leq V(s_1^*)\). See the Deterrence Example tab for the full calculation with belief-robustness.</em></p>
     </div>
 
     <div class="plot-container">
@@ -160,22 +190,20 @@
 
     <div class="comparison-grid">
         <div class="comparison-card">
-            <h4>Fast Mixing (→ i.i.d.)</h4>
-            <p><strong>Regime:</strong> α, β large (close to 0.5)</p>
-            <p><strong>Mixing time:</strong> τ<sub>mix</sub> ≈ O(1)</p>
-            <p><strong>Result:</strong> Recovers original theorem</p>
-            <div class="equation-block">
-                $$F(\cdot \mid \theta) \approx \pi(\cdot)$$
-            </div>
+            <h4>Fast Mixing (&rarr; i.i.d.)</h4>
+            <p><strong>Regime:</strong> \(\alpha + \beta \to 1\)</p>
+            <p>\(F(\cdot|\theta) \approx \pi\)</p>
+            <p>Belief-robustness holds generically</p>
+            <p>\(V_{\mathrm{Markov}} = V(s_1^*)\)</p>
+            <p><strong>Recovers Luo &amp; Wolitzky (2024)</strong></p>
         </div>
         <div class="comparison-card">
-            <h4>Slow Mixing (→ Pei 2020)</h4>
-            <p><strong>Regime:</strong> α, β → 0</p>
-            <p><strong>Mixing time:</strong> τ<sub>mix</sub> → ∞</p>
-            <p><strong>Result:</strong> Weakens toward Pei's conditions</p>
-            <div class="equation-block">
-                $$F(\cdot \mid \theta) \to \delta_\theta$$
-            </div>
+            <h4>Slow Mixing (&rarr; Pei 2020)</h4>
+            <p><strong>Regime:</strong> \(\alpha, \beta \to 0\)</p>
+            <p>\(F(\cdot|\theta) \to \delta_\theta\)</p>
+            <p>Belief-robustness fails generically</p>
+            <p>Cost of persistence maximized</p>
+            <p><strong>Framework degrades; Pei's approach needed</strong></p>
         </div>
     </div>
 
@@ -183,25 +211,15 @@
         <div id="mixing-comparison-plot"></div>
     </div>
 
-    <h3>Economic Insights: Temporal Patterns</h3>
+    <h3>Economic Insights</h3>
     
-    <div class="result-box">
-        <div class="box-title">New Identification Channel</div>
-        <p>With persistent states, actions exhibit <strong>autocorrelation</strong>. Two strategies with identical per-period frequencies may produce different temporal patterns:</p>
-        <ul>
-            <li><strong>Conditional strategy:</strong> "Fight when attack detected" → actions cluster in runs</li>
-            <li><strong>Unconditional strategy:</strong> "Fight 30% randomly" → no temporal structure</li>
-        </ul>
-        <p>Persistence thus <strong>strengthens identification</strong>, making confound-defeating conditions easier to satisfy!</p>
-    </div>
-
     <div class="extension-box">
         <div class="box-title">New Economic Content from the Markov Framework</div>
         <ul>
-            <li><strong>Temporal patterns as identification:</strong> Autocorrelation in actions provides an additional channel beyond marginal frequencies, shrinking the set of behaviorally confounded strategies.</li>
-            <li><strong>Transition-contingent commitment types:</strong> The lifted state allows types that condition on state <em>transitions</em> (e.g., "fight only when state deteriorates from G to B") — natural in dynamic settings with no i.i.d. counterpart.</li>
-            <li><strong>Persistence is a blessing:</strong> The commitment payoff bound is identical to i.i.d. Persistence affects only convergence rate, not limiting payoff. The long-run player's patience (δ → 1) compensates for slower learning.</li>
-            <li><strong>Regime-dependent reputation:</strong> In settings with regime shifts, the framework directly links transition rates to the value of reputation: V(s₁*) = β/(α+β).</li>
+            <li><strong>Temporal patterns as identification:</strong> Autocorrelation in actions provides an additional channel beyond marginal frequencies, making confound-defeating conditions easier to satisfy in the supermodular case.</li>
+            <li><strong>Transition-contingent commitment types:</strong> The lifted state allows types that condition on state <em>transitions</em> (e.g., "fight only when state deteriorates") &mdash; natural in dynamic settings with no i.i.d. counterpart.</li>
+            <li><strong>Persistence is not uniformly harmful:</strong> Under belief-robustness, the payoff bound is identical to i.i.d. The cost of persistence arises <em>only</em> when \(\mu^*\) falls in the danger zone \([\beta, 1-\alpha]\).</li>
+            <li><strong>Regime-dependent reputation:</strong> The framework directly links transition rates to the value of reputation, providing new economic content about how dynamic environments affect long-run players.</li>
         </ul>
     </div>
 
@@ -212,44 +230,49 @@
             <tr>
                 <th>Aspect</th>
                 <th>i.i.d.</th>
-                <th>Markovian</th>
+                <th>Markov (belief-robust)</th>
+                <th>Markov (general)</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>State evolution</td>
                 <td>Independent</td>
-                <td>Dependent</td>
+                <td colspan="2">Dependent (Markov chain)</td>
             </tr>
             <tr>
                 <td>Effective state</td>
-                <td>θ<sub>t</sub></td>
-                <td>θ̃<sub>t</sub> = (θ<sub>t</sub>, θ<sub>t-1</sub>)</td>
+                <td>\(\theta_t\)</td>
+                <td colspan="2">\(\tilde\theta_t = (\theta_t, \theta_{t-1})\)</td>
             </tr>
             <tr>
-                <td>Stationary distribution</td>
-                <td>π (given)</td>
-                <td>ρ̃ (derived)</td>
+                <td>SR belief about \(\theta_{t+1}\)</td>
+                <td>\(\pi\)</td>
+                <td>\(F(\cdot|\theta_t)\) (irrelevant)</td>
+                <td>\(F(\cdot|\theta_t)\) (relevant)</td>
+            </tr>
+            <tr>
+                <td>SR behavior</td>
+                <td>Static</td>
+                <td>Static</td>
+                <td>State-contingent</td>
             </tr>
             <tr>
                 <td>KL bound</td>
-                <td>$-2\log\mu_0/\eta^2$</td>
-                <td>$-2\log\mu_0/\eta^2$ (same!)</td>
-            </tr>
-            <tr>
-                <td>Additional assumption</td>
-                <td>None</td>
-                <td>Ergodicity</td>
+                <td>\(-2\log\mu_0/\eta^2\)</td>
+                <td colspan="2">\(-2\log\mu_0/\eta^2\) (same!)</td>
             </tr>
             <tr>
                 <td>Commitment payoff</td>
-                <td>V(s₁*)</td>
-                <td>V(s₁*) (same!)</td>
+                <td>\(V(s_1^*)\)</td>
+                <td>\(V(s_1^*)\) (same!)</td>
+                <td>\(V_{\mathrm{Markov}} \leq V(s_1^*)\)</td>
             </tr>
             <tr>
-                <td>Convergence rate</td>
-                <td>Fast</td>
-                <td>Depends on τ<sub>mix</sub></td>
+                <td>Cost of persistence</td>
+                <td>0</td>
+                <td>0</td>
+                <td>\(V(s_1^*) - V_{\mathrm{Markov}} > 0\)</td>
             </tr>
         </tbody>
     </table>

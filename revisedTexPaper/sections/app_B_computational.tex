@@ -5,7 +5,7 @@ This appendix documents the computational analysis that informed the revision. A
 
 \subsection{Analysis Modules}
 
-Seven analysis modules (SA1--SA7) systematically tested each claim from the original submission:
+Seven analysis modules (SA1--SA7) systematically tested each claim from the initial draft:
 
 \begin{center}
 \renewcommand{\arraystretch}{1.3}
@@ -31,9 +31,46 @@ Total: 21 scripts, 8 diagnostic figures. Runtime: approximately 8 minutes on a s
 The analysis pipeline is fully reproducible:
 \begin{enumerate}[label=(\arabic*)]
     \item Dependencies: \texttt{numpy}, \texttt{scipy}, \texttt{matplotlib}, \texttt{seaborn} (Python 3.8+).
-    \item Entry point: \texttt{scripts/generate\_paper.sh} runs the statistics extraction and paper compilation.
-    \item Statistics are auto-generated: \texttt{scripts/extract\_stats.py} reads SA report files and produces \texttt{stats.tex}, ensuring the paper always reflects the latest computational results.
+    \item Entry point: \texttt{scripts/generate\_paper.sh} runs the full pipeline (analysis $\to$ statistics $\to$ PDF).
+    \item Statistics are auto-generated: \texttt{scripts/extract\_stats.py} produces \texttt{stats.tex}, ensuring the paper always reflects the latest computational results.
 \end{enumerate}
+
+\subsection{Repository Structure}
+
+The full project repository contains all artifacts from both phases of the research:
+
+\begin{small}
+\begin{verbatim}
+mathTest/
++-- revisedTexPaper/          # This paper
+|   +-- main.tex              # Master file (inputs sections)
+|   +-- stats.tex             # Auto-generated statistics macros
+|   +-- sections/             # 12 modular .tex files
+|   +-- figures/              # 8 essential figures
+|   +-- scripts/              # 7 analysis + 3 automation scripts
+|   +-- response_letter.tex   # Point-by-point response
+|   +-- build.sh              # Compile paper
++-- Agent1206_workspace/      # Computational testing framework
+|   +-- agent_framework.py    # Reusable Agent class
+|   +-- orchestrator.py       # Runs all 21 scripts
+|   +-- shared/markov_utils.py
+|   +-- SA{1-7}_*/            # 7 subagent directories
+|   |   +-- task.md / report.md
+|   |   +-- SSA*_*/           # 3 sub-subagent dirs each
+|   +-- reports/final_report.md
++-- OPReview/                 # Daniel Luo's original feedback
++-- AgentReports/             # Phase 1 agent reports
+|   +-- Agent1206plan.md      # Review + testing plan
++-- promptHistory/            # All 15 agent transcripts
++-- texPaper/                 # Original (uncorrected) paper
++-- index.html                # Interactive web demo (9 tabs)
++-- author-review.html        # Critique visualization
++-- revision.html             # Revision explorer
++-- revision_summary.md       # One-page summary
+\end{verbatim}
+\end{small}
+
+\noindent Total artifacts: 15 agent transcripts, 28 task/report files, 21 analysis scripts (full) + 7 consolidated scripts, 40+ figures, 2 compiled PDFs, 9 interactive HTML pages.
 
 \subsection{Additional Figures}
 

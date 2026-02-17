@@ -4,18 +4,23 @@
 \subsection{Monotonicity on the Lifted Space}
 
 \begin{proposition}[Extension of Proposition 7]\label{prop:supermodular}
-Suppose $u_1$ is \textbf{strictly supermodular} in $(\tilde\theta, a_1)$ for some orders $\succeq_{\tilde\Theta}$ on $\tilde\Theta$ and $\succeq_{A_1}$ on $A_1$, for all $\alpha_2$. Then:
+Suppose $u_1$ is \textbf{strictly supermodular} in $(\tilde\theta, a_1)$ for some orders $\succeq_{\tilde\Theta}$ on $\tilde\Theta$ and $\succeq_{A_1}$ on $A_1$, for all $\alpha_2$. Then the following are equivalent:
 \begin{enumerate}[label=(\arabic*)]
-    \item $s_1^*$ is confound-defeating if and only if it is monotone on $\tilde\Theta$.
-    \item The co-monotone coupling is the unique OT solution.
+    \item $s_1^*$ is confound-defeating.
+    \item $s_1^*$ is monotone: if $\tilde\theta \succ \tilde\theta'$, $a_1 \in \supp(s_1^*(\tilde\theta))$, $a_1' \in \supp(s_1^*(\tilde\theta'))$, then $a_1 \succeq a_1'$.
+    \item For any $(\alpha_0, \alpha_2)$, $\gamma(\alpha_0, s_1^*)$ is the \textbf{co-monotone coupling} of $\tilde\rho(\alpha_0)$ and $\phi(\alpha_0, s_1^*)$.
 \end{enumerate}
 \end{proposition}
 
+\begin{proof}
+The equivalence $(1) \Leftrightarrow (3)$ follows from Lemma~6 of Luo \& Wolitzky (2024) applied to $\tilde\Theta \times A_1$: under strict supermodularity, the co-monotone coupling is the unique solution to the OT problem (Santambrogio, 2015, Lemma~2.8). The equivalence $(2) \Leftrightarrow (3)$ follows from the definition of monotonicity and co-monotone coupling. The proof is a purely combinatorial argument on the expanded state space and does not reference the temporal structure of the signal process.
+\end{proof}
+
 \subsection{Payoffs Depending Only on $\theta_t$}
 
-When $u_1(\tilde\theta, a_1, \alpha_2) = u_1(\theta_t, a_1, \alpha_2)$, the relevant order on $\tilde\Theta$ is the \emph{first-coordinate order}: $(\theta_t, \theta_{t-1}) \succeq (\theta_t', \theta_{t-1}')$ iff $\theta_t \succeq \theta_t'$. Under this order, supermodularity of $u_1$ in $(\theta_t, a_1)$ implies supermodularity in $(\tilde\theta, a_1)$.
+If $u_1(\tilde\theta, a_1, \alpha_2) = u_1(\theta_t, a_1, \alpha_2)$, then $u_1$ is supermodular in $(\tilde\theta, a_1)$ if and only if it is supermodular in $(\theta_t, a_1)$, using any order on $\tilde\Theta$ that is consistent with the order on the first coordinate (e.g., the lexicographic order). The relevant order on $\tilde\Theta$ is the \emph{first-coordinate order}: $(\theta_t, \theta_{t-1}) \succeq (\theta_t', \theta_{t-1}')$ if and only if $\theta_t \succeq \theta_t'$. Under this order, the supermodularity condition is \textbf{unchanged} from the i.i.d.\ case: it depends only on the payoff structure in $(\theta_t, a_1)$, not on the Markov dynamics.
 
-\textbf{Computational evidence:} For $\theta_t$-dependent payoffs, \SupermodFraction{} out of \SupermodTotal{} orderings of the 9-element lifted space $\tilde\Theta$ preserve supermodularity---exactly those consistent with the first-coordinate ranking (Figure~\ref{fig:monotonicity}).
+Computational evidence confirms this: for $\theta_t$-dependent payoffs, \SupermodFraction{} out of \SupermodTotal{} orderings of the lifted space $\tilde\Theta$ preserve supermodularity---exactly those consistent with the first-coordinate ranking (Figure~\ref{fig:monotonicity}).
 
 \begin{figure}[ht]
 \centering
@@ -31,9 +36,21 @@ When payoffs depend on the full lifted state $(\theta_t, \theta_{t-1})$---e.g., 
 \subsection{Extended Bounds}
 
 \begin{corollary}[Extended Lower Bound]\label{cor:lower}
-Under supermodularity with $\theta_t$-only payoffs:
+Under the conditions of Proposition~\ref{prop:supermodular} with $\theta_t$-only payoffs:
 \begin{equation}
     \liminf_{\delta \to 1}\, \underline{U}_1(\delta) \;\geq\; v_{\mathrm{mon}} \;:=\; \sup\left\{V_{\mathrm{Markov}}(s_1) : s_1 \text{ monotone on } \tilde\Theta,\; \omega_{s_1} \in \Omega\right\}.
 \end{equation}
 Under belief-robustness, $V_{\mathrm{Markov}}(s_1)$ can be replaced by $V(s_1)$.
 \end{corollary}
+
+\begin{corollary}[Extended Upper Bound]\label{cor:upper}
+If $u_1$ is cyclically separable and $\mu_0(\omega^R) \to 1$, then:
+\begin{equation}
+    \bar{U}_1(\delta) \;<\; \bar{v}_1^{CM} + \varepsilon
+\end{equation}
+where $\bar{v}_1^{CM}$ is the supremum over $u_1$-cyclically monotone strategies on $\tilde\Theta$.
+\end{corollary}
+
+\begin{proof}
+The upper bound follows from the extension of Lemma~5: in any equilibrium, $\sigma_1^*(h_t, \omega^R)$ must solve $\OT(\sigma_0^*(h_t), \phi(\sigma_0^*(h_t), \sigma_1^*(h_t, \omega^R)), \sigma_2^*(h_t))$, hence is $u_1$-cyclically monotone. This is a per-period optimality condition and does not use the i.i.d.\ assumption.
+\end{proof}

@@ -5,10 +5,10 @@
     
     <p>Consider a deterrence game where:</p>
     <ul>
-        <li>The state θ<sub>t</sub> ∈ {G(ood), B(ad)} indicates whether an attack is occurring</li>
-        <li>The long-run player chooses a₁ ∈ {A(cquiesce), F(ight)}</li>
-        <li>The short-run player chooses a₂ ∈ {C(ooperate), D(efect)}; D is dominant</li>
-        <li>Attacks follow a <strong>Markov chain</strong> (attacks come in clusters!)</li>
+        <li>The state \(\theta_t \in \{G(\text{ood}), B(\text{ad})\}\) indicates whether an attack is occurring</li>
+        <li>The long-run player chooses \(a_1 \in \{A(\text{cquiesce}), F(\text{ight})\}\)</li>
+        <li>The short-run player chooses \(a_2 \in \{C(\text{ooperate}), D(\text{efect})\}\)</li>
+        <li>Attacks follow a <strong>Markov chain</strong> (attacks come in clusters)</li>
     </ul>
 
     <h3>Markov Attack Process</h3>
@@ -23,22 +23,22 @@
         <h4>Attack Process Parameters</h4>
         
         <div class="control-group">
-            <label>α (escalation rate G→B): <span class="slider-value" id="ex-alpha-value">0.30</span></label>
+            <label>\(\alpha\) (escalation rate G&rarr;B): <span class="slider-value" id="ex-alpha-value">0.30</span></label>
             <input type="range" id="ex-alpha-slider" min="0.05" max="0.95" step="0.05" value="0.3">
         </div>
 
         <div class="control-group">
-            <label>β (de-escalation rate B→G): <span class="slider-value" id="ex-beta-value">0.50</span></label>
+            <label>\(\beta\) (de-escalation rate B&rarr;G): <span class="slider-value" id="ex-beta-value">0.50</span></label>
             <input type="range" id="ex-beta-slider" min="0.05" max="0.95" step="0.05" value="0.5">
         </div>
 
         <div class="control-group">
-            <label>Payoff x = u₁(G, F): <span class="slider-value" id="ex-x-value">0.30</span></label>
+            <label>Payoff \(x = u_1(G, F)\): <span class="slider-value" id="ex-x-value">0.30</span></label>
             <input type="range" id="ex-x-slider" min="0" max="1" step="0.05" value="0.3">
         </div>
 
         <div class="control-group">
-            <label>Payoff y = u₁(B, A): <span class="slider-value" id="ex-y-value">0.40</span></label>
+            <label>Payoff \(y = u_1(B, A)\): <span class="slider-value" id="ex-y-value">0.40</span></label>
             <input type="range" id="ex-y-slider" min="0" max="1" step="0.05" value="0.4">
         </div>
     </div>
@@ -83,11 +83,11 @@
         <table>
             <tbody>
                 <tr>
-                    <td><strong>π(Good):</strong></td>
+                    <td><strong>\(\pi(\text{Good})\):</strong></td>
                     <td id="ex-stat-g">0.625</td>
                 </tr>
                 <tr>
-                    <td><strong>π(Bad):</strong></td>
+                    <td><strong>\(\pi(\text{Bad})\):</strong></td>
                     <td id="ex-stat-b">0.375</td>
                 </tr>
                 <tr>
@@ -106,14 +106,14 @@
 
     <h3>Lifted State Distribution</h3>
     
-    <p>The lifted state θ̃<sub>t</sub> = (θ<sub>t</sub>, θ<sub>t-1</sub>) captures the <strong>transition structure</strong>:</p>
+    <p>The lifted state \(\tilde\theta_t = (\theta_t, \theta_{t-1})\) captures the <strong>transition structure</strong>:</p>
 
     <table id="ex-lifted-table">
         <thead>
             <tr>
-                <th>θ̃ = (θ<sub>t</sub>, θ<sub>t-1</sub>)</th>
+                <th>\(\tilde\theta = (\theta_t, \theta_{t-1})\)</th>
                 <th>Interpretation</th>
-                <th>ρ̃(θ̃)</th>
+                <th>\(\tilde\rho(\tilde\theta)\)</th>
             </tr>
         </thead>
         <tbody>
@@ -148,26 +148,87 @@
     
     <p>The natural deterrence strategy is:</p>
     <div class="equation-block">
-        $$s_1^*(G) = A \text{ (Acquiesce when calm)}$$
-        $$s_1^*(B) = F \text{ (Fight when attacked)}$$
+        $$s_1^*(G) = A \text{ (Acquiesce when calm)}, \quad s_1^*(B) = F \text{ (Fight when attacked)}$$
+    </div>
+    <p>This is a <strong>state-revealing strategy</strong>: the SR player can infer \(\theta_t\) from observing \(a_1\).</p>
+
+    <h3>The Belief-Robustness Question</h3>
+
+    <div class="extension-box">
+        <div class="box-title">Filtering Beliefs and the "Danger Zone"</div>
+        <p>Since \(s_1^*\) reveals the state, SR learns \(\theta_t\) and forms beliefs about \(\theta_{t+1}\):</p>
+        <div class="equation-block">
+            $$F(G|G) = 1 - \alpha, \quad F(G|B) = \beta, \quad \pi(G) = \frac{\beta}{\alpha + \beta}$$
+        </div>
+        <p>The SR cooperation threshold is \(\mu^*\) (the belief level where SR is indifferent). <strong>Belief-robustness holds iff:</strong></p>
+        <div class="equation-block">
+            $$\mu^* \notin [\beta,\; 1-\alpha] \quad \text{(the "danger zone")}$$
+        </div>
+        <p>With \(\alpha = 0.3, \beta = 0.5\): the danger zone is \([0.5, 0.7]\).</p>
     </div>
 
-    <p>This strategy <strong>ignores</strong> θ<sub>t-1</sub> — it's memoryless. But it can be viewed as a strategy on the expanded space θ̃ ∈ Θ̃:</p>
+    <h3>Version 1: Belief-Robust (\(\mu^* = 0.35 < \beta = 0.5\))</h3>
 
-    <div class="equation-block">
-        $$s_1^*(\tilde{\theta}) = s_1^*(\theta_t) \quad \text{(depends only on current state)}$$
+    <div class="theorem-box" style="border-left-color: #2ecc71;">
+        <div class="box-title" style="color: #2ecc71;">Theorem 1' Applies: Full Bound</div>
+        <p>With SR payoffs calibrated so \(\mu^* = 0.35 < \beta = 0.5\), the SR player <strong>always cooperates</strong> regardless of the revealed state, since \(F(G|\theta) \geq \beta > \mu^*\) for all \(\theta\).</p>
+        <div class="equation-block">
+            $$\liminf_{\delta\to 1} \underline{U}_1(\delta) \geq V(s_1^*) = \frac{\beta}{\alpha + \beta} = 0.625$$
+        </div>
+        <p>The bound is <strong>identical</strong> to the i.i.d. case. No cost of persistence.</p>
+    </div>
+
+    <h3>Version 2: Non-Belief-Robust (\(\mu^* = 0.55 \in [0.5, 0.7]\))</h3>
+
+    <div class="theorem-box" style="border-left-color: #e67e22;">
+        <div class="box-title" style="color: #e67e22;">Theorem 1'' Applies: Corrected Bound</div>
+        <p>With \(\mu^* = 0.55 \in [\beta, 1-\alpha] = [0.5, 0.7]\), SR behavior becomes <strong>state-contingent</strong>:</p>
+        <table style="margin: 1rem 0;">
+            <thead>
+                <tr>
+                    <th>State \(\theta\)</th>
+                    <th>\(\pi(\theta)\)</th>
+                    <th>SR Belief \(F(G|\theta)\)</th>
+                    <th>vs \(\mu^*\)</th>
+                    <th>SR Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background: rgba(46,204,113,0.08);">
+                    <td>\(G\)</td>
+                    <td>0.625</td>
+                    <td>\(F(G|G) = 0.7\)</td>
+                    <td>\(> 0.55\)</td>
+                    <td><strong>Cooperate</strong></td>
+                </tr>
+                <tr style="background: rgba(231,76,60,0.08);">
+                    <td>\(B\)</td>
+                    <td>0.375</td>
+                    <td>\(F(G|B) = 0.5\)</td>
+                    <td>\(< 0.55\)</td>
+                    <td><strong>Defect</strong></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>The corrected bound:</p>
+        <div class="equation-block">
+            $$V_{\mathrm{Markov}} = \pi(G) \cdot u_1(G, A, C) + \pi(B) \cdot u_1(B, F, D) < V(s_1^*)$$
+        </div>
+        <p>The overestimation from ignoring belief effects is the <strong>cost of persistence</strong>.</p>
     </div>
 
     <h3>Commitment Payoff</h3>
     
-    <div class="theorem-box">
+    <div class="result-box">
         <div class="box-title">Result: Deterrence with Markov Attacks</div>
-        <p><strong>If x + y &lt; 1</strong> (supermodular), the strategy s₁* is confound-defeating and the long-run player secures:</p>
+        <p><strong>If \(x + y < 1\)</strong> (supermodular), the strategy \(s_1^*\) is confound-defeating. The patient LR player secures at least:</p>
         <div class="equation-block">
-            $$V(s_1^*) = \pi(G) \cdot 1 + \pi(B) \cdot 0 = \frac{\beta}{\alpha + \beta}$$
+            $$V(s_1^*) = \pi(G) = \frac{\beta}{\alpha + \beta} \quad \text{(belief-robust case)}$$
         </div>
-        <p>With current parameters:</p>
-        <p style="margin-left: 2rem;"><strong>V(s₁*) = <span id="ex-commitment-payoff">0.625</span></strong></p>
+        <div class="equation-block">
+            $$V_{\mathrm{Markov}}(s_1^*) \leq V(s_1^*) \quad \text{(general case)}$$
+        </div>
+        <p>With current parameters: <strong>V(s\(_1^*\)) = <span id="ex-commitment-payoff">0.625</span></strong></p>
     </div>
 
     <h3>KL Bound for This Example</h3>
@@ -176,12 +237,12 @@
         <h4>Prior and Tolerance</h4>
         
         <div class="control-group">
-            <label>Prior μ₀(ω<sub>s₁*</sub>): <span class="slider-value" id="ex-mu0-value">0.01</span></label>
+            <label>Prior \(\mu_0(\omega_{s_1^*})\): <span class="slider-value" id="ex-mu0-value">0.01</span></label>
             <input type="range" id="ex-mu0-slider" min="0.001" max="0.1" step="0.001" value="0.01">
         </div>
 
         <div class="control-group">
-            <label>Tolerance η: <span class="slider-value" id="ex-eta-value">0.10</span></label>
+            <label>Tolerance \(\eta\): <span class="slider-value" id="ex-eta-value">0.10</span></label>
             <input type="range" id="ex-eta-slider" min="0.01" max="0.3" step="0.01" value="0.1">
         </div>
     </div>
@@ -191,14 +252,12 @@
         <div class="equation-block">
             $$\bar{T}(\eta, \mu_0) = \frac{-2\log\mu_0(\omega_{s_1^*})}{\eta^2}$$
         </div>
-        <p>With μ₀ = <span id="ex-kl-mu0">0.01</span> and η = <span id="ex-kl-eta">0.10</span>:</p>
-        <p style="margin-left: 2rem;"><strong>T̄ = <span id="ex-kl-bound">921</span> periods</strong></p>
-        <p>This bound is <strong>identical</strong> to what it would be in the i.i.d. case with the same prior!</p>
+        <p>With \(\mu_0\) = <span id="ex-kl-mu0">0.01</span> and \(\eta\) = <span id="ex-kl-eta">0.10</span>:</p>
+        <p style="margin-left: 2rem;"><strong>\(\bar T\) = <span id="ex-kl-bound">921</span> periods</strong></p>
+        <p>This bound is <strong>identical</strong> to the i.i.d. case &mdash; no mixing-time correction needed.</p>
     </div>
 
-    <h3>Comparison Across Persistence Levels</h3>
-    
-    <p>How does the commitment payoff and mixing time vary with persistence?</p>
+    <h3>Persistence Comparison</h3>
 
     <div class="plot-container">
         <div id="ex-persistence-plot"></div>
@@ -210,40 +269,29 @@
         <thead>
             <tr>
                 <th>Regime</th>
-                <th>α, β values</th>
-                <th>Mixing τ<sub>mix</sub></th>
-                <th>V(s₁*)</th>
-                <th>Framework</th>
+                <th>Mixing \(\tau_{\mathrm{mix}}\)</th>
+                <th>Payoff Bound</th>
+                <th>Behavior</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td><strong>Fast mixing</strong></td>
-                <td>α, β large (~0.5)</td>
+                <td><strong>Fast mixing</strong> (\(\alpha+\beta\) large)</td>
                 <td>Small</td>
-                <td>β/(α+β)</td>
-                <td>Luo-Wolitzky (i.i.d.)</td>
+                <td>\(V(s_1^*) = \beta/(\alpha+\beta)\)</td>
+                <td>Recovers LW Prop. 1</td>
             </tr>
             <tr>
-                <td><strong>Moderate</strong></td>
-                <td>α = 0.3, β = 0.5</td>
+                <td><strong>Moderate persistence</strong></td>
                 <td>Moderate</td>
-                <td>0.625</td>
-                <td><strong>Our extension</strong></td>
+                <td>\(V_{\mathrm{Markov}} \leq V(s_1^*)\)</td>
+                <td><strong>New result</strong></td>
             </tr>
             <tr>
-                <td><strong>High persistence</strong></td>
-                <td>α, β small</td>
-                <td>Large</td>
-                <td>→ Initial π(G)</td>
-                <td>Weakens toward Pei</td>
-            </tr>
-            <tr>
-                <td><strong>Perfect persistence</strong></td>
-                <td>α, β → 0</td>
-                <td>∞</td>
-                <td>π₀(G)</td>
-                <td>Pei (2020)</td>
+                <td><strong>Near-perfect persistence</strong> (\(\alpha,\beta \to 0\))</td>
+                <td>\(\to \infty\)</td>
+                <td>\(V \to \pi_0(G)\)</td>
+                <td>Weakens toward Pei (2020)</td>
             </tr>
         </tbody>
     </table>
@@ -251,24 +299,14 @@
     <h3>Economic Interpretation</h3>
     
     <div class="result-box">
-        <div class="box-title">Clustered Attacks</div>
-        <p>With α = <span id="ex-interp-alpha">0.30</span> and β = <span id="ex-interp-beta">0.50</span>, attacks come in <strong>clusters</strong>:</p>
+        <div class="box-title">Clustered Attacks and the Cost of Persistence</div>
+        <p>With \(\alpha\) = <span id="ex-interp-alpha">0.30</span> and \(\beta\) = <span id="ex-interp-beta">0.50</span>, attacks come in <strong>clusters</strong>:</p>
         <ul>
             <li>When calm (G), it tends to stay calm (70% probability)</li>
             <li>When attacked (B), it tends to continue (50% probability)</li>
             <li>Average calm period: ~<span id="ex-avg-calm">3.3</span> periods</li>
             <li>Average attack period: ~<span id="ex-avg-attack">2.0</span> periods</li>
         </ul>
-        <p>The temporal pattern of Fight actions reveals the conditional strategy, even though marginal frequencies alone wouldn't distinguish it from random fighting!</p>
+        <p>The temporal pattern of Fight actions reveals the conditional strategy. But the same pattern also reveals the state to SR players, enabling them to adjust behavior &mdash; which is the source of the cost of persistence when belief-robustness fails.</p>
     </div>
-
-    <h3>Interactive Exploration</h3>
-    
-    <p>Use the sliders above to explore how the commitment payoff varies with:</p>
-    <ul>
-        <li><strong>Persistence</strong> (α and β): More persistence → longer runs of attacks</li>
-        <li><strong>Payoff structure</strong> (x and y): Supermodularity condition x + y &lt; 1</li>
-    </ul>
-
-    <p><strong>Key insight:</strong> The limiting payoff V(s₁*) = β/(α+β) depends on the <strong>stationary distribution</strong>, not the mixing time. Persistence affects only the <strong>convergence rate</strong>, not the payoff secured by a patient player!</p>
 </div>

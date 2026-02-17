@@ -20,7 +20,7 @@ The state $\theta_t \in \Theta$ follows a \textbf{stationary ergodic Markov chai
 \end{assumption}
 
 \begin{remark}
-When $F(\cdot | \theta) = \pi(\cdot)$ for all $\theta$, the chain has no memory and we recover the i.i.d.\ case of the original paper. The two-state case with $\Theta = \{G, B\}$ is parameterized by $\alpha = \Prob(B|G)$ and $\beta = \Prob(G|B)$, giving $\pi(G) = \beta/(\alpha+\beta)$.
+When $F(\cdot | \theta) = \pi(\cdot)$ for all $\theta$, the chain has no memory and we recover the i.i.d.\ case of Luo \& Wolitzky (2024). The two-state case with $\Theta = \{G, B\}$ is parameterized by $\alpha = \Prob(B|G)$ and $\beta = \Prob(G|B)$, giving $\pi(G) = \beta/(\alpha+\beta)$.
 \end{remark}
 
 \subsection{Lifted State Space}\label{subsec:lifted}
@@ -33,6 +33,10 @@ Define
     \tilde\theta_t \;=\; (\theta_t,\, \theta_{t-1}) \;\in\; \tilde\Theta \;=\; \Theta \times \Theta.
 \end{equation}
 \end{definition}
+
+\begin{remark}[Initial Period Convention]\label{rem:initial}
+The lifted state $\tilde\theta_t = (\theta_t, \theta_{t-1})$ is defined for $t \geq 1$. For $t = 0$, we draw $\theta_{-1}$ from the stationary distribution $\pi$ independently of $\theta_0$ (equivalently, we initialize the chain in stationarity at $t = -1$). This loses nothing: the first period is transient and vanishes under $\delta \to 1$. Alternatively, one may start the game at $t = 1$.
+\end{remark}
 
 The process $(\tilde\theta_t)_{t \geq 1}$ is itself a Markov chain on $\tilde\Theta$ with transition probabilities
 \begin{equation}
@@ -48,11 +52,15 @@ Under Assumption~\ref{ass:markov}, the lifted chain $(\tilde\theta_t)$ on $\tild
 \end{proposition}
 
 \begin{proof}
-Irreducibility of the original chain ensures connectivity of the lifted chain: for any lifted states $(\theta_a, \theta_b)$ and $(\theta_d, \theta_c)$, there exists a finite path with positive probability connecting them. Aperiodicity of the original chain implies aperiodicity of the lifted chain. Uniqueness of $\tilde\rho$ follows from the Perron--Frobenius theorem.
+Since the original chain is irreducible on $\Theta$, for any states $\theta, \theta' \in \Theta$, there exists $n \in \N$ such that $F^n(\theta' | \theta) > 0$. Now consider two lifted states $(\theta_a, \theta_b)$ and $(\theta_d, \theta_c)$ in $\tilde\Theta$. By irreducibility of the original chain, there exists a finite path $\theta_a \to \theta_{i_1} \to \cdots \to \theta_{i_k} \to \theta_c$ with positive probability. This path in the original chain induces a path $(\theta_a, \theta_b) \to (\theta_{i_1}, \theta_a) \to \cdots \to (\theta_c, \theta_{i_k}) \to (\theta_d, \theta_c)$ in the lifted chain (where the final step uses $F(\theta_d | \theta_c) > 0$ for some path from $\theta_c$ to $\theta_d$). Hence the lifted chain is irreducible. Aperiodicity follows from aperiodicity of the original chain: if $F(\theta | \theta) > 0$ for some $\theta$, then $(\theta, \theta) \to (\theta, \theta)$ is a self-loop in the lifted chain. Uniqueness of $\tilde\rho$ follows from the Perron--Frobenius theorem.
 \end{proof}
 
-\begin{remark}[Purpose of the Lifting]
-The lifted state provides a Markov structure on which the optimal transport framework and cyclical monotonicity characterizations apply. The key property is that $\tilde\theta_t$ has a \emph{fixed, known} stationary distribution $\tilde\rho$, playing precisely the role of the i.i.d.\ signal distribution $\rho$ in the original paper.
+\begin{remark}[Effective State Space]\label{rem:effective}
+If $F(\theta | \theta') = 0$ for some pair, the lifted state $(\theta, \theta')$ is never visited. The effective state space is $\tilde\Theta_+ = \{(\theta, \theta') \in \Theta \times \Theta : F(\theta | \theta') > 0\} \subseteq \tilde\Theta$. All results hold on $\tilde\Theta_+$; we write $\tilde\Theta$ for notational simplicity throughout.
+\end{remark}
+
+\begin{remark}[Purpose of the Lifting]\label{rem:key_property}
+The lifted state provides a Markov structure on which the optimal transport framework and cyclical monotonicity characterizations apply. The \textbf{key property} is that $\tilde\theta_t$ has a \emph{fixed, known} stationary distribution $\tilde\rho$, playing precisely the role of the i.i.d.\ signal distribution $\rho$ in Luo \& Wolitzky (2024). This is the central insight enabling the extension.
 \end{remark}
 
 \subsection{Stage Game}
@@ -66,11 +74,22 @@ The stage game is identical to Luo \& Wolitzky's Section~3.1, except:
 
 We restrict throughout to payoffs $u_1(\theta_t, a_1, \alpha_2)$ that depend on $\theta_t$ alone (not the full lifted state $\tilde\theta_t$). This covers all standard applications---deterrence, trust, signaling---and avoids unmotivated generalization.
 
-\subsection{Joint Distribution and Commitment Types}
+\subsection{Joint Distribution and Marginals}
 
 Under Markov strategy $s_1$ and the stationary distribution $\tilde\rho$, the joint distribution over $(\tilde\theta, a_1)$ is:
 \begin{equation}\label{eq:joint}
     \gamma(s_1)[\tilde\theta, a_1] \;=\; \tilde\rho(\tilde\theta) \cdot s_1(\tilde\theta)[a_1].
 \end{equation}
+The marginals of $\gamma(s_1)$ are the stationary distribution $\pi_{\tilde\Theta}(\gamma) = \tilde\rho$, which is fixed and known, and the action marginal $\pi_{A_1}(\gamma) = \phi(s_1) = \sum_{\tilde\theta} \tilde\rho(\tilde\theta)\, s_1(\tilde\theta)[\cdot]$, which is observable to the short-run players. These two marginals play exactly the roles of the exogenous state distribution and the action frequency in the Luo--Wolitzky optimal transport formulation.
+
+\subsection{Commitment Types}
 
 A commitment type $\omega_{s_1} \in \Omega$ plays Markov strategy $s_1 : \tilde\Theta \to \Delta(A_1)$ every period. The type space $\Omega$ is countable with full-support prior $\mu_0 \in \Delta(\Omega)$.
+
+\begin{remark}
+A ``memoryless'' commitment type that plays $s_1 : \Theta \to \Delta(A_1)$ (ignoring $\theta_{t-1}$) is a special case. The framework allows richer types that condition on transitions, but the memoryless case suffices for most applications.
+\end{remark}
+
+\subsection{Repeated Game}
+
+The repeated game structure is identical to Luo \& Wolitzky's Section~3.2. Assumption~1 (signal $y_1$ identifies $a_1$) is maintained throughout.

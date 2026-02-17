@@ -1,69 +1,88 @@
 <div class="intro-content">
-    <h2>The Challenge: Extending Marginal Reputation to Markovian States</h2>
+    <h2>Extending Marginal Reputation to Persistent Markovian States</h2>
     
     <div class="result-box">
-        <div class="box-title">📱 The Twitter Challenge (Feb 16, 2026)</div>
+        <div class="box-title">The $500 Challenge (Feb 16, 2026)</div>
         <p><strong>Daniel Luo (MIT):</strong> <em>"I will pay you $500 if you can figure out how to extend the main result to allow for persistent/markovian states (something we suspect is possible but never did) in &lt;5 hours of time."</em></p>
     </div>
 
-    <h3>Overview of the Problem</h3>
+    <h3>The Original Result (Luo &amp; Wolitzky, 2024)</h3>
     
-    <p>The paper <strong>"Marginal Reputation"</strong> by Luo & Wolitzky (2024) establishes a groundbreaking connection between reputation theory in repeated games and optimal transport theory. Their main result shows that a patient long-run player can secure her <em>commitment payoff</em> if her strategy satisfies two key properties:</p>
-    
-    <ul>
-        <li><strong>Confound-defeating:</strong> The strategy is uniquely optimal in the induced optimal transport problem</li>
-        <li><strong>Not behaviorally confounded:</strong> The strategy is distinguishable from alternatives based on observable behavior</li>
-    </ul>
-
-    <h3>The Setting</h3>
-    
-    <p>A <strong>long-run player</strong> (patient, with discount factor δ) faces a sequence of <strong>myopic short-run players</strong> in a repeated game:</p>
-    
-    <ol>
-        <li>Each period, a <strong>private signal</strong> θ<sub>t</sub> is drawn — the long-run player observes it, short-run players do not</li>
-        <li>The long-run player chooses an action a<sub>1</sub> based on θ<sub>t</sub></li>
-        <li>Short-run players observe the <strong>history of actions</strong> but <strong>not</strong> the history of signals</li>
-    </ol>
-
-    <p>The long-run player is either <strong>rational</strong> or one of many <strong>commitment types</strong> that play fixed strategies.</p>
+    <p><strong>"Marginal Reputation"</strong> by Luo &amp; Wolitzky (2024) establishes a connection between reputation theory in repeated games and optimal transport theory. Their main result shows that a patient long-run player can secure her <em>commitment payoff</em> \(V(s_1^*)\) if her Stackelberg strategy is <em>confound-defeating</em> and <em>not behaviorally confounded</em>. Throughout, states are drawn <strong>i.i.d. across periods</strong>. The authors note (footnote 9) that the extension to persistent states is an open question.</p>
 
     <div class="theorem-box">
-        <div class="box-title">Theorem 1 (Original — i.i.d. case)</div>
-        <p>If the Stackelberg strategy s₁* is <strong>confound-defeating</strong> and <strong>not behaviorally confounded</strong>, then:</p>
+        <div class="box-title">Theorem 1 (Luo &amp; Wolitzky, 2024 &mdash; i.i.d. case)</div>
+        <p>If the Stackelberg strategy \(s_1^*\) is confound-defeating and not behaviorally confounded, then:</p>
         <div class="equation-block">
             $$\liminf_{\delta \to 1} \underline{U}_1(\delta) \geq V(s_1^*)$$
         </div>
-        <p>where V(s₁*) is the commitment payoff.</p>
     </div>
 
-    <h3>The Key Insight: Optimal Transport</h3>
-    
-    <p>The confound-defeating property is characterized by <strong>strict cyclical monotonicity</strong> of the strategy's support in the signal-action space. This establishes a deep connection to classical optimal transport theory.</p>
+    <h3>The Answer: Partially Yes, Partially No</h3>
 
-    <div class="equation-block">
-        <div class="equation-label">Optimal Transport Problem:</div>
-        $$\text{OT}(\rho, \phi; \alpha_2): \max_{\gamma \in \Delta(Y_0 \times A_1)} \int u_1(y_0, a_1, \alpha_2)\, d\gamma$$
-        <p style="margin-top: 0.5rem;">subject to: π<sub>Y₀</sub>(γ) = ρ and π<sub>A₁</sub>(γ) = φ</p>
-    </div>
-
-    <h3>The Extension Challenge</h3>
-    
-    <p>The original paper assumes states are drawn <strong>i.i.d. across periods</strong>. The challenge is to extend the result to <strong>Markovian states</strong> where:</p>
-    
-    <div class="equation-block">
-        $$\theta_t \sim F(\cdot \mid \theta_{t-1})$$
-    </div>
-
-    <p>This interpolates between the i.i.d. framework (Luo-Wolitzky) and the perfectly persistent framework (Pei 2020).</p>
+    <p>The extension from i.i.d. to Markov states is <strong>not</strong> a straightforward substitution. The key new phenomenon: when the Stackelberg strategy reveals the state (e.g., \(s_1^*(G)=A, s_1^*(B)=F\)), short-run players learn \(\theta_t\) and form beliefs about \(\theta_{t+1}\) using the <em>filtering distribution</em> \(F(\cdot|\theta_t)\) rather than the stationary distribution \(\pi\). This makes short-run behavior <strong>state-contingent</strong>.</p>
 
     <div class="extension-box">
-        <div class="box-title">✅ The Solution: Lifted State Construction</div>
-        <p>The key insight is to define a <strong>lifted state</strong>:</p>
+        <div class="box-title">The Key New Concept: Belief-Robustness</div>
+        <p>A game is <strong>belief-robust</strong> if the short-run player's best-response set does not depend on the revealed state:</p>
         <div class="equation-block">
-            $$\tilde{\theta}_t = (\theta_t, \theta_{t-1}) \in \tilde{\Theta} = \Theta \times \Theta$$
+            $$B(s_1^*, F(\cdot|\theta)) = B(s_1^*, F(\cdot|\theta')) \quad \text{for all } \theta, \theta'$$
         </div>
-        <p>Under ergodicity, this lifted state has a fixed stationary distribution, and the optimal transport framework applies on the expanded space!</p>
+        <p>For the deterrence game, belief-robustness holds iff the SR threshold \(\mu^*\) lies <strong>outside</strong> the "danger zone" \([\beta, 1-\alpha]\).</p>
     </div>
+
+    <h3>Two Corrected Theorems</h3>
+
+    <div class="comparison-grid">
+        <div class="comparison-card">
+            <h4>Theorem 1' (Belief-Robust)</h4>
+            <p>When the game is belief-robust, the full i.i.d. bound holds exactly:</p>
+            <div class="equation-block">
+                $$\liminf_{\delta \to 1} \underline{U}_1(\delta) \geq V(s_1^*)$$
+            </div>
+            <p>All proof machinery transfers without modification.</p>
+        </div>
+        <div class="comparison-card">
+            <h4>Theorem 1'' (General Case)</h4>
+            <p>For all supermodular games, a corrected bound holds:</p>
+            <div class="equation-block">
+                $$\liminf_{\delta \to 1} \underline{U}_1(\delta) \geq V_{\mathrm{Markov}}(s_1^*) \leq V(s_1^*)$$
+            </div>
+            <p>Equality iff belief-robust. The gap is the <strong>"cost of persistence."</strong></p>
+        </div>
+    </div>
+
+    <div class="result-box">
+        <div class="box-title">The Cost of Persistence</div>
+        <p>The gap \(V(s_1^*) - V_{\mathrm{Markov}}\) is a new economic object quantifying how much the long-run player loses because state persistence enables short-run players to condition behavior on the revealed state. It vanishes continuously as the chain approaches the i.i.d. limit (\(\alpha + \beta \to 1\)).</p>
+    </div>
+
+    <h3>What Extends and What Doesn't</h3>
+
+    <div class="comparison-grid">
+        <div class="comparison-card" style="border-left: 3px solid #2ecc71;">
+            <h4 style="color: #2ecc71;">Extends Unchanged</h4>
+            <ul>
+                <li><strong>KL counting bound</strong> &mdash; identical, no mixing-time correction</li>
+                <li><strong>OT / confound-defeating</strong> &mdash; works on lifted space \(\tilde\Theta\)</li>
+                <li><strong>Filter stability</strong> &mdash; exponential forgetting holds</li>
+                <li><strong>Supermodularity / monotonicity</strong> &mdash; first-coordinate order suffices</li>
+            </ul>
+        </div>
+        <div class="comparison-card" style="border-left: 3px solid #e74c3c;">
+            <h4 style="color: #e74c3c;">Requires New Ideas</h4>
+            <ul>
+                <li><strong>SR belief dynamics</strong> &mdash; beliefs permanently deviate from \(\pi\)</li>
+                <li><strong>Nash correspondence</strong> &mdash; becomes state-contingent \(B(s_1^*, F(\cdot|\theta))\)</li>
+                <li><strong>Payoff bound</strong> &mdash; needs belief-robustness or corrected \(V_{\mathrm{Markov}}\)</li>
+                <li><strong>Continuation value</strong> &mdash; depends on \(\theta_t\) through transition kernel</li>
+            </ul>
+        </div>
+    </div>
+
+    <h3>The Lifted State Construction</h3>
+
+    <p>The mathematical framework still begins with the <em>lifted state</em> \(\tilde\theta_t = (\theta_t, \theta_{t-1})\), which provides a stationary distribution \(\tilde\rho\) on the expanded space and enables the optimal transport framework. But the lifting alone is <strong>not sufficient</strong> &mdash; the belief-robustness distinction is essential for the correct payoff bound.</p>
 
     <h3>Navigation Guide</h3>
     
@@ -77,51 +96,43 @@
         <tbody>
             <tr>
                 <td><strong>Original (i.i.d.)</strong></td>
-                <td>Interactive exploration of the original result with i.i.d. states</td>
+                <td>Interactive exploration of the Luo &amp; Wolitzky (2024) result with i.i.d. states</td>
             </tr>
             <tr>
                 <td><strong>Markovian Extension</strong></td>
-                <td>The lifted-state construction and extended theorem</td>
+                <td>Lifted state construction, belief-robustness, and two corrected theorems</td>
             </tr>
             <tr>
                 <td><strong>Comparison</strong></td>
-                <td>Side-by-side comparison of key proof steps</td>
+                <td>Three-regime comparison: i.i.d. vs. belief-robust Markov vs. general Markov</td>
             </tr>
             <tr>
                 <td><strong>Deterrence Example</strong></td>
-                <td>Worked example: deterrence game with Markov attacks</td>
+                <td>Worked example with belief-robust and non-belief-robust versions</td>
+            </tr>
+            <tr>
+                <td><strong>Author Review</strong></td>
+                <td>Daniel Luo's 15-point critique with severity classifications</td>
+            </tr>
+            <tr>
+                <td><strong>Revision</strong></td>
+                <td>Point-by-point responses with interactive belief gap and payoff visualizations</td>
+            </tr>
+            <tr>
+                <td><strong>Prompt History</strong></td>
+                <td>Full AI agent conversation transcripts from both phases</td>
             </tr>
         </tbody>
     </table>
 
-    <h3>Key Results at a Glance</h3>
-    
-    <div class="comparison-grid">
-        <div class="comparison-card">
-            <h4>Original (i.i.d.)</h4>
-            <ul>
-                <li>States θ<sub>t</sub> drawn i.i.d. from π</li>
-                <li>Confound-defeating ⟺ cyclically monotone</li>
-                <li>Supermodular case: monotonicity</li>
-                <li>KL bound: $\bar{T} = -2\log\mu_0 / \eta^2$</li>
-            </ul>
-        </div>
-        <div class="comparison-card">
-            <h4>Markovian Extension</h4>
-            <ul>
-                <li>States θ<sub>t</sub> follow Markov chain F</li>
-                <li>Lifted state: θ̃<sub>t</sub> = (θ<sub>t</sub>, θ<sub>t-1</sub>)</li>
-                <li>Same KL bound — <strong>no mixing correction!</strong></li>
-                <li>Additional assumption: ergodicity</li>
-            </ul>
-        </div>
-    </div>
-
     <div class="result-box" style="text-align: center;">
-        <div class="box-title">📄 Full Paper (26 pages)</div>
-        <p><a href="agent852_output/marginal_reputation_markov_extension.pdf" style="font-size: 1.2rem; font-weight: bold; color: var(--secondary-color);">Download: "Extending Marginal Reputation to Persistent Markovian States" (PDF)</a></p>
-        <p>Complete formal proof sketch with theorem statements, worked examples, and peer review.</p>
+        <div class="box-title">Papers</div>
+        <p><a href="revisedTexPaper/main.pdf" style="font-size: 1.1rem; font-weight: bold; color: var(--secondary-color);">Revised Paper (v2, 28 pages)</a> &middot; <a href="revisedTexPaper/response_letter.pdf" style="font-size: 0.95rem; color: var(--secondary-color);">Response Letter</a></p>
+        <p>Corrected theorems, belief-robustness framework, and computational verification addressing all 15 critiques from Daniel Luo.</p>
+        <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.2); margin: 1rem 0;">
+        <p><a href="texPaper/marginal_reputation_markov_extension.pdf" style="font-size: 0.95rem; color: var(--secondary-color);">Initial Draft (v1, 26 pages)</a></p>
+        <p style="font-size: 0.9rem;">Original AI-assisted conjecture produced under the 5-hour time constraint.</p>
     </div>
 
-    <p class="text-center mt-2"><em>Explore the tabs above to dive into the mathematics and interactive visualizations!</em></p>
+    <p class="text-center mt-2"><em>Explore the tabs above to dive into the mathematics and interactive visualizations.</em></p>
 </div>

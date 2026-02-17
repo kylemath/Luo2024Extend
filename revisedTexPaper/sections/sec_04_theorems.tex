@@ -5,7 +5,7 @@ We state two results. Theorem~1$'$ recovers the exact i.i.d.\ bound under belief
 
 \subsection{Definitions on the Expanded State Space}
 
-All definitions from the original paper carry over to $\tilde\Theta$, with strategies mapping $\tilde\Theta \to \Delta(A_1)$.
+All definitions from Luo \& Wolitzky (2024) carry over to $\tilde\Theta$, with strategies mapping $\tilde\Theta \to \Delta(A_1)$.
 
 \begin{definition}[Confound-Defeating, Extended]\label{def:CD_extended}
 A Markov strategy $s_1^* : \tilde\Theta \to \Delta(A_1)$ is \textbf{confound-defeating} if for every $(\alpha_0, \alpha_2) \in B_0(s_1^*)$, the joint distribution $\gamma(\alpha_0, s_1^*)$ is the \emph{unique solution} to:
@@ -65,3 +65,19 @@ The two results are nested: Theorem~\ref{thm:belief_robust} is the special case 
 \begin{remark}[Continuity in Chain Parameters]
 $V_{\mathrm{Markov}}(s_1^*)$ is a continuous function of the chain parameters $(\alpha, \beta)$. As $\alpha + \beta \to 1$ (the i.i.d.\ limit), $F(\cdot|\theta) \to \pi(\cdot)$ for all $\theta$, so $V_{\mathrm{Markov}} \to V(s_1^*)$. The gap vanishes continuously.
 \end{remark}
+
+\subsection{Extension to Behaviorally Confounded Strategies (Theorem 2)}\label{subsec:theorem2}
+
+The salience-based extension (Luo \& Wolitzky, 2024, Appendix~A, Theorem~2) also generalizes to the Markov setting.
+
+\begin{theorem}[Extended Theorem 2]\label{thm:theorem2}
+Under the same Markov setup, if $s_1^*$ is confound-defeating on $\tilde\Theta$ and has salience $\beta_s$ (defined identically to Luo \& Wolitzky, 2024, but with confounding weights computed on $\tilde\Theta$), then:
+\begin{equation}
+    \liminf_{\delta \to 1}\, \underline{U}_1(\delta) \;\geq\; \beta_s\, V_{\mathrm{Markov}}(s_1^*) + (1 - \beta_s)\, V_0(s_1^*).
+\end{equation}
+Under belief-robustness, $V_{\mathrm{Markov}}$ is replaced by $V(s_1^*)$. If $s_1^*$ is not behaviorally confounded, $\beta_s = 1$ and this reduces to Theorems~\ref{thm:belief_robust} or~\ref{thm:general} respectively.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+The proof of Theorem~2 in Luo \& Wolitzky (2024) follows from Theorem~1 via Lemma~7 (the salience bound). Lemma~7 uses the submartingale property of $\mu_t(\omega_{s_1^*} | \Omega_\eta(s_1^*) \setminus \{\omega^R\}, h_t)$, which holds by Bayesian updating regardless of the signal process. The remainder of the argument---compactness, limiting, the three-case analysis---extends as in Section~\ref{sec:proof}. The only modification is the payoff bound: under belief-robustness, the full $V(s_1^*)$ is used; in the general case, $V_{\mathrm{Markov}}(s_1^*)$ replaces $V(s_1^*)$.
+\end{proof}

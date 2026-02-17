@@ -1,44 +1,47 @@
 % ================================================================
 \section{Interpolation Between i.i.d.\ and Persistent}\label{sec:interpolation}
 
-Our framework provides a continuous interpolation between the i.i.d.\ setting (Luo--Wolitzky 2024) and increasingly persistent Markov states.
+Our framework provides a continuous interpolation between the i.i.d.\ setting of Luo--Wolitzky (2024) and increasingly persistent Markov states, making precise the transition from one regime to the other.
 
 \subsection{The Interpolation Landscape}
 
-The interpolation is two-dimensional in the $(\alpha, \beta)$ parameter space:
+The interpolation is governed by the chain parameters $(\alpha, \beta)$ through the persistence measure $|1-\alpha-\beta|$. Along the anti-diagonal $\alpha+\beta = 1$, the chain is memoryless: $F(\cdot|\theta) = \pi(\cdot)$ for all $\theta$, so $V_{\mathrm{Markov}} = V(s_1^*)$ and there is no gap between the i.i.d.\ and Markov payoff bounds. Away from this line, the filtering beliefs $F(\cdot|\theta)$ separate from the stationary distribution, and $V_{\mathrm{Markov}}$ falls below $V(s_1^*)$, with the gap increasing as $|1-\alpha-\beta|$ grows. In the extreme corners where $\alpha, \beta \to 0$ (near-perfect persistence), $V_{\mathrm{Markov}}$ converges to the state-by-state payoff and the gap is maximized.
 
-\begin{itemize}
-    \item \textbf{Along $\alpha+\beta = 1$ (i.i.d.\ line):} $F(\cdot|\theta) = \pi(\cdot)$ for all $\theta$, so $V_{\mathrm{Markov}} = V(s_1^*)$. No gap.
-    \item \textbf{Away from $\alpha+\beta = 1$:} $V_{\mathrm{Markov}} < V(s_1^*)$, with gap increasing as $|1-\alpha-\beta|$ grows.
-    \item \textbf{Corners $(\alpha,\beta) \to (0,0)$ (near-perfect persistence):} $V_{\mathrm{Markov}} \to$ state-by-state payoff; gap maximized.
-\end{itemize}
-
-The mean TV distance $\|F(\cdot|\theta) - \pi\|$ averaged over the parameter space is \TVMean{} (Figure~\ref{fig:belief_deviation}), confirming that belief deviation from the stationary distribution is the norm, not the exception, for Markov states.
+The mean total variation distance $\|F(\cdot|\theta) - \pi\|$, averaged over the stationary distribution of states and over the $(\alpha,\beta)$ parameter space, is \TVMean{} (Figure~\ref{fig:belief_deviation}), confirming that belief deviation from the stationary distribution is the norm rather than the exception for Markov states.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/fig_belief_deviation.png}
-\caption{Mean TV distance $\|F(\cdot|\theta) - \pi\|$ across the $(\alpha,\beta)$ parameter space. The deviation vanishes along $\alpha+\beta=1$ (i.i.d.) and increases toward the corners (high persistence). Average: \TVMean.}
+\caption{Mean TV distance $\|F(\cdot|\theta) - \pi\|$ across the $(\alpha,\beta)$ parameter space. The deviation vanishes along $\alpha+\beta=1$ (the i.i.d.\ line) and increases toward the corners (high persistence). Average across the grid: \TVMean.}
 \label{fig:belief_deviation}
 \end{figure}
 
-\subsection{Recovery of Existing Results}
+\subsection{Recovery of i.i.d.\ (Luo--Wolitzky 2024)}
 
-\begin{description}
-    \item[i.i.d.\ (Luo--Wolitzky 2024):] $F(\cdot|\theta) = \pi(\cdot)$ for all $\theta$. Theorems~\ref{thm:belief_robust} and~\ref{thm:general} both reduce to the original Theorem~1 with $V_{\mathrm{Markov}} = V(s_1^*)$.
+When $F(\cdot|\theta) = \pi(\cdot)$ for all $\theta$ (the i.i.d.\ case), both Theorem~\ref{thm:belief_robust} and Theorem~\ref{thm:general} reduce to Theorem~1 of Luo \& Wolitzky (2024) with $V_{\mathrm{Markov}} = V(s_1^*)$. The lifted state has $\tilde\rho = \pi \otimes \pi$, and any strategy ignoring $\theta_{t-1}$ recovers the Luo--Wolitzky setup. Extended Theorem~\ref{thm:belief_robust} reduces to Theorem~1 of Luo--Wolitzky.
 
-    \item[Perfectly persistent (Pei 2020):] $F(\cdot|\theta) = \delta_\theta$. The chain is not ergodic, so our framework does not directly apply. As $\alpha, \beta \to 0$, the gap $V(s_1^*) - V_{\mathrm{Markov}}$ diverges (the rate of convergence in $\delta$ degrades), and Pei's different approach is needed.
-\end{description}
+\subsection{Connection to Pei (2020) --- Perfect Persistence}
+
+When $F(\cdot | \theta) = \delta_\theta$ (Dirac mass), the state is drawn once and fixed forever. The mixing time is infinite, the lifted state is $\tilde\theta = (\theta, \theta)$ with all mass on the diagonal, and the framework does not directly recover Pei's conditions (binary actions, prior restrictions). Our result holds for any \emph{finite} mixing time. As mixing time diverges, the rate of convergence (how large $\delta$ must be) degrades. In the limit, one needs Pei's (2020) different approach, which requires additional assumptions beyond perfect persistence for reasons directly related to the SR information structure---precisely the same issue our belief-robustness condition addresses in the intermediate regime.
+
+\subsection{The Markov Interpolation}
+
+The Markov framework interpolates continuously between the i.i.d.\ regime (fast mixing, $\tau_{\mathrm{mix}} = O(1)$), where Luo--Wolitzky conditions apply and belief-robustness holds generically; the persistent regime (slow mixing, $\tau_{\mathrm{mix}}$ large), where the same qualitative result holds but with slower convergence in $\delta$ and potential loss from non-belief-robustness; and the perfectly persistent regime ($\tau_{\mathrm{mix}} = \infty$), where the framework breaks down and Pei's conditions are needed. This answers the question of ``what happens between i.i.d.\ and perfectly persistent'' that Luo \& Wolitzky (2024) leave open (their footnote~9).
 
 \subsection{The Cost of Persistence}
 
-The gap $V(s_1^*) - V_{\mathrm{Markov}}$ is a new economic object: the \emph{cost of persistence in reputation games}. It quantifies how much the LR player loses because state persistence causes SR to adjust behavior state-by-state.
+The gap $V(s_1^*) - V_{\mathrm{Markov}}$ is a new economic object: the \emph{cost of persistence in reputation games}. It quantifies how much the long-run player loses because state persistence causes the short-run player to adjust behavior state-by-state rather than responding to time-averaged frequencies.
 
-For the deterrence game with $\mu^* = \SRThreshold$:
-\begin{itemize}
-    \item The cost is $\PayoffStationary - \PayoffFiltered = \PayoffGapAbsolute$ (\PayoffOverestimation\% of the i.i.d.\ payoff).
-    \item The cost is increasing in $|1-\alpha-\beta|$ (persistence).
-    \item The cost vanishes as $\alpha+\beta \to 1$ (i.i.d.\ limit).
-\end{itemize}
+For the deterrence game with $\mu^* = \SRThreshold$, the cost equals $\PayoffStationary - \PayoffFiltered = \PayoffGapAbsolute$, representing \PayoffOverestimation\% of the i.i.d.\ payoff. The cost is increasing in the persistence parameter $|1-\alpha-\beta|$ and vanishes continuously as $\alpha+\beta \to 1$, providing a direct quantitative link between the dynamics of the economic environment and the value of reputation.
 
-This provides a direct link between the dynamics of the economic environment and the value of reputation.
+\subsection{New Economic Content}
+
+Beyond extending the mathematical result, the Markov framework yields genuinely new economic insights.
+
+The first is that \emph{temporal patterns serve as an identification channel}. With persistent states, actions exhibit autocorrelation. A conditional strategy (``fight when detecting an attack'') produces different sequential patterns than an unconditional strategy (``fight 50\% of the time''), even when per-period frequencies match. Persistence thus strengthens identification, making confound-defeating conditions easier to satisfy in the supermodular case.
+
+Second, the lifted state allows \emph{transition-contingent commitment types}---commitment types that condition on state transitions, e.g., ``fight only when the state deteriorates from $G$ to $B$.'' Such types are natural in dynamic environments (escalation strategies in deterrence, quality-dependent menus in trust games) and have no counterpart in the i.i.d.\ framework.
+
+Third, persistence is not uniformly harmful to the long-run player. The commitment payoff bound is identical to the i.i.d.\ case under belief-robustness, and the mixing time affects only the convergence rate, not the limiting payoff. The long-run player's patience ($\delta \to 1$) compensates for slower learning. The cost of persistence arises only when belief-robustness fails---that is, only when the SR threshold falls in the danger zone $[\beta, 1-\alpha]$.
+
+Fourth, in applications with \emph{regime shifts} (e.g., alternating periods of economic expansion and contraction), the Markov framework captures how reputation interacts with regime persistence. The commitment payoff $V(s_1^*) = \beta/(\alpha + \beta)$ in the deterrence example depends on the transition rates, providing a direct link between the economic environment's dynamics and the value of reputation. The Markov commitment payoff $V_{\mathrm{Markov}}$ further refines this by accounting for the state-contingent SR response, producing a more accurate picture of the long-run player's reputation value under regime-dependent behavior.

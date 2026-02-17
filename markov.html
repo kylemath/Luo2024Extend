@@ -1,18 +1,18 @@
 <div class="markov-content">
-    <h2>Markovian Extension: The Lifted State Construction</h2>
+    <h2>Markovian Extension: Lifted States and Belief-Robustness</h2>
     
-    <h3>The Challenge</h3>
+    <h3>From i.i.d. to Markov States</h3>
     
-    <p>The original paper assumes states θ<sub>t</sub> are drawn <strong>i.i.d.</strong> across periods. We extend this to the case where θ<sub>t</sub> follows a <strong>stationary ergodic Markov chain</strong>:</p>
+    <p>Luo &amp; Wolitzky (2024) assume states \(\theta_t\) are drawn <strong>i.i.d.</strong> across periods. We extend to the case where \(\theta_t\) follows a <strong>stationary ergodic Markov chain</strong>:</p>
     
     <div class="equation-block">
         $$\theta_t \sim F(\cdot \mid \theta_{t-1})$$
-        <p style="margin-top: 0.5rem;">with unique stationary distribution π and transition kernel F.</p>
+        <p style="margin-top: 0.5rem;">with unique stationary distribution \(\pi\) and transition kernel \(F\).</p>
     </div>
 
-    <h3>The Key Insight: Lifted State</h3>
+    <h3>Step 1: The Lifted State Construction</h3>
     
-    <p>The central construction is to redefine the state as the <strong>pair</strong>:</p>
+    <p>The state is redefined as the <strong>pair</strong>:</p>
     
     <div class="extension-box">
         <div class="box-title">Definition: Lifted State</div>
@@ -23,26 +23,23 @@
         <div class="equation-block">
             $$\tilde{\rho}(\theta, \theta') = \pi(\theta') \cdot F(\theta \mid \theta')$$
         </div>
+        <p>This plays the role of the i.i.d. signal distribution in Luo &amp; Wolitzky (2024), enabling the optimal transport framework on the expanded space.</p>
     </div>
-
-    <p><strong>Key property:</strong> The lifted state θ̃<sub>t</sub> has a fixed, known stationary distribution, playing precisely the role of the i.i.d. signal distribution in the original paper!</p>
-
-    <p><strong>Note:</strong> If F(θ | θ') = 0 for some pair, the lifted state (θ, θ') is never visited. The effective state space is Θ̃₊ = {(θ, θ') : F(θ | θ') > 0} ⊆ Θ̃. All results hold on Θ̃₊.</p>
 
     <h3>Interactive Markov Chain Visualization</h3>
     
-    <p>Consider a two-state Markov chain θ<sub>t</sub> ∈ {G, B} with transition probabilities:</p>
+    <p>Consider a two-state chain \(\theta_t \in \{G, B\}\) with transition probabilities:</p>
 
     <div class="controls">
         <h4>Markov Chain Parameters</h4>
         
         <div class="control-group">
-            <label>α (G→B transition): <span class="slider-value" id="alpha-value">0.30</span></label>
+            <label>\(\alpha\) (G&rarr;B transition): <span class="slider-value" id="alpha-value">0.30</span></label>
             <input type="range" id="alpha-slider" min="0.05" max="0.95" step="0.05" value="0.3">
         </div>
 
         <div class="control-group">
-            <label>β (B→G transition): <span class="slider-value" id="beta-value">0.50</span></label>
+            <label>\(\beta\) (B&rarr;G transition): <span class="slider-value" id="beta-value">0.50</span></label>
             <input type="range" id="beta-slider" min="0.05" max="0.95" step="0.05" value="0.5">
         </div>
     </div>
@@ -80,11 +77,11 @@
             <table>
                 <tbody>
                     <tr>
-                        <td><strong>π(G):</strong></td>
+                        <td><strong>\(\pi(G)\):</strong></td>
                         <td id="stat-g">0.625</td>
                     </tr>
                     <tr>
-                        <td><strong>π(B):</strong></td>
+                        <td><strong>\(\pi(B)\):</strong></td>
                         <td id="stat-b">0.375</td>
                     </tr>
                 </tbody>
@@ -98,15 +95,15 @@
 
     <h3>Lifted State Distribution</h3>
     
-    <p>The lifted state θ̃<sub>t</sub> = (θ<sub>t</sub>, θ<sub>t-1</sub>) lives in a 4-element space:</p>
+    <p>The lifted state \(\tilde\theta_t = (\theta_t, \theta_{t-1})\) lives in a 4-element space:</p>
 
     <div class="result-box">
         <div class="box-title">Lifted Stationary Distribution</div>
         <table id="lifted-dist-table">
             <thead>
                 <tr>
-                    <th>θ̃ = (θ<sub>t</sub>, θ<sub>t-1</sub>)</th>
-                    <th>ρ̃(θ̃)</th>
+                    <th>\(\tilde\theta = (\theta_t, \theta_{t-1})\)</th>
+                    <th>\(\tilde\rho(\tilde\theta)\)</th>
                     <th>Formula</th>
                 </tr>
             </thead>
@@ -114,22 +111,22 @@
                 <tr>
                     <td><strong>(G, G)</strong></td>
                     <td id="lifted-gg">0.4375</td>
-                    <td>π(G) × P(G→G)</td>
+                    <td>\(\pi(G) \times (1-\alpha)\)</td>
                 </tr>
                 <tr>
                     <td><strong>(G, B)</strong></td>
                     <td id="lifted-gb">0.1875</td>
-                    <td>π(B) × P(B→G)</td>
+                    <td>\(\pi(B) \times \beta\)</td>
                 </tr>
                 <tr>
                     <td><strong>(B, G)</strong></td>
                     <td id="lifted-bg">0.1875</td>
-                    <td>π(G) × P(G→B)</td>
+                    <td>\(\pi(G) \times \alpha\)</td>
                 </tr>
                 <tr>
                     <td><strong>(B, B)</strong></td>
                     <td id="lifted-bb">0.1875</td>
-                    <td>π(B) × P(B→B)</td>
+                    <td>\(\pi(B) \times (1-\beta)\)</td>
                 </tr>
             </tbody>
         </table>
@@ -139,116 +136,149 @@
         <div id="lifted-distribution-plot"></div>
     </div>
 
-    <h3>The Extended Theorem</h3>
+    <h3>Step 2: The Fundamental New Phenomenon</h3>
+
+    <div class="result-box" style="border-left: 4px solid #e74c3c;">
+        <div class="box-title" style="color: #e74c3c;">The Filtering Belief Problem</div>
+        <p>The lifted state construction is <strong>necessary but not sufficient</strong>. When the Stackelberg strategy reveals the state (e.g., \(s_1^*(G)=A, s_1^*(B)=F\)), the short-run player learns \(\theta_t\) exactly, and their belief about \(\theta_{t+1}\) becomes the <strong>filtering distribution</strong> \(F(\cdot|\theta_t)\), which <em>permanently differs</em> from the stationary distribution \(\pi\):</p>
+        <div class="equation-block">
+            $$F(G|G) = 1 - \alpha \neq \pi(G) = \frac{\beta}{\alpha + \beta} \neq \beta = F(G|B)$$
+        </div>
+        <p>This makes the short-run player's best response <strong>state-contingent</strong>: the Nash correspondence \(B(s_1^*)\) must be replaced by \(B(s_1^*, F(\cdot|\theta))\).</p>
+    </div>
+
+    <h3>Step 3: Belief-Robustness &mdash; The Key New Concept</h3>
+
+    <div class="extension-box">
+        <div class="box-title">Definition: Belief-Robustness</div>
+        <p>A game is <strong>belief-robust</strong> if the SR best-response set is invariant to the revealed state:</p>
+        <div class="equation-block">
+            $$B(s_1^*, F(\cdot|\theta)) = B(s_1^*, F(\cdot|\theta')) \quad \text{for all } \theta, \theta'$$
+        </div>
+        <p>For the deterrence game with SR threshold \(\mu^*\), belief-robustness holds iff:</p>
+        <div class="equation-block">
+            $$\mu^* \notin [\beta,\; 1-\alpha] \quad \text{(the "danger zone")}$$
+        </div>
+        <p>When \(\mu^*\) lies <strong>below</strong> \(\beta\), SR always cooperates regardless of state. When \(\mu^*\) lies <strong>above</strong> \(1-\alpha\), SR always defects. In either case, the filtering belief gap is irrelevant.</p>
+    </div>
+
+    <h3>The Two Corrected Theorems</h3>
     
     <div class="theorem-box">
-        <div class="box-title">Extended Theorem 1 (Markovian States)</div>
-        <p>Let θ<sub>t</sub> follow a stationary ergodic Markov chain with transition kernel F and stationary distribution π. Let θ̃<sub>t</sub> = (θ<sub>t</sub>, θ<sub>t-1</sub>) with stationary distribution ρ̃. Suppose:</p>
-        <ul>
-            <li>s₁*: Θ̃ → Δ(A₁) is a Markov strategy</li>
-            <li>s₁* is <strong>confound-defeating on the expanded state space</strong></li>
-            <li>s₁* is <strong>not behaviorally confounded</strong></li>
-        </ul>
-        <p>Then:</p>
+        <div class="box-title">Theorem 1' (Belief-Robust Markov Extension)</div>
+        <p>Under belief-robustness, plus confound-defeating and NBC on the lifted space \(\tilde\Theta\):</p>
         <div class="equation-block">
-            $$\liminf_{\delta \to 1} \underline{U}_1(\delta) \geq V(s_1^*)$$
+            $$\boxed{\liminf_{\delta \to 1} \underline{U}_1(\delta) \geq V(s_1^*)}$$
         </div>
+        <p>The bound is <strong>identical</strong> to the i.i.d. case. All proof machinery transfers without modification.</p>
     </div>
 
-    <h3>The Surprising Result: No Mixing-Time Correction!</h3>
-    
-    <div class="extension-box">
-        <div class="box-title">🎯 Key Finding: Lemma 2 Extends Unchanged</div>
-        <p>The KL-divergence counting bound requires <strong>NO mixing-time correction</strong>:</p>
+    <div class="theorem-box" style="border-left-color: #e67e22;">
+        <div class="box-title" style="color: #e67e22;">Theorem 1'' (General Markov Extension)</div>
+        <p>Without belief-robustness, for supermodular games with Markov states:</p>
         <div class="equation-block">
-            $$\bar{T}(\eta, \mu_0) = \frac{-2\log\mu_0(\omega_{s_1^*})}{\eta^2}$$
+            $$\boxed{\liminf_{\delta \to 1} \underline{U}_1(\delta) \geq V_{\mathrm{Markov}}(s_1^*)}$$
         </div>
-        <p><strong>This is identical to the i.i.d. case!</strong></p>
-        <p>The bound uses only:</p>
-        <ul>
-            <li>KL divergence chain rule (valid for any stochastic process)</li>
-            <li>Bayesian updating identity (general)</li>
-            <li>Pinsker's inequality (per-period)</li>
-        </ul>
+        <p>where</p>
+        <div class="equation-block">
+            $$V_{\mathrm{Markov}}(s_1^*) = \sum_{\theta \in \Theta} \pi(\theta) \cdot \inf_{(\alpha_0, \alpha_2) \in B(s_1^*, F(\cdot|\theta))} u_1(\theta, s_1^*(\theta), \alpha_2) \;\leq\; V(s_1^*)$$
+        </div>
+        <p>Equality holds <strong>if and only if</strong> the game is belief-robust. The gap \(V(s_1^*) - V_{\mathrm{Markov}}\) is the <strong>cost of persistence</strong>.</p>
     </div>
 
-    <h3>Proof Structure</h3>
+    <h3>Proof Structure: Where i.i.d. Is Actually Used</h3>
     
     <table>
         <thead>
             <tr>
-                <th>Step</th>
+                <th>Proof Step</th>
                 <th>i.i.d. used?</th>
                 <th>Modification for Markov</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>OT/Confound-defeating</td>
-                <td>❌ No</td>
-                <td>Replace Y₀ with Θ̃</td>
+                <td>Step 0: OT / Confound-defeating</td>
+                <td>No</td>
+                <td>Replace \(Y_0\) with \(\tilde\Theta\)</td>
+            </tr>
+            <tr style="background: rgba(231,76,60,0.08);">
+                <td><strong>Step 1: Equilibrium (Lemma 1)</strong></td>
+                <td><strong>Yes</strong></td>
+                <td><strong>SR belief becomes state-contingent</strong></td>
             </tr>
             <tr>
-                <td>Lemma 1 (equilibrium)</td>
-                <td>❌ No</td>
-                <td>Replace strategy space<sup>*</sup></td>
+                <td>Step 2: KL bound (Lemma 2)</td>
+                <td>No</td>
+                <td>None needed &mdash; identical bound!</td>
             </tr>
             <tr>
-                <td><strong>Lemma 2 (KL bound)</strong></td>
-                <td><strong>❌ No</strong></td>
-                <td><strong>None needed!</strong></td>
+                <td>Step 3: Martingale (Lemma 3)</td>
+                <td>Partially</td>
+                <td>Ergodicity + filter stability</td>
             </tr>
             <tr>
-                <td>Lemma 3 (martingale)</td>
-                <td>⚠️ Partially</td>
-                <td>Add ergodicity + filter stability</td>
+                <td>Step 4: Combining (Lemma 4)</td>
+                <td>No</td>
+                <td>Uses corrected best response</td>
             </tr>
-            <tr>
-                <td>Lemma 4 (combining)</td>
-                <td>❌ No</td>
-                <td>None needed</td>
-            </tr>
-            <tr>
-                <td>Payoff bound</td>
-                <td>❌ No</td>
-                <td>None needed</td>
+            <tr style="background: rgba(231,76,60,0.08);">
+                <td><strong>Step 5: Payoff bound</strong></td>
+                <td><strong>Yes</strong></td>
+                <td><strong>Belief-robust: \(V(s_1^*)\); General: \(V_{\mathrm{Markov}}\)</strong></td>
             </tr>
         </tbody>
     </table>
 
-    <div class="result-box">
-        <div class="box-title">⚠️ Caveat: Continuation Value Subtlety (Lemma 1<sup>*</sup>)</div>
-        <p>In the i.i.d. case, the continuation value depends only on the action a₁ (since future states are independent of θ<sub>t</sub>). In the Markov case, the continuation value depends on θ<sub>t</sub> (since future states depend on it through F), which changes the effective one-shot deviation objective.</p>
-        <p><strong>Supermodular case (all applications):</strong> Unaffected — the co-monotone coupling is optimal for all objectives preserving supermodularity.</p>
-        <p><strong>General case:</strong> Requires either a strengthened confound-defeating condition or a continuity argument via filter stability. See <a href="agent852_output/marginal_reputation_markov_extension.pdf" style="color: var(--secondary-color);">the full paper (Remark 4.5)</a> for details.</p>
+    <p>The pattern: <strong>information-theoretic</strong> steps (KL bound, martingale) are process-independent, while <strong>game-theoretic</strong> steps (equilibrium implications, payoff bound) depend on the information structure and require belief-robustness or the corrected bound.</p>
+
+    <h3>The KL Bound: Still No Mixing-Time Correction</h3>
+    
+    <div class="extension-box">
+        <div class="box-title">Key Finding: Lemma 2 Extends Unchanged</div>
+        <p>The KL-divergence counting bound requires <strong>no mixing-time correction</strong>:</p>
+        <div class="equation-block">
+            $$\bar{T}(\eta, \mu_0) = \frac{-2\log\mu_0(\omega_{s_1^*})}{\eta^2}$$
+        </div>
+        <p><strong>Identical to the i.i.d. case.</strong> This uses only the KL chain rule, Bayesian updating, and Pinsker's inequality &mdash; all valid for general stochastic processes. Verified via Monte Carlo simulation.</p>
     </div>
 
-    <h3>Additional Condition: Ergodicity</h3>
-    
-    <p>The only substantive new requirement is <strong>ergodicity</strong> of the Markov chain (irreducibility and aperiodicity). This ensures:</p>
-    
-    <ul>
-        <li>A unique stationary distribution π exists</li>
-        <li>The lifted chain has stationary distribution ρ̃</li>
-        <li>Filter stability: posteriors "forget" initial conditions</li>
-    </ul>
-
-    <h3>Comparison: Mixing Time vs. Limiting Payoff</h3>
+    <h3>Mixing Time vs. Limiting Payoff</h3>
     
     <div class="result-box">
         <div class="box-title">Role of Mixing Time</div>
-        <p>The mixing time τ<sub>mix</sub> affects only the <strong>rate of convergence</strong> (how large δ must be), not the <strong>limiting payoff</strong> V(s₁*).</p>
-        <p>As δ → 1, the transient phase vanishes regardless of mixing time.</p>
+        <p>The mixing time \(\tau_{\mathrm{mix}}\) affects only the <strong>rate of convergence</strong> (how large \(\delta\) must be), not the <strong>limiting payoff</strong>. As \(\delta \to 1\), the transient phase vanishes regardless of mixing time.</p>
     </div>
 
     <div class="controls">
         <h4>Mixing Time Visualization</h4>
         <div class="control-group">
-            <label>View mixing for α = <span id="alpha-mix-display">0.30</span>, β = <span id="beta-mix-display">0.50</span></label>
+            <label>View mixing for \(\alpha\) = <span id="alpha-mix-display">0.30</span>, \(\beta\) = <span id="beta-mix-display">0.50</span></label>
         </div>
     </div>
 
     <div class="plot-container">
         <div id="mixing-time-plot"></div>
+    </div>
+
+    <h3>Interpolation: From i.i.d. to Persistent</h3>
+
+    <p>The framework continuously interpolates between three regimes:</p>
+
+    <div class="comparison-grid">
+        <div class="comparison-card">
+            <h4>Fast Mixing (\(\alpha+\beta \to 1\))</h4>
+            <p>\(F(\cdot|\theta) \to \pi\) for all \(\theta\)</p>
+            <p>Belief-robustness holds generically</p>
+            <p>\(V_{\mathrm{Markov}} = V(s_1^*)\)</p>
+            <p><strong>Recovers Luo &amp; Wolitzky</strong></p>
+        </div>
+        <div class="comparison-card">
+            <h4>Moderate Persistence</h4>
+            <p>\(F(\cdot|\theta)\) deviates from \(\pi\)</p>
+            <p>Belief-robustness may fail</p>
+            <p>\(V_{\mathrm{Markov}} \leq V(s_1^*)\)</p>
+            <p><strong>New result (this paper)</strong></p>
+        </div>
     </div>
 </div>

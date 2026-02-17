@@ -75,8 +75,8 @@
 \centering
 \vspace*{2cm}
 
-{\LARGE\bfseries Extending Marginal Reputation to Markov States:\\[6pt]
-A Corrected Analysis}
+{\LARGE\bfseries Extending Marginal Reputation\\[6pt]
+to Persistent Markovian States}
 
 \vspace{1.5cm}
 
@@ -97,7 +97,7 @@ with AI Collaborators
 
 \begin{abstract}
 \noindent
-We extend the main result (Theorem~1) of Luo \& Wolitzky (2024), ``Marginal Reputation,'' from i.i.d.\ states to persistent Markovian states. Our initial attempt overclaimed that the extension requires no correction. Following expert critique (Luo, 2026), we conducted systematic computational testing (7 analysis modules, 8 diagnostic figures) that identified precisely where the original proof breaks: short-run player beliefs permanently deviate from the stationary distribution when the Stackelberg strategy reveals the state. We present two corrected results. \textbf{Theorem~1\textsuperscript{$\prime$}} (belief-robust case): when short-run best responses are invariant to the filtering belief $F(\cdot|\theta)$, the original commitment payoff $V(s_1^*)$ holds exactly. \textbf{Theorem~1\textsuperscript{$\prime\prime$}} (general case): the corrected bound $V_{\mathrm{Markov}}(s_1^*) = \sum_\theta \pi(\theta) \cdot \inf_{B(s_1^*, F(\cdot|\theta))} u_1 \leq V(s_1^*)$ always holds, with equality iff the game is belief-robust. For the deterrence game with baseline parameters ($\alpha=\BaseAlpha$, $\beta=\BaseBeta$), the overestimation from ignoring state-contingent beliefs is \PayoffOverestimation\%. We quantify the cost of persistence in reputation games and demonstrate a correction methodology combining AI conjecture, expert critique, and computational verification.
+We extend the main result (Theorem~1) of Luo \& Wolitzky (2024), ``Marginal Reputation,'' from i.i.d.\ states to persistent Markovian states. The extension reveals a new phenomenon: when the Stackelberg strategy reveals the state, short-run player beliefs permanently deviate from the stationary distribution, causing the Nash correspondence to become state-contingent. We introduce the concept of \emph{belief-robustness} and present two results. \textbf{Theorem~1\textsuperscript{$\prime$}} (belief-robust case): when short-run best responses are invariant to the filtering belief $F(\cdot|\theta)$, the original commitment payoff $V(s_1^*)$ holds exactly under Markov states with no correction. \textbf{Theorem~1\textsuperscript{$\prime\prime$}} (general case): the \emph{Markov commitment payoff} $V_{\mathrm{Markov}}(s_1^*) = \sum_\theta \pi(\theta) \cdot \inf_{B(s_1^*, F(\cdot|\theta))} u_1 \leq V(s_1^*)$ provides the appropriate bound, with equality if and only if the game is belief-robust. The gap $V(s_1^*) - V_{\mathrm{Markov}}$ quantifies the \emph{cost of persistence in reputation games}---a new economic object measuring how state persistence enables short-run players to condition behavior on the revealed state. For the deterrence game with baseline parameters ($\alpha=\BaseAlpha$, $\beta=\BaseBeta$), this cost is \PayoffOverestimation\% of the i.i.d.\ payoff. Our framework interpolates continuously between i.i.d.\ (Luo--Wolitzky) and perfectly persistent (Pei 2020) states. The paper also documents the human--AI research process, including computational verification across seven analysis modules with eight diagnostic figures.
 \end{abstract}
 
 \vspace{0.5cm}

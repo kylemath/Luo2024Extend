@@ -79,14 +79,14 @@
     <div class="comparison-card" style="margin-bottom:1.5rem;">
         <h4>R5. i.i.d. Disciplines SR Info Sets (FATAL) <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#28a745;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">ADDRESSED</span></h4>
         <p><strong>Critique:</strong> Under Markov states, SR can infer current state from past actions, breaking the info-set argument.</p>
-        <p><strong>Response:</strong> The revision introduces a <em>belief-filtered payoff</em> construction. Instead of ignoring the SR inference problem, we define the effective payoff as an expectation over the SR player's posterior belief about the state. The key insight: under ergodicity with mixing rate \(\rho\), the SR posterior converges to the stationary distribution at rate \(O(\rho^t)\), so for patient LR players the belief-filtered payoff converges to the stationary payoff. See the "Belief Gap Explorer" visualization below.</p>
+        <p><strong>Response:</strong> The revision introduces the concept of <em>belief-robustness</em> (Definition 3.2). Instead of ignoring the SR inference problem, we distinguish two cases: (1) <strong>Belief-robust games</strong>, where SR best responses are invariant to the filtering belief \(F(\cdot|\theta_t)\), so the full i.i.d. bound \(V(s_1^*)\) holds exactly (Theorem 1'); and (2) <strong>General games</strong>, where a corrected bound \(V_{\mathrm{Markov}} \leq V(s_1^*)\) applies (Theorem 1''). The gap is the "cost of persistence." See the "Belief Gap Explorer" visualization below.</p>
     </div>
 
     <!-- R6 -->
     <div class="comparison-card" style="margin-bottom:1.5rem;">
         <h4>R6. Stackelberg Strategy May Not Be Well-Defined <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#28a745;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">ADDRESSED</span></h4>
         <p><strong>Critique:</strong> Optimal commitment may depend on SR beliefs, creating circularity.</p>
-        <p><strong>Response:</strong> The revision defines the Stackelberg strategy with respect to the <em>stationary</em> belief (the ergodic distribution). For patient players (\(\delta \to 1\)), deviations from the stationary belief are transient and bounded by the mixing rate. The Stackelberg strategy \(s_1^*\) is well-defined as the optimizer against the stationary-belief SR best response.</p>
+        <p><strong>Response:</strong> For supermodular games, the Stackelberg strategy is well-defined as the monotone strategy \(s_1^*(G)=A, s_1^*(B)=F\). The revision confirms this for all supermodular applications and acknowledges the open question for persuasion games where different concavifications may be optimal under different priors (Section 10).</p>
     </div>
 
     <!-- Q1 -->
@@ -114,14 +114,14 @@
     <div class="comparison-card" style="margin-bottom:1.5rem;">
         <h4>Q4. \(B(s_1)\) Must Depend on \(\mu_0\) <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#28a745;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">ADDRESSED</span></h4>
         <p><strong>Critique:</strong> SR best-response set depends on belief \(\mu_0\), not just strategy.</p>
-        <p><strong>Response:</strong> The revision redefines \(B_\eta(s_1)\) as the best-response set under the <em>stationary belief</em>, making the dependence explicit. For beliefs within \(\eta\) of the stationary distribution, the best-response set is shown to be contained in \(B_\eta(s_1, \pi)\) by a continuity argument. The subscript \(\eta\) absorbs the belief-perturbation.</p>
+        <p><strong>Response:</strong> The revision explicitly makes \(B\) depend on the filtering belief: \(B(s_1^*, F(\cdot|\theta))\) is the state-contingent Nash correspondence. When belief-robustness holds, this is constant across states and reduces to the i.i.d. case. When it fails, the Markov commitment payoff \(V_{\mathrm{Markov}}\) correctly averages over the state-contingent SR behavior (Theorem 1'', Definition 4.3).</p>
     </div>
 
     <!-- Q5 -->
     <div class="comparison-card" style="margin-bottom:1.5rem;">
         <h4>Q5. \(\mu_0\) Constantly Changing <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#28a745;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">ADDRESSED</span></h4>
         <p><strong>Critique:</strong> SR belief about state evolves each period, preventing stationarity.</p>
-        <p><strong>Response:</strong> Under ergodicity, the SR posterior about the state satisfies \(\|\mu_t - \pi\|_{TV} \leq C\rho^t\) where \(\rho < 1\) is the mixing rate. For patient LR players, the transient non-stationarity is bounded: the fraction of periods where \(\mu_t\) is far from \(\pi\) vanishes as \(\delta \to 1\). This is formalized in the "belief-filtered" payoff bound.</p>
+        <p><strong>Response:</strong> Correct &mdash; SR beliefs about the <em>state</em> keep evolving. But what matters for the reputation argument is beliefs about the LR <em>type</em>, which do converge (martingale convergence + filter stability). For the <em>payoff bound</em>, the revision handles the changing \(\mu_0\) by making the Nash correspondence state-contingent: \(B(s_1^*, F(\cdot|\theta_t))\). The Markov commitment payoff \(V_{\mathrm{Markov}}\) averages over this state-contingent behavior, correctly accounting for the dynamic belief process.</p>
     </div>
 
     <!-- Q6 -->
@@ -142,7 +142,7 @@
     <div class="comparison-card" style="margin-bottom:1.5rem;">
         <h4>Q8. State-Revealing Beliefs Never Settle <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#28a745;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">ADDRESSED</span></h4>
         <p><strong>Critique:</strong> With persistent states, SR beliefs about the state keep fluctuating.</p>
-        <p><strong>Response:</strong> Correct that beliefs about the <em>state</em> don't settle — but they don't need to. The revision shows that what matters is beliefs about the LR <em>type</em>, which do converge by the standard merging argument. The state beliefs fluctuate but are <em>mean-reverting</em> under ergodicity: the time-average belief converges to \(\pi\), which is sufficient for the payoff bound. The "Belief Gap Explorer" below visualizes this convergence.</p>
+        <p><strong>Response:</strong> Correct that beliefs about the <em>state</em> don't settle &mdash; and this is precisely why the revision introduces belief-robustness. When belief-robustness holds, the fluctuating state beliefs are <strong>irrelevant</strong> because SR plays the same action regardless. When it fails, the revision provides the corrected bound \(V_{\mathrm{Markov}}\) that accounts for state-contingent SR behavior. The key insight (Luo's quote: "suppose \(s_1\) reveals the state...") led directly to the belief-robustness framework. The "Belief Gap Explorer" below visualizes when belief-robustness holds and when it fails.</p>
     </div>
 
     <!-- ============================================= -->

@@ -1,21 +1,70 @@
 % ================================================================
-\section{Worked Example: Deterrence Game}\label{sec:example}
+\section{Worked Example: Deterrence Game with Markov Attacks}\label{sec:example}
 
-We illustrate both theorems using the deterrence game with Markov attacks, presenting a belief-robust and a non-belief-robust version.
+We illustrate both theorems using the deterrence game with Markov attacks. We present the full game setup, a formal proposition establishing when the extended theorem applies, concrete numerical calculations, and both a belief-robust and a non-belief-robust version.
 
 \subsection{Setup}
 
-The state $\theta_t \in \{G, B\}$ follows a Markov chain with $\alpha = \Prob(B|G) = \BaseAlpha$ and $\beta = \Prob(G|B) = \BaseBeta$. The stationary distribution is $\pi(G) = \BasePiG$, $\pi(B) = \BasePiB$.
+The state $\theta_t \in \{G(\text{ood}), B(\text{ad})\}$ follows a Markov chain:
+\begin{align}
+    \Prob(G | G) &= 1 - \alpha, \qquad \Prob(B | G) = \alpha, \\
+    \Prob(G | B) &= \beta, \qquad \Prob(B | B) = 1 - \beta,
+\end{align}
+with $\alpha, \beta \in (0,1)$. The unique stationary distribution is:
+\begin{equation}
+    \pi(G) = \frac{\beta}{\alpha + \beta}, \qquad \pi(B) = \frac{\alpha}{\alpha + \beta}.
+\end{equation}
 
-The LR player chooses $a_1 \in \{A(\text{cquiesce}), F(\text{ight})\}$; the SR player chooses $a_2 \in \{C(\text{ooperate}), D(\text{efect})\}$. The Stackelberg strategy is $s_1^*(G)=A$, $s_1^*(B)=F$.
+The long-run player chooses $a_1 \in \{A(\text{cquiesce}), F(\text{ight})\}$. The short-run player, observing the history of $a_1$ but not $\theta$, chooses $a_2 \in \{C(\text{ooperate}), D(\text{efect})\}$. Payoffs conditional on $a_2 = D$ (or more generally against SR strategy $\alpha_2$) are:
+\begin{equation}
+    u_1(G, A) = 1, \quad u_1(G, F) = x, \quad u_1(B, A) = y, \quad u_1(B, F) = 0,
+\end{equation}
+with $x, y \in (0,1)$. (See Luo \& Wolitzky, Section~2.1, for the full payoff matrix with $(g, l)$ parameters.)
+
+The Stackelberg strategy is $s_1^*(G) = A$, $s_1^*(B) = F$ (ignoring $\theta_{t-1}$): the long-run player acquiesces in good states and fights in bad states.
+
+\subsection{Lifted State Distribution}
+
+The lifted state is $\tilde\theta_t = (\theta_t, \theta_{t-1}) \in \{(G,G),\, (G,B),\, (B,G),\, (B,B)\}$, with stationary distribution:
+
+\begin{center}
+\begin{tabular}{@{}cc@{}}
+\toprule
+$\tilde\theta$ & $\tilde\rho(\tilde\theta)$ \\
+\midrule
+$(G,G)$ & $\beta(1-\alpha)/(\alpha+\beta)$ \\
+$(G,B)$ & $\alpha\beta/(\alpha+\beta)$ \\
+$(B,G)$ & $\alpha\beta/(\alpha+\beta)$ \\
+$(B,B)$ & $\alpha(1-\beta)/(\alpha+\beta)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Markov Deterrence Proposition}
+
+\begin{proposition}[Markov Deterrence]\label{prop:deterrence}
+Consider the deterrence game with Markov attacks.
+\begin{enumerate}[label=(\arabic*)]
+    \item \textbf{If $x + y < 1$ (supermodular):} Under the belief-robust condition (Proposition~\ref{prop:br_condition}), a patient long-run player secures at least $V(s_1^*) = \beta/(\alpha + \beta)$ in any Nash equilibrium, for any $\mu_0 > 0$. In the general (non-belief-robust) case, the bound is $V_{\mathrm{Markov}}(s_1^*) \leq V(s_1^*)$.
+    \item \textbf{If $x + y > 1$ (submodular):} As $\mu_0 \to 0$, the long-run player's payoff approaches the minmax payoff.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Since $u_1$ depends only on $\theta_t$ and $x + y < 1$ gives strict supermodularity in $(\theta_t, a_1)$ (with orders $G \succ B$ and $A \succ F$), the supermodularity condition on $\tilde\Theta \times A_1$ is satisfied (Section~\ref{sec:supermodular}).
+
+The strategy $s_1^*(G) = A$, $s_1^*(B) = F$ is monotone ($G \succ B \implies A \succ F$). By Proposition~\ref{prop:supermodular}, $s_1^*$ is confound-defeating. If $s_1^*$ is not behaviorally confounded (which holds generically; see Definition~\ref{def:NBC_extended}), then the theorems apply. Under belief-robustness (Theorem~\ref{thm:belief_robust}):
+\[
+    \liminf_{\delta \to 1}\, \underline{U}_1(\delta) \;\geq\; V(s_1^*) \;=\; \frac{\beta}{\alpha + \beta}.
+\]
+In the general case (Theorem~\ref{thm:general}), the bound is $V_{\mathrm{Markov}}(s_1^*)$, which equals $V(s_1^*)$ if and only if the game is belief-robust.
+
+For part (2), when $x + y > 1$, the payoff is strictly submodular. By the extended upper bound (Corollary~\ref{cor:upper}), the only cyclically monotone strategies are \emph{anti-monotone} (higher state $\to$ lower action), which gives the long-run player at most her minmax payoff.
+\end{proof}
 
 \subsection{Version 1: Belief-Robust ($\mu^* = \BRThreshold$)}
 
-With SR payoffs calibrated so the indifference threshold is $\mu^* = \BRThreshold < \beta = \BaseBeta$:
-
-Since $\mu^* = \BRThreshold < \beta = \BaseBeta \leq F(G|\theta)$ for all $\theta$, the SR player always cooperates regardless of the revealed state. The game is \textbf{belief-robust} (Proposition~\ref{prop:br_condition}).
-
-By Theorem~\ref{thm:belief_robust}:
+With SR payoffs calibrated so the indifference threshold is $\mu^* = \BRThreshold < \beta = \BaseBeta$, the SR player always cooperates regardless of the revealed state, since $\mu^* = \BRThreshold < \beta = \BaseBeta \leq F(G|\theta)$ for all $\theta$. The game is \textbf{belief-robust} (Proposition~\ref{prop:br_condition}), and by Theorem~\ref{thm:belief_robust}:
 \[
     \liminf_{\delta\to 1} \underline{U}_1(\delta) \geq V(s_1^*) = \BRPayoff.
 \]
@@ -23,9 +72,7 @@ The bound is exact and identical to the i.i.d.\ case.
 
 \subsection{Version 2: Non-Belief-Robust ($\mu^* = \SRThreshold$)}
 
-With SR payoffs giving threshold $\mu^* = \SRThreshold \in [\BaseBeta, 1-\BaseAlpha] = [0.5, 0.7]$:
-
-The SR best response now depends on the revealed state:
+With SR payoffs giving threshold $\mu^* = \SRThreshold \in [\BaseBeta, 1-\BaseAlpha] = [0.5, 0.7]$, the SR best response depends on the revealed state:
 
 \begin{table}[ht]
 \centering
@@ -47,6 +94,39 @@ By Theorem~\ref{thm:general}, the corrected bound is:
     V_{\mathrm{Markov}} = \pi(G) \cdot u_1(G, A, C) + \pi(B) \cdot u_1(B, F, D) = \PayoffFiltered.
 \]
 
+\subsection{Concrete Numerical Example}\label{subsec:numerical}
+
+Let $\alpha = 0.3$ (probability of transitioning $G \to B$), $\beta = 0.5$ (probability of transitioning $B \to G$), $x = 0.3$, $y = 0.4$, so $x + y = 0.7 < 1$ (supermodular).
+
+\medskip
+\noindent\textbf{Stationary distribution:}
+\[
+    \pi(G) = \frac{0.5}{0.3 + 0.5} = \frac{5}{8} = 0.625, \qquad \pi(B) = \frac{0.3}{0.8} = 0.375.
+\]
+
+\noindent\textbf{Lifted stationary distribution:}
+\[
+\begin{aligned}
+    \tilde\rho(G,G) &= 0.625 \times 0.7 = 0.4375, \\
+    \tilde\rho(G,B) &= 0.375 \times 0.5 = 0.1875, \\
+    \tilde\rho(B,G) &= 0.625 \times 0.3 = 0.1875, \\
+    \tilde\rho(B,B) &= 0.375 \times 0.5 = 0.1875.
+\end{aligned}
+\]
+
+\noindent\textbf{Commitment payoff (i.i.d.\ benchmark):} Under $s_1^*(G) = A$, $s_1^*(B) = F$:
+\[
+    V(s_1^*) = \pi(G) \cdot u_1(G, A) + \pi(B) \cdot u_1(B, F) = 0.625 \times 1 + 0.375 \times 0 = 0.625.
+\]
+
+\noindent\textbf{Comparison with i.i.d.:} If the state were i.i.d.\ with $\Prob(G) = 0.625$, the Stackelberg payoff would be identical ($p = 0.625$). The difference is in the \emph{dynamics}: with persistence ($\alpha = 0.3$), attacks come in clusters. The signal process $\{y_{1,t}\}$ exhibits autocorrelation (runs of ``Fight'' and ``Acquiesce'' actions), which provides an \textbf{additional identification channel} beyond marginal frequencies. This makes the confound-defeating condition \emph{easier} to verify in the supermodular case, although (as Section~\ref{sec:belief_robust} shows) the resulting payoff bound may differ from the i.i.d.\ case when belief-robustness fails.
+
+\noindent\textbf{KL bound:} If $\mu_0(\omega_{s_1^*}) = 0.01$ and $\eta = 0.1$:
+\[
+    \bar{T}(0.1, \mu_0) = \frac{-2 \log(0.01)}{0.01} = \frac{2 \times 4.605}{0.01} = 921 \text{ periods}.
+\]
+This bound is \textbf{identical} to what it would be in the i.i.d.\ case with the same prior.
+
 \subsection{The Overestimation Gap}
 
 \begin{center}
@@ -55,7 +135,7 @@ By Theorem~\ref{thm:general}, the corrected bound is:
 \toprule
 \textbf{Scenario} & \textbf{LR Average Payoff} & \textbf{Assumption} \\
 \midrule
-Stationary beliefs (original paper) & \PayoffStationary & $\mu = \pi(G)$ always \\
+Stationary beliefs (i.i.d.\ assumption) & \PayoffStationary & $\mu = \pi(G)$ always \\
 Filtered beliefs (reality) & \PayoffFiltered & $\mu = F(G|\theta_t)$ \\
 \midrule
 \textbf{Overestimation} & \textbf{\PayoffOverestimation\%} & \\
@@ -63,7 +143,24 @@ Filtered beliefs (reality) & \PayoffFiltered & $\mu = F(G|\theta_t)$ \\
 \end{tabular}
 \end{center}
 
-The overestimation arises because the original analysis assumes SR always faces belief $\pi(G) = \BasePiG > \SRThreshold$, so SR always cooperates. In reality, SR defects in bad states (where $F(G|B) = \SRBeliefAfterB < \SRThreshold$), reducing the LR payoff by \PayoffOverestimation\%.
+The overestimation arises because the i.i.d.\ analysis assumes SR always faces belief $\pi(G) = \BasePiG > \SRThreshold$, so SR always cooperates. In reality, SR defects in bad states (where $F(G|B) = \SRBeliefAfterB < \SRThreshold$), reducing the LR payoff by \PayoffOverestimation\%.
+
+\subsection{Limiting Cases}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Regime} & \textbf{Mixing} & \textbf{Stackelberg payoff} & \textbf{Behavior} \\
+\midrule
+Fast mixing ($\alpha, \beta$ large) & $\tau_{\mathrm{mix}}$ small & $V = \frac{\beta}{\alpha+\beta}$ (cf.\ $p$ in Luo--Wolitzky) & Recovers LW Prop.~1 \\
+Moderate persistence & $\tau_{\mathrm{mix}}$ moderate & $V_{\mathrm{Markov}} \leq \frac{\beta}{\alpha+\beta}$ & \textbf{New result} \\
+Near-perfect persistence ($\alpha, \beta \to 0$) & $\tau_{\mathrm{mix}} \to \infty$ & $V \to \pi_0(G)$ & Weakens toward Pei \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+In the fast-mixing regime, the filtering beliefs $F(\cdot|\theta)$ are close to $\pi$, so belief-robustness holds generically and $V_{\mathrm{Markov}} \approx V(s_1^*)$. In the moderate-persistence regime, the gap between $V_{\mathrm{Markov}}$ and $V(s_1^*)$ depends on whether the SR threshold falls in the danger zone $[\beta, 1-\alpha]$. In the near-perfect-persistence regime, the framework degrades as mixing time diverges, and Pei's (2020) different approach becomes necessary.
 
 \subsection{Comparison Table}
 
