@@ -1,0 +1,273 @@
+<div class="example-content">
+    <h2>Worked Example: Deterrence Game with Markov Attacks</h2>
+    
+    <h3>Setup</h3>
+    
+    <p>Consider a deterrence game where:</p>
+    <ul>
+        <li>The state θ<sub>t</sub> ∈ {G(ood), B(ad)} indicates whether an attack is occurring</li>
+        <li>The long-run player chooses to Fight (F) or Acquiesce (A)</li>
+        <li>Attacks follow a <strong>Markov chain</strong> (attacks come in clusters!)</li>
+    </ul>
+
+    <h3>Markov Attack Process</h3>
+    
+    <div class="equation-block">
+        <p><strong>Transition probabilities:</strong></p>
+        $$P(\text{Good} \mid \text{Good}) = 1 - \alpha, \quad P(\text{Bad} \mid \text{Good}) = \alpha$$
+        $$P(\text{Good} \mid \text{Bad}) = \beta, \quad P(\text{Bad} \mid \text{Bad}) = 1 - \beta$$
+    </div>
+
+    <div class="controls">
+        <h4>Attack Process Parameters</h4>
+        
+        <div class="control-group">
+            <label>α (escalation rate G→B): <span class="slider-value" id="ex-alpha-value">0.30</span></label>
+            <input type="range" id="ex-alpha-slider" min="0.05" max="0.95" step="0.05" value="0.3">
+        </div>
+
+        <div class="control-group">
+            <label>β (de-escalation rate B→G): <span class="slider-value" id="ex-beta-value">0.50</span></label>
+            <input type="range" id="ex-beta-slider" min="0.05" max="0.95" step="0.05" value="0.5">
+        </div>
+
+        <div class="control-group">
+            <label>Payoff x = u₁(G, F): <span class="slider-value" id="ex-x-value">0.30</span></label>
+            <input type="range" id="ex-x-slider" min="0" max="1" step="0.05" value="0.3">
+        </div>
+
+        <div class="control-group">
+            <label>Payoff y = u₁(B, A): <span class="slider-value" id="ex-y-value">0.40</span></label>
+            <input type="range" id="ex-y-slider" min="0" max="1" step="0.05" value="0.4">
+        </div>
+    </div>
+
+    <h3>Payoff Structure</h3>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>State</th>
+                <th>Acquiesce (A)</th>
+                <th>Fight (F)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Good (no attack)</strong></td>
+                <td>1</td>
+                <td id="ex-payoff-gf">0.30</td>
+            </tr>
+            <tr>
+                <td><strong>Bad (attack)</strong></td>
+                <td id="ex-payoff-ba">0.40</td>
+                <td>0</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div id="ex-supermodular" class="result-box">
+        <div class="box-title">Supermodularity Check</div>
+        <p id="ex-supermodular-text"></p>
+    </div>
+
+    <h3>Stationary Distribution</h3>
+    
+    <div class="equation-block">
+        $$\pi(G) = \frac{\beta}{\alpha + \beta}, \quad \pi(B) = \frac{\alpha}{\alpha + \beta}$$
+    </div>
+
+    <div class="result-box">
+        <div class="box-title">Current Parameters</div>
+        <table>
+            <tbody>
+                <tr>
+                    <td><strong>π(Good):</strong></td>
+                    <td id="ex-stat-g">0.625</td>
+                </tr>
+                <tr>
+                    <td><strong>π(Bad):</strong></td>
+                    <td id="ex-stat-b">0.375</td>
+                </tr>
+                <tr>
+                    <td><strong>Persistence:</strong></td>
+                    <td id="ex-persistence">Moderate</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3>Sample Attack Trajectory</h3>
+    
+    <div class="plot-container">
+        <div id="ex-trajectory-plot"></div>
+    </div>
+
+    <h3>Lifted State Distribution</h3>
+    
+    <p>The lifted state θ̃<sub>t</sub> = (θ<sub>t</sub>, θ<sub>t-1</sub>) captures the <strong>transition structure</strong>:</p>
+
+    <table id="ex-lifted-table">
+        <thead>
+            <tr>
+                <th>θ̃ = (θ<sub>t</sub>, θ<sub>t-1</sub>)</th>
+                <th>Interpretation</th>
+                <th>ρ̃(θ̃)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>(G, G)</strong></td>
+                <td>Calm continues</td>
+                <td id="ex-lifted-gg">0.4375</td>
+            </tr>
+            <tr>
+                <td><strong>(G, B)</strong></td>
+                <td>Attack ends</td>
+                <td id="ex-lifted-gb">0.1875</td>
+            </tr>
+            <tr>
+                <td><strong>(B, G)</strong></td>
+                <td>Attack begins</td>
+                <td id="ex-lifted-bg">0.1875</td>
+            </tr>
+            <tr>
+                <td><strong>(B, B)</strong></td>
+                <td>Attack persists</td>
+                <td id="ex-lifted-bb">0.1875</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="plot-container">
+        <div id="ex-lifted-plot"></div>
+    </div>
+
+    <h3>Stackelberg Strategy</h3>
+    
+    <p>The natural deterrence strategy is:</p>
+    <div class="equation-block">
+        $$s_1^*(G) = A \text{ (Acquiesce when calm)}$$
+        $$s_1^*(B) = F \text{ (Fight when attacked)}$$
+    </div>
+
+    <p>This strategy <strong>ignores</strong> θ<sub>t-1</sub> — it's memoryless. But it can be viewed as a strategy on the expanded space θ̃ ∈ Θ̃:</p>
+
+    <div class="equation-block">
+        $$s_1^*(\tilde{\theta}) = s_1^*(\theta_t) \quad \text{(depends only on current state)}$$
+    </div>
+
+    <h3>Commitment Payoff</h3>
+    
+    <div class="theorem-box">
+        <div class="box-title">Result: Deterrence with Markov Attacks</div>
+        <p><strong>If x + y &lt; 1</strong> (supermodular), the strategy s₁* is confound-defeating and the long-run player secures:</p>
+        <div class="equation-block">
+            $$V(s_1^*) = \pi(G) \cdot 1 + \pi(B) \cdot 0 = \frac{\beta}{\alpha + \beta}$$
+        </div>
+        <p>With current parameters:</p>
+        <p style="margin-left: 2rem;"><strong>V(s₁*) = <span id="ex-commitment-payoff">0.625</span></strong></p>
+    </div>
+
+    <h3>KL Bound for This Example</h3>
+    
+    <div class="controls">
+        <h4>Prior and Tolerance</h4>
+        
+        <div class="control-group">
+            <label>Prior μ₀(ω<sub>s₁*</sub>): <span class="slider-value" id="ex-mu0-value">0.01</span></label>
+            <input type="range" id="ex-mu0-slider" min="0.001" max="0.1" step="0.001" value="0.01">
+        </div>
+
+        <div class="control-group">
+            <label>Tolerance η: <span class="slider-value" id="ex-eta-value">0.10</span></label>
+            <input type="range" id="ex-eta-slider" min="0.01" max="0.3" step="0.01" value="0.1">
+        </div>
+    </div>
+
+    <div class="extension-box">
+        <div class="box-title">KL Bound Calculation</div>
+        <div class="equation-block">
+            $$\bar{T}(\eta, \mu_0) = \frac{-2\log\mu_0(\omega_{s_1^*})}{\eta^2}$$
+        </div>
+        <p>With μ₀ = <span id="ex-kl-mu0">0.01</span> and η = <span id="ex-kl-eta">0.10</span>:</p>
+        <p style="margin-left: 2rem;"><strong>T̄ = <span id="ex-kl-bound">921</span> periods</strong></p>
+        <p>This bound is <strong>identical</strong> to what it would be in the i.i.d. case with the same prior!</p>
+    </div>
+
+    <h3>Comparison Across Persistence Levels</h3>
+    
+    <p>How does the commitment payoff and mixing time vary with persistence?</p>
+
+    <div class="plot-container">
+        <div id="ex-persistence-plot"></div>
+    </div>
+
+    <h3>Limiting Cases</h3>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Regime</th>
+                <th>α, β values</th>
+                <th>Mixing τ<sub>mix</sub></th>
+                <th>V(s₁*)</th>
+                <th>Framework</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Fast mixing</strong></td>
+                <td>α, β large (~0.5)</td>
+                <td>Small</td>
+                <td>≈ 0.5</td>
+                <td>Luo-Wolitzky (i.i.d.)</td>
+            </tr>
+            <tr>
+                <td><strong>Moderate</strong></td>
+                <td>α = 0.3, β = 0.5</td>
+                <td>Moderate</td>
+                <td>0.625</td>
+                <td><strong>Our extension</strong></td>
+            </tr>
+            <tr>
+                <td><strong>High persistence</strong></td>
+                <td>α, β small</td>
+                <td>Large</td>
+                <td>→ Initial π(G)</td>
+                <td>Weakens toward Pei</td>
+            </tr>
+            <tr>
+                <td><strong>Perfect persistence</strong></td>
+                <td>α, β → 0</td>
+                <td>∞</td>
+                <td>π₀(G)</td>
+                <td>Pei (2020)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Economic Interpretation</h3>
+    
+    <div class="result-box">
+        <div class="box-title">Clustered Attacks</div>
+        <p>With α = <span id="ex-interp-alpha">0.30</span> and β = <span id="ex-interp-beta">0.50</span>, attacks come in <strong>clusters</strong>:</p>
+        <ul>
+            <li>When calm (G), it tends to stay calm (70% probability)</li>
+            <li>When attacked (B), it tends to continue (50% probability)</li>
+            <li>Average calm period: ~<span id="ex-avg-calm">3.3</span> periods</li>
+            <li>Average attack period: ~<span id="ex-avg-attack">2.0</span> periods</li>
+        </ul>
+        <p>The temporal pattern of Fight actions reveals the conditional strategy, even though marginal frequencies alone wouldn't distinguish it from random fighting!</p>
+    </div>
+
+    <h3>Interactive Exploration</h3>
+    
+    <p>Use the sliders above to explore how the commitment payoff varies with:</p>
+    <ul>
+        <li><strong>Persistence</strong> (α and β): More persistence → longer runs of attacks</li>
+        <li><strong>Payoff structure</strong> (x and y): Supermodularity condition x + y &lt; 1</li>
+    </ul>
+
+    <p><strong>Key insight:</strong> The limiting payoff V(s₁*) = β/(α+β) depends on the <strong>stationary distribution</strong>, not the mixing time. Persistence affects only the <strong>convergence rate</strong>, not the payoff secured by a patient player!</p>
+</div>

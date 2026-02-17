@@ -7,6 +7,31 @@
 
 ---
 
+## Revisions
+
+### v1 (22 pages) — Initial draft
+Synthesized reports from Agents 840, 841, 857. Full theorem statement, proof sketch, supermodular case, deterrence example, Theorem 2 extension, references.
+
+### v2 (25 pages) — Self-review fixes
+Added: initial period convention, concrete numerical example, filtering distribution discussion, commitment types with memory remark, stronger identification remark, new economic content section, honest self-criticism. Fixed NBC typo.
+
+### v3 (26 pages) — Agent 860 review incorporation
+Addressed all issues flagged by Agent 860's peer review (`agent860/agent860_review.md`):
+
+| Agent 860 Issue | Severity | Status |
+|-----------------|----------|--------|
+| Per-period OT + continuation value (Section 2.1, B') | **Substantive** | **FIXED** — Added Remark 4.5 with full discussion: supermodular case unaffected (co-monotone coupling robust), general case has two fix paths (strengthened CD condition or continuity argument) |
+| Proposition 2.4 proof "two steps" overclaim | Minor | **FIXED** — Replaced with correct "finitely many steps" argument via irreducibility path |
+| Effective state space $\tilde\Theta_+$ vs $\tilde\Theta$ | Minor | **FIXED** — Added remark noting effective state space |
+| Deterrence missing short-run player | Minor | **FIXED** — Added $a_2 \in \{C, D\}$ structure |
+| Limiting cases table $p$ notation | Minor | **FIXED** — Changed to $\beta/(\alpha+\beta)$ |
+| Definition 3.2 typo ($s_1 \to s_1^*$) | Minor | Already fixed in v2 |
+| Santambrogio spelling | Minor | **Verified correct** via web search |
+
+**Agent 860's biggest contribution:** Identifying that the continuation value depends on $\theta_t$ in the Markov case (point B'), which means the one-shot deviation objective is NOT the same as the confound-defeating OT objective. This is a genuine gap in the general case. Our fix: (1) show the supermodular case is unaffected (co-monotone coupling is robust to additive perturbations preserving supermodularity), and (2) propose two approaches for the general case (strengthened CD condition, or continuity + filter stability argument).
+
+---
+
 ## What I Did
 
 ### Inputs Consumed
@@ -18,7 +43,7 @@
 
 ### Output Produced
 
-**Primary deliverable:** `agent852_output/marginal_reputation_markov_extension.tex` → compiled to `marginal_reputation_markov_extension.pdf` (25 pages)
+**Primary deliverable:** `agent852_output/marginal_reputation_markov_extension.tex` → compiled to `marginal_reputation_markov_extension.pdf` (26 pages, v3 incorporating Agent 860 review)
 
 ### Paper Structure (25 pages)
 
@@ -72,11 +97,11 @@ After the first draft (22 pages), I re-read critically from Luo's perspective an
 
 ### What's imperfect (honest gaps)
 1. **Lemma 3 is the weakest link.** Filter stability is cited but not proven within the paper. A full proof would verify that the observation process satisfies full-support conditions.
-2. **The OT problem per-period vs. in stationarity** — the resolution is correct but a formal proof would need more care about the transient phase
+2. **Continuation value subtlety (flagged by Agent 860).** In the general (non-supermodular) case, the continuation value depends on $\theta_t$, which changes the effective OT objective for the one-shot deviation. We provide two proposed fixes (strengthened CD condition; continuity + filter stability) but neither is fully proven. **The supermodular case (all applications) is unaffected.**
 3. **No computational complexity discussion** — checking confound-defeating on $|\Theta|^2 \times |A_1|$ is harder than on $|\Theta| \times |A_1|$
 
 ### Verdict
-For a proof sketch produced in under 5 hours (total team time) in response to an open challenge, this substantially exceeds the bar. The approach is correct, the key insight is genuine, and the result is clean. A PhD student could take this and produce a publication-ready appendix in a few days of focused work.
+For a proof sketch produced in under 5 hours (total team time) in response to an open challenge, this substantially exceeds the bar. The approach is correct, the key insight is genuine, and the result is clean. Agent 860's peer review was invaluable -- it identified the continuation value subtlety that none of the earlier agents caught, which is now transparently acknowledged. A PhD student could take this and produce a publication-ready appendix in a few days of focused work.
 
 ---
 

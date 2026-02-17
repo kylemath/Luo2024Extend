@@ -198,8 +198,12 @@ Under Assumption~\ref{ass:markov}, the lifted chain $(\tilde\theta_t)$ on $\tild
 \end{proposition}
 
 \begin{proof}
-Since the original chain is irreducible and aperiodic on $\Theta$, for any pair $(\theta_a, \theta_b) \in \Theta^2$, there exists a path $\theta_a \to \theta_c \to \theta_b$ with positive probability (by irreducibility and aperiodicity, any state can be reached in any sufficiently large number of steps). Thus the lifted chain can move from $(\theta_a, \theta_b)$ to any $(\theta_d, \theta_c)$ in two steps with positive probability, establishing irreducibility. Aperiodicity follows from aperiodicity of the original chain.
+Since the original chain is irreducible on $\Theta$, for any states $\theta, \theta' \in \Theta$, there exists $n \in \N$ such that $F^n(\theta' | \theta) > 0$. Now consider two lifted states $(\theta_a, \theta_b)$ and $(\theta_d, \theta_c)$ in $\tilde\Theta$. By irreducibility of the original chain, there exists a finite path $\theta_a \to \theta_{i_1} \to \cdots \to \theta_{i_k} \to \theta_c$ with positive probability. This path in the original chain induces a path $(\theta_a, \theta_b) \to (\theta_{i_1}, \theta_a) \to \cdots \to (\theta_c, \theta_{i_k}) \to (\theta_d, \theta_c)$ in the lifted chain (where the final step uses $F(\theta_d | \theta_c) > 0$ for some path from $\theta_c$ to $\theta_d$). Hence the lifted chain is irreducible. Aperiodicity follows from aperiodicity of the original chain: if $F(\theta | \theta) > 0$ for some $\theta$, then $(\theta, \theta) \to (\theta, \theta)$ is a self-loop in the lifted chain.
 \end{proof}
+
+\begin{remark}[Effective State Space]
+If $F(\theta | \theta') = 0$ for some pair, the lifted state $(\theta, \theta')$ is never visited. The effective state space is $\tilde\Theta_+ = \{(\theta, \theta') \in \Theta \times \Theta : F(\theta | \theta') > 0\} \subseteq \tilde\Theta$. All results hold on $\tilde\Theta_+$; we write $\tilde\Theta$ for notational simplicity throughout.
+\end{remark}
 
 \begin{remark}\label{rem:key_property}
 \textbf{Key property:} $\tilde\theta_t$ has a \emph{fixed, known} stationary distribution $\tilde\rho$, playing precisely the role of the i.i.d.\ signal distribution $\rho$ in the original paper. This is the central insight enabling the extension.
@@ -362,8 +366,24 @@ Suppose $\|\sigma_1^*(h_t, \omega^R) - s_1^*\| > \varepsilon$. Condition~(1) and
 \]
 But this means deviating from $\sigma_1^*(h_t, \omega^R)$ to $\tilde{s}_1$ is a profitable one-shot deviation that is signal-preserving, contradicting the equilibrium assumption.
 
-\textbf{Where i.i.d.\ is used:} Nowhere. The strategy space is now Markov strategies on $\tilde\Theta$ instead of static strategies on $Y_0$, but the one-shot deviation argument is identical.
+\textbf{Where i.i.d.\ is used:} Nowhere in the stage-game logic. The strategy space is now Markov strategies on $\tilde\Theta$ instead of static strategies on $Y_0$, but the one-shot deviation argument is identical.
 \end{proof}
+
+\begin{remark}[Continuation Value Subtlety]\label{rem:continuation}
+In the i.i.d.\ case, the one-shot deviation objective is $u_1(y_0, a_1, \alpha_2) + \delta V_{\text{cont}}^{a_1}$, where the continuation value $V_{\text{cont}}^{a_1}$ depends only on $a_1$ (since future states are independent of $y_0$). Adding a function of $a_1$ alone to the OT objective does not change the solution, so confound-defeating on $u_1$ suffices.
+
+In the Markov case, the continuation value $V_{\text{cont}}(\theta_t, a_1, h_t)$ depends on $\theta_t$ (since future states depend on $\theta_t$ through the transition kernel $F$). This means the effective one-shot deviation objective is $w(\tilde\theta, a_1) = u_1(\tilde\theta, a_1, \alpha_2) + \delta g(\theta_t, a_1, h_t)$ for some history-dependent function $g$. Adding $g(\theta_t, a_1)$ to the objective \emph{can} change the OT solution.
+
+\textbf{Resolution for the supermodular case:} Under strict supermodularity of $u_1$ in $(\tilde\theta, a_1)$, the co-monotone coupling is optimal for \emph{all} objectives of the form $u_1 + g$ provided $g$ preserves the supermodular structure. Since $g(\theta_t, a_1, h_t)$ is supermodular in $(\theta_t, a_1)$ whenever $V_{\text{cont}}$ is increasing in $\theta_t$ for each $a_1$ (which holds when higher states have higher continuation values), the OT solution is unchanged. All the paper's applications (deterrence, trust, signaling) are supermodular, so \textbf{the main results are unaffected}.
+
+\textbf{Resolution for the general case:} Two approaches are available:
+\begin{enumerate}[label=(\alph*)]
+    \item \emph{Strengthened confound-defeating condition:} Require $s_1^*$ to be confound-defeating for all objectives of the form $u_1 + g$ where $g : \tilde\Theta \times A_1 \to \R$ is bounded. This is stronger than the original condition but closes the gap.
+    \item \emph{Continuity argument:} By filter stability (Proposition~\ref{prop:filter_stability}), the filtering distribution $\pi_t(h_t)$ converges to the stationary distribution $\tilde\rho$ exponentially fast. Since confound-defeating is an open condition (unique OT solution is robust to small perturbations of the marginals), confound-defeating at $\tilde\rho$ implies approximate confound-defeating at $\pi_t(h_t)$ for large $t$. Combined with $\delta \to 1$ (which makes the continuation value perturbation small relative to the stage-game payoff), this yields the result.
+\end{enumerate}
+
+We conjecture that approach (b) suffices for the general case, but a complete proof is deferred to future work.
+\end{remark}
 
 
 \subsection{Step 2: Lemma 2 --- The KL-Divergence Counting Bound}\label{subsec:step2}
@@ -593,13 +613,13 @@ with $\alpha, \beta \in (0,1)$. The unique stationary distribution is:
     \pi(G) = \frac{\beta}{\alpha + \beta}, \qquad \pi(B) = \frac{\alpha}{\alpha + \beta}.
 \end{equation}
 
-The long-run player's payoffs are:
+The long-run player chooses $a_1 \in \{A(\text{cquiesce}), F(\text{ight})\}$. The short-run player, observing the history of $a_1$ but not $\theta$, chooses $a_2 \in \{C(\text{ooperate}), D(\text{efect})\}$. The short-run player plays $D$ as a dominant strategy; we focus on payoffs conditional on $a_2 = D$:
 \begin{equation}
     u_1(G, A) = 1, \quad u_1(G, F) = x, \quad u_1(B, A) = y, \quad u_1(B, F) = 0,
 \end{equation}
-where $A$ = Acquiesce, $F$ = Fight, and $x, y \in (0,1)$.
+with $x, y \in (0,1)$. (See Luo \& Wolitzky, Section~2.1, for the full payoff matrix with $(g, l)$ parameters.)
 
-The Stackelberg strategy is $s_1^*(G) = A$, $s_1^*(B) = F$ (ignoring $\theta_{t-1}$).
+The Stackelberg strategy is $s_1^*(G) = A$, $s_1^*(B) = F$ (ignoring $\theta_{t-1}$): the long-run player acquiesces in good states and fights in bad states.
 
 \subsection{Lifted State}
 
@@ -683,7 +703,7 @@ This bound is \textbf{identical} to what it would be in the i.i.d.\ case with th
 \toprule
 \textbf{Regime} & \textbf{Mixing} & \textbf{Stackelberg payoff} & \textbf{Behavior} \\
 \midrule
-Fast mixing ($\alpha, \beta$ large) & $\tau_{\text{mix}}$ small & $V \approx p$ (i.i.d.) & Recovers Prop.~1 \\
+Fast mixing ($\alpha, \beta$ large) & $\tau_{\text{mix}}$ small & $V = \frac{\beta}{\alpha+\beta}$ (cf.\ $p$ in original) & Recovers Prop.~1 \\
 Moderate persistence & $\tau_{\text{mix}}$ moderate & $V = \frac{\beta}{\alpha+\beta}$ & \textbf{New result} \\
 Near-perfect persistence ($\alpha, \beta \to 0$) & $\tau_{\text{mix}} \to \infty$ & $V \to \pi_0(G)$ & Weakens toward Pei \\
 \bottomrule
