@@ -1,0 +1,64 @@
+% ================================================================
+\section{Belief-Robustness: The Key New Concept}\label{sec:belief_robust}
+
+This section introduces the central new concept needed for the Markov extension. The issue is simple: when the Stackelberg strategy reveals the state, short-run players learn $\theta_t$ and form beliefs about $\theta_{t+1}$ using the filtering distribution $F(\cdot|\theta_t)$, which generically differs from the stationary distribution $\pi$.
+
+\subsection{Filtering Beliefs}
+
+\begin{definition}[Filtering Belief]\label{def:filtering}
+Given a state-revealing Stackelberg strategy $s_1^*$ (i.e., $s_1^*(\theta) \neq s_1^*(\theta')$ for $\theta \neq \theta'$), the \textbf{filtering belief} in state $\theta$ is
+\begin{equation}
+    F(\cdot|\theta_t) = \Prob(\theta_{t+1} = \cdot \mid \theta_t),
+\end{equation}
+the one-step-ahead predictive distribution conditional on the current state.
+\end{definition}
+
+For the two-state chain $\Theta = \{G, B\}$ with parameters $(\alpha, \beta)$:
+\begin{align}
+    F(G|G) &= 1-\alpha, \qquad F(G|B) = \beta.
+\end{align}
+The stationary distribution gives $\pi(G) = \beta/(\alpha+\beta)$. The gap between the filtering belief and the stationary distribution is:
+\begin{equation}\label{eq:belief_gap}
+    \E\bigl[|F(G|\theta_t) - \pi(G)|\bigr] = \frac{2\alpha\beta|1-\alpha-\beta|}{(\alpha+\beta)^2}.
+\end{equation}
+This equals zero \textbf{if and only if} $\alpha + \beta = 1$, which is precisely the i.i.d.\ case. For the baseline parameters $(\alpha=\BaseAlpha, \beta=\BaseBeta)$, the expected gap is \BeliefGapBaseline.
+
+\subsection{The Belief-Robustness Condition}
+
+\begin{definition}[Belief-Robustness]\label{def:belief_robust}
+A game $(u_1, u_2)$ with Stackelberg strategy $s_1^*$ and Markov chain $(\Theta, F)$ is \textbf{belief-robust} if the short-run player Nash correspondence satisfies
+\begin{equation}\label{eq:belief_robust}
+    B(s_1^*, F(\cdot|\theta)) = B(s_1^*, F(\cdot|\theta')) \quad \text{for all } \theta, \theta' \in \Theta.
+\end{equation}
+\end{definition}
+
+In words: the SR best-response set does not change when SR learns the current state. Under this condition, the belief gap documented in~\eqref{eq:belief_gap} is irrelevant---SR plays the same regardless.
+
+\subsection{When Does Belief-Robustness Hold?}
+
+For the deterrence game with SR threshold $\mu^*$ (the belief level at which SR is indifferent between cooperating and defecting):
+
+\begin{proposition}\label{prop:br_condition}
+Belief-robustness holds if and only if
+\begin{equation}\label{eq:br_interval}
+    \mu^* \notin \bigl[\min_\theta F(G|\theta),\; \max_\theta F(G|\theta)\bigr] = [\beta,\; 1-\alpha].
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The SR best response depends on whether $F(G|\theta_t) \gtrless \mu^*$. If $\mu^* < \beta$, then $F(G|\theta_t) \geq \beta > \mu^*$ for all $\theta_t$, so SR always cooperates. If $\mu^* > 1-\alpha$, then $F(G|\theta_t) \leq 1-\alpha < \mu^*$ for all $\theta_t$, so SR always defects. In either case, $B(s_1^*, F(\cdot|\theta))$ is constant. Conversely, if $\mu^* \in [\beta, 1-\alpha]$, there exist states $\theta, \theta'$ with $F(G|\theta) > \mu^* > F(G|\theta')$, so SR cooperates after $\theta$ and defects after $\theta'$.
+\end{proof}
+
+\begin{remark}[Economic Interpretation]
+Belief-robustness fails when the SR indifference threshold lies between the conditional beliefs for different states. This happens when:
+\begin{enumerate}[label=(\roman*)]
+    \item The game has belief-sensitive SR behavior (threshold near $\pi$).
+    \item The chain is persistent enough that $F(\cdot|\theta)$ varies substantially across states.
+    \item The strategy reveals state information to SR.
+\end{enumerate}
+Persistence hurts the LR player if and only if the SR threshold lies in the ``danger zone'' $[\beta, 1-\alpha]$.
+\end{remark}
+
+\begin{remark}[Baseline Example]
+For the baseline parameters $(\alpha=\BaseAlpha, \beta=\BaseBeta)$: the danger zone is $[\BaseBeta, 1-\BaseAlpha] = [0.5, 0.7]$. The SR threshold $\mu^* = \SRThreshold$ lies inside this interval, so the baseline deterrence example is \textbf{not} belief-robust. Changing SR payoffs to make $\mu^* = \BRThreshold < \beta = \BaseBeta$ would restore belief-robustness.
+\end{remark}

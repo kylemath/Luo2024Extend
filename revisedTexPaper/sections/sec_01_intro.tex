@@ -1,0 +1,49 @@
+% ================================================================
+\section{Introduction}\label{sec:intro}
+
+Luo \& Wolitzky (2024) establish a striking connection between reputation theory in repeated games and optimal transport theory. Their main result, Theorem~1, shows that a patient long-run player can secure her \emph{commitment payoff} $V(s_1^*)$ in any Nash equilibrium, provided her Stackelberg strategy $s_1^*$ is \emph{confound-defeating} and \emph{not behaviorally confounded}. Throughout their analysis, states are drawn \textbf{i.i.d.\ across periods}. The authors note (footnote~9) that the extension to persistent states is an open question.
+
+\subsection{What We Attempted and What Went Wrong}
+
+We initially attempted to extend Theorem~1 to Markovian states via a \emph{lifted state} construction $\tilde\theta_t = (\theta_t, \theta_{t-1})$. Our first submission claimed the extension required no correction---that the commitment payoff $V(s_1^*)$ holds identically. This overclaimed.
+
+Expert critique (Luo, 2026) identified the central flaw: when the Stackelberg strategy reveals the state (e.g., $s_1^*(G)=A$, $s_1^*(B)=F$), the short-run player learns $\theta_t$ exactly. Their belief about $\theta_{t+1}$ is then the \emph{filtering distribution} $F(\cdot|\theta_t)$, \textbf{not} the stationary distribution $\pi$. This creates a permanent structural gap: short-run behavior becomes state-contingent, violating the assumption that short-run players face the same incentives every period.
+
+\subsection{Systematic Computational Testing}
+
+Rather than simply accepting or rejecting the critique, we conducted systematic computational analysis across 7 diagnostic modules producing 8 figures. The results cleanly separate the claims that survive from those that fail:
+
+\medskip
+\noindent\textbf{Claims that survive:}
+\begin{enumerate}[label=(\alph*)]
+    \item The KL counting bound extends verbatim---no mixing-time correction needed (verified via $N=\KLMonteCarloN$ Monte Carlo simulations over $T=\KLMonteCarloPeriods$ periods).
+    \item Filter stability holds with exponential forgetting: correlation $r > \FilterCorrelation$ between fitted decay rate and $|1-\alpha-\beta|$.
+    \item The OT support is robust to belief perturbations: stability margin $\geq \OTStabilityMargin$ in \OTStabilityPct\% of the $(\alpha,\beta)$ parameter space.
+    \item Monotonicity extends for $\theta_t$-dependent payoffs on the lifted space.
+\end{enumerate}
+
+\medskip
+\noindent\textbf{Claims that fail:}
+\begin{enumerate}[label=(\alph*)]
+    \item SR beliefs permanently deviate from $\pi$ with mean TV distance \TVMean{} and analytical gap \BeliefGapBaseline.
+    \item The Nash correspondence $B(s_1^*, \mu)$ varies period-to-period: \SRDisagreement\% disagreement rate.
+    \item The commitment payoff is overestimated: \PayoffStationary{} (stationary assumption) vs.\ \PayoffFiltered{} (filtered reality), a \PayoffOverestimation\% gap.
+\end{enumerate}
+
+\subsection{Corrected Results}
+
+We present two new theorems that properly account for belief dynamics:
+
+\begin{description}
+    \item[Theorem~1$'$ (Belief-Robust Extension).] When the SR best-response set $B(s_1^*, F(\cdot|\theta))$ is constant across states $\theta$---a condition we call \emph{belief-robustness}---the original bound $V(s_1^*)$ holds exactly. The entire proof machinery (KL bound, OT robustness, monotonicity) works as before; belief-robustness ensures the SR belief gap is irrelevant.
+
+    \item[Theorem~1$''$ (General Corrected Bound).] For all supermodular games with Markov states, a corrected bound holds:
+    \[
+        V_{\mathrm{Markov}}(s_1^*) := \sum_{\theta \in \Theta} \pi(\theta) \cdot \inf_{(\alpha_0, \alpha_2) \in B(s_1^*, F(\cdot|\theta))} u_1(\theta, s_1^*(\theta), \alpha_2) \;\leq\; V(s_1^*),
+    \]
+    with equality if and only if the game is belief-robust. The gap $V(s_1^*) - V_{\mathrm{Markov}}$ quantifies the ``cost of persistence'' in reputation games.
+\end{description}
+
+\subsection{Outline}
+
+Section~\ref{sec:model} presents the model with the lifted state construction. Section~\ref{sec:belief_robust} introduces the key new concept of belief-robustness. Section~\ref{sec:theorems} states the two corrected theorems. Section~\ref{sec:proof} contains the proof sketch. Section~\ref{sec:supermodular} extends the supermodular case. Section~\ref{sec:example} works out the deterrence game. Section~\ref{sec:interpolation} discusses interpolation between i.i.d.\ and persistent. Section~\ref{sec:methodology} documents the correction methodology. Section~\ref{sec:discussion} discusses open questions.

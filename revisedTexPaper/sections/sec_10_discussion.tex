@@ -1,0 +1,34 @@
+% ================================================================
+\section{Discussion and Open Questions}\label{sec:discussion}
+
+\subsection{Summary}
+
+We have shown that extending Marginal Reputation to Markov states is more subtle than initially claimed. The extension requires distinguishing two regimes:
+\begin{itemize}
+    \item \textbf{Belief-robust games:} The original bound $V(s_1^*)$ holds exactly (Theorem~\ref{thm:belief_robust}).
+    \item \textbf{General games:} The corrected bound $V_{\mathrm{Markov}}(s_1^*) \leq V(s_1^*)$ holds (Theorem~\ref{thm:general}).
+\end{itemize}
+
+The gap $V(s_1^*) - V_{\mathrm{Markov}}$ is the ``cost of persistence''---a new economic object quantifying how state persistence affects reputation-building.
+
+\subsection{Open Questions}
+
+\begin{enumerate}[label=(\arabic*)]
+    \item \textbf{Belief-robustness landscape.} For which classes of games is belief-robustness generic vs.\ exceptional? Our analysis of the deterrence game shows it depends on the location of the SR threshold relative to the filtering beliefs.
+
+    \item \textbf{Computing $V_{\mathrm{Markov}}$.} Can $V_{\mathrm{Markov}}(s_1^*)$ be computed in closed form for general supermodular games? For the deterrence game, the computation reduces to a weighted sum over states, but general games may require solving state-contingent Nash equilibria.
+
+    \item \textbf{$\varepsilon$-perturbed strategies.} If the commitment type plays $s_1^\varepsilon(\theta) = (1-\varepsilon) s_1^*(\theta) + \varepsilon \cdot \text{uniform}$ for small $\varepsilon > 0$, the strategy is non-revealing. Does $V_{\mathrm{Markov}} \to V(s_1^*)$ as $\varepsilon \to 0$, uniformly in other parameters? This would provide a ``smoothing'' route to the full bound.
+
+    \item \textbf{Rate of convergence.} How fast does $\underline{U}_1(\delta) \to V_{\mathrm{Markov}}$ as $\delta \to 1$? The rate likely depends on both the mixing time $\tau_{\mathrm{mix}}$ and the belief-robustness margin $\min_\theta |F(G|\theta) - \mu^*|$.
+
+    \item \textbf{Continuous state spaces.} If $\Theta$ is infinite (e.g., $\R$), the OT problem becomes infinite-dimensional. The result should extend under compactness, but requires care with cyclical monotonicity.
+
+    \item \textbf{Non-revealing strategies.} For commitment strategies with full support on $A_1$ for all $\theta$ (so the state is not revealed), filter stability (SA4) suggests the belief dynamics may be more benign. Is the full bound $V(s_1^*)$ recoverable for non-revealing strategies without belief-robustness?
+
+    \item \textbf{Approximate belief-robustness.} Define $\varepsilon$-belief-robustness as $\sup_{\theta,\theta'} d_H(B(s_1^*, F(\cdot|\theta)), B(s_1^*, F(\cdot|\theta'))) \leq \varepsilon$. Is $V_{\mathrm{Markov}} \geq V(s_1^*) - C\varepsilon$ for some constant $C$?
+\end{enumerate}
+
+\subsection{Conclusion}
+
+Persistence in states creates a fundamental tension between the LR player's reputation-building and the SR player's state-learning. When the Stackelberg strategy reveals the state, SR players learn the state sequence and adjust their behavior accordingly. The LR player's commitment payoff is reduced by exactly the amount of SR behavioral adjustment. This tension---invisible in the i.i.d.\ framework---is a genuinely new economic insight that our corrected analysis makes precise.

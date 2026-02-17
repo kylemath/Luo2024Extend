@@ -1,0 +1,76 @@
+% ================================================================
+\section{The Extended Model}\label{sec:model}
+
+We maintain all notation and conventions from Luo \& Wolitzky (2024, Sections~3.1--3.2), modifying only the state process.
+
+\subsection{State Process}
+
+Let $\Theta$ be a finite set.
+
+\begin{assumption}[Markov States]\label{ass:markov}
+The state $\theta_t \in \Theta$ follows a \textbf{stationary ergodic Markov chain} with:
+\begin{enumerate}[label=(\alph*)]
+    \item Transition kernel $F(\cdot | \theta)$ for each $\theta \in \Theta$, so that $\Prob(\theta_{t+1} = \theta' | \theta_t = \theta) = F(\theta' | \theta)$.
+    \item Unique stationary distribution $\pi \in \Delta(\Theta)$ satisfying
+    \begin{equation}\label{eq:stationary}
+        \pi(\theta) = \sum_{\theta' \in \Theta} \pi(\theta') F(\theta | \theta') \quad \text{for all } \theta \in \Theta.
+    \end{equation}
+    \item The chain is \textbf{irreducible and aperiodic} (ensuring ergodicity).
+\end{enumerate}
+\end{assumption}
+
+\begin{remark}
+When $F(\cdot | \theta) = \pi(\cdot)$ for all $\theta$, the chain has no memory and we recover the i.i.d.\ case of the original paper. The two-state case with $\Theta = \{G, B\}$ is parameterized by $\alpha = \Prob(B|G)$ and $\beta = \Prob(G|B)$, giving $\pi(G) = \beta/(\alpha+\beta)$.
+\end{remark}
+
+\subsection{Lifted State Space}\label{subsec:lifted}
+
+The central construction is the \emph{lifted state}:
+
+\begin{definition}[Lifted State]\label{def:lifted}
+Define
+\begin{equation}\label{eq:lifted}
+    \tilde\theta_t \;=\; (\theta_t,\, \theta_{t-1}) \;\in\; \tilde\Theta \;=\; \Theta \times \Theta.
+\end{equation}
+\end{definition}
+
+The process $(\tilde\theta_t)_{t \geq 1}$ is itself a Markov chain on $\tilde\Theta$ with transition probabilities
+\begin{equation}
+    \tilde F\bigl((\theta', \theta) \,\big|\, (\theta, \theta'')\bigr) \;=\; F(\theta' | \theta)
+\end{equation}
+and stationary distribution
+\begin{equation}\label{eq:lifted_stationary}
+    \tilde\rho(\theta, \theta') \;=\; \pi(\theta') \cdot F(\theta | \theta').
+\end{equation}
+
+\begin{proposition}\label{prop:lifted_ergodic}
+Under Assumption~\ref{ass:markov}, the lifted chain $(\tilde\theta_t)$ on $\tilde\Theta$ is ergodic with unique stationary distribution $\tilde\rho$.
+\end{proposition}
+
+\begin{proof}
+Irreducibility of the original chain ensures connectivity of the lifted chain: for any lifted states $(\theta_a, \theta_b)$ and $(\theta_d, \theta_c)$, there exists a finite path with positive probability connecting them. Aperiodicity of the original chain implies aperiodicity of the lifted chain. Uniqueness of $\tilde\rho$ follows from the Perron--Frobenius theorem.
+\end{proof}
+
+\begin{remark}[Purpose of the Lifting]
+The lifted state provides a Markov structure on which the optimal transport framework and cyclical monotonicity characterizations apply. The key property is that $\tilde\theta_t$ has a \emph{fixed, known} stationary distribution $\tilde\rho$, playing precisely the role of the i.i.d.\ signal distribution $\rho$ in the original paper.
+\end{remark}
+
+\subsection{Stage Game}
+
+The stage game is identical to Luo \& Wolitzky's Section~3.1, except:
+\begin{enumerate}[label=(\roman*)]
+    \item The long-run player's private information each period is $\tilde\theta_t = (\theta_t, \theta_{t-1})$.
+    \item A stage-game strategy for player~1 is $s_1 : \tilde\Theta \to \Delta(A_1)$, a \emph{Markov strategy}.
+    \item Payoffs depend on the current state: $u_1(\theta_t, a_1, \alpha_2)$.
+\end{enumerate}
+
+We restrict throughout to payoffs $u_1(\theta_t, a_1, \alpha_2)$ that depend on $\theta_t$ alone (not the full lifted state $\tilde\theta_t$). This covers all standard applications---deterrence, trust, signaling---and avoids unmotivated generalization.
+
+\subsection{Joint Distribution and Commitment Types}
+
+Under Markov strategy $s_1$ and the stationary distribution $\tilde\rho$, the joint distribution over $(\tilde\theta, a_1)$ is:
+\begin{equation}\label{eq:joint}
+    \gamma(s_1)[\tilde\theta, a_1] \;=\; \tilde\rho(\tilde\theta) \cdot s_1(\tilde\theta)[a_1].
+\end{equation}
+
+A commitment type $\omega_{s_1} \in \Omega$ plays Markov strategy $s_1 : \tilde\Theta \to \Delta(A_1)$ every period. The type space $\Omega$ is countable with full-support prior $\mu_0 \in \Delta(\Omega)$.

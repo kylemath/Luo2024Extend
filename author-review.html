@@ -1,0 +1,195 @@
+<div class="author-review-content">
+    <h2>Author Review: Daniel Luo's Critique</h2>
+
+    <div class="result-box">
+        <div class="box-title">Context</div>
+        <p>After the AI-assisted extension was produced, <strong>Daniel Luo</strong> — co-author of the original "Marginal Reputation" paper (Luo &amp; Wolitzky, 2024) — provided a detailed critique. His feedback came in two forms: a <em>reply thread</em> directly responding to the extension, and a <em>quote-tweet thread</em> offering additional observations. Below are all 15 points, organized by thread, with severity ratings.</p>
+    </div>
+
+    <div class="equation-block" style="border-left-color: var(--accent-color);">
+        <div class="equation-label">Severity Legend</div>
+        <p>
+            <span style="display:inline-block;padding:0.2rem 0.6rem;border-radius:4px;background:#dc3545;color:white;font-weight:bold;margin-right:0.5rem;">FATAL</span>
+            Claim is mathematically incorrect or relies on a flawed argument that invalidates the result.
+        </p>
+        <p>
+            <span style="display:inline-block;padding:0.2rem 0.6rem;border-radius:4px;background:#fd7e14;color:white;font-weight:bold;margin-right:0.5rem;">SERIOUS</span>
+            Significant gap or unsupported claim that requires substantial revision.
+        </p>
+        <p>
+            <span style="display:inline-block;padding:0.2rem 0.6rem;border-radius:4px;background:#ffc107;color:#333;font-weight:bold;margin-right:0.5rem;">MODERATE</span>
+            Expository issue, misleading framing, or minor technical imprecision.
+        </p>
+    </div>
+
+    <!-- ============================================= -->
+    <h3>Reply Thread (R1–R6)</h3>
+    <!-- ============================================= -->
+
+    <!-- R1 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem; border-left:4px solid #ffc107;">
+        <h4>R1. Overall Assessment <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#ffc107;color:#333;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">MODERATE</span></h4>
+        <blockquote style="border-left:3px solid #999;padding:0.5rem 1rem;margin:0.75rem 0;background:#f9f9f9;font-style:italic;">
+            "nicely written nonsense"
+        </blockquote>
+        <p>Luo's summary verdict: the paper reads convincingly but contains fundamental errors masked by polished exposition. The AI produced text that <em>looks</em> like a valid extension while hiding structural flaws beneath correct-sounding language.</p>
+    </div>
+
+    <!-- R2 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem; border-left:4px solid #ffc107;">
+        <h4>R2. Lifting Construction Superfluous <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#ffc107;color:#333;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">MODERATE</span></h4>
+        <blockquote style="border-left:3px solid #999;padding:0.5rem 1rem;margin:0.75rem 0;background:#f9f9f9;font-style:italic;">
+            The lifted-state construction \(\tilde{\theta}_t = (\theta_t, \theta_{t-1})\) is unnecessary — payoffs depend only on the current state \(\theta_t\), so expanding the state space adds complexity without buying anything.
+        </blockquote>
+        <p>The extension defines a lifted state \(\tilde{\theta}_t = (\theta_t, \theta_{t-1})\) to make transitions depend only on the current lifted state. Luo argues this is superfluous because the original game's payoffs depend only on \(\theta_t\), so the extra coordinate \(\theta_{t-1}\) contributes nothing to the payoff structure.</p>
+    </div>
+
+    <!-- R3 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem; border-left:4px solid #ffc107;">
+        <h4>R3. Payoffs on Lifted State Unmotivated <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#ffc107;color:#333;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">MODERATE</span></h4>
+        <blockquote style="border-left:3px solid #999;padding:0.5rem 1rem;margin:0.75rem 0;background:#f9f9f9;font-style:italic;">
+            Defining payoffs on \(\tilde{\Theta}\) via \(\tilde{u}(\tilde{\theta}, a) = u(\theta_t, a)\) is just projection — it doesn't create a richer structure.
+        </blockquote>
+        <p>The extension defines \(\tilde{u}_1((\theta, \theta'), a_1, a_2) = u_1(\theta, a_1, a_2)\). Luo points out this is simply ignoring the second coordinate. The optimal transport problem on the lifted space reduces to the original problem, so lifting doesn't produce new results.</p>
+    </div>
+
+    <!-- R4 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem; border-left:4px solid #ffc107;">
+        <h4>R4. NBC "Easier" Claim Meaningless <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#ffc107;color:#333;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">MODERATE</span></h4>
+        <blockquote style="border-left:3px solid #999;padding:0.5rem 1rem;margin:0.75rem 0;background:#f9f9f9;font-style:italic;">
+            The claim that the not-behaviorally-confounded (NBC) condition is "easier to satisfy" on the lifted space is vacuous — the condition is either satisfied or not; calling it "easier" without a formal metric is meaningless.
+        </blockquote>
+        <p>The extension claims that lifting helps the NBC condition because SR players have less information about the lifted state. Luo argues that without a formal comparison theorem, this is just hand-waving — the expanded action-signal space makes the claim imprecise.</p>
+    </div>
+
+    <!-- R5 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem; border-left:4px solid #dc3545;">
+        <h4>R5. i.i.d. Disciplines SR Info Sets — FATAL Flaw <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#dc3545;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">FATAL</span></h4>
+        <blockquote style="border-left:3px solid #999;padding:0.5rem 1rem;margin:0.75rem 0;background:#f9f9f9;font-style:italic;">
+            The i.i.d. assumption is <strong>not</strong> just about getting a stationary distribution — it disciplines the short-run players' information sets. Under i.i.d., past actions carry no information about the current state, which is essential for the reputation argument. With Markov states, SR players can <em>infer</em> the current state from LR's past actions, fundamentally changing the information structure.
+        </blockquote>
+        <p>This is identified as a <strong>fatal flaw</strong>. The original proof crucially uses the fact that under i.i.d. states, observing past actions of the LR player gives SR players no information about the <em>current</em> state \(\theta_t\). With Markov transitions, past actions reveal information about \(\theta_{t-1}\), which in turn predicts \(\theta_t\). This breaks the core identification argument.</p>
+    </div>
+
+    <!-- R6 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem; border-left:4px solid #fd7e14;">
+        <h4>R6. Stackelberg Strategy May Not Be Well-Defined <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#fd7e14;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">SERIOUS</span></h4>
+        <blockquote style="border-left:3px solid #999;padding:0.5rem 1rem;margin:0.75rem 0;background:#f9f9f9;font-style:italic;">
+            With Markov states, the Stackelberg strategy \(s_1^*\) depends on the belief about the current state, which evolves endogenously. There may not be a single fixed commitment strategy that is optimal across all possible belief states.
+        </blockquote>
+        <p>In the i.i.d. case, the commitment strategy is a fixed map \(s_1^*: \Theta \to \Delta(A_1)\). With Markov states and endogenous beliefs, the optimal commitment may need to condition on the SR player's belief about the state — but that belief depends on the LR player's past behavior, creating a circularity.</p>
+    </div>
+
+    <!-- ============================================= -->
+    <h3>Quote-Tweet Thread (Q1–Q8)</h3>
+    <!-- ============================================= -->
+
+    <!-- Q1 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem; border-left:4px solid #ffc107;">
+        <h4>Q1. AI Generates Convincing-Looking Errors <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#ffc107;color:#333;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">MODERATE</span></h4>
+        <blockquote style="border-left:3px solid #999;padding:0.5rem 1rem;margin:0.75rem 0;background:#f9f9f9;font-style:italic;">
+            The AI generates errors that look convincing on the surface — correct notation, plausible structure, proper citation style — but fall apart on close inspection.
+        </blockquote>
+        <p>A meta-observation about AI-generated mathematical writing: the output mimics the <em>form</em> of valid proofs (correct LaTeX, theorem-proof structure, appropriate references) while the <em>substance</em> can be flawed. This makes errors harder to catch than in typical student work.</p>
+    </div>
+
+    <!-- Q2 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem; border-left:4px solid #fd7e14;">
+        <h4>Q2. Monotonicity Only for 1D States <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#fd7e14;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">SERIOUS</span></h4>
+        <blockquote style="border-left:3px solid #999;padding:0.5rem 1rem;margin:0.75rem 0;background:#f9f9f9;font-style:italic;">
+            The claim that cyclical monotonicity reduces to ordinary monotonicity is only valid when \(\Theta \subseteq \mathbb{R}\) is one-dimensional. For the lifted state \(\tilde{\Theta} = \Theta \times \Theta\), the state space is two-dimensional and this reduction fails.
+        </blockquote>
+        <p>The extension invokes the result that for supermodular payoffs, cyclical monotonicity = monotonicity. But this holds in \(\mathbb{R}^1\). On the lifted space \(\tilde{\Theta} = \Theta \times \Theta \subseteq \mathbb{R}^2\), the result does not apply — cyclical monotonicity is strictly stronger, and verifying it requires different tools.</p>
+    </div>
+
+    <!-- Q3 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem; border-left:4px solid #ffc107;">
+        <h4>Q3. i.i.d.-ification Is Natural but Fails <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#ffc107;color:#333;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">MODERATE</span></h4>
+        <blockquote style="border-left:3px solid #999;padding:0.5rem 1rem;margin:0.75rem 0;background:#f9f9f9;font-style:italic;">
+            The idea of "i.i.d.-ifying" the Markov chain via the stationary distribution is a natural first attempt — but it doesn't work because it ignores the temporal dependence that SR players can exploit.
+        </blockquote>
+        <p>Replacing the Markov chain with its stationary distribution (treating draws as i.i.d.) is the obvious approach. Luo acknowledges it's a reasonable first idea but explains why it fails: the autocorrelation in the state process gives SR players additional inferential power that the i.i.d. framework doesn't account for.</p>
+    </div>
+
+    <!-- Q4 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem; border-left:4px solid #dc3545;">
+        <h4>Q4. \(B(s_1)\) Must Depend on \(\mu_0\) <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#dc3545;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">FATAL</span></h4>
+        <blockquote style="border-left:3px solid #999;padding:0.5rem 1rem;margin:0.75rem 0;background:#f9f9f9;font-style:italic;">
+            The set of best responses \(B(s_1)\) in the Markov case must depend on the SR player's belief \(\mu_0\) about the state, not just on the strategy \(s_1\). The extension treats \(B\) as belief-independent, which is wrong.
+        </blockquote>
+        <p>In the original i.i.d. case, the SR best response depends only on \(s_1\) because the state distribution is fixed and known. With Markov states, the SR player's belief about the current state \(\theta_t\) — captured by \(\mu_0\) — affects which action is a best response. Ignoring this dependence invalidates the construction of the behavioral confounding condition.</p>
+    </div>
+
+    <!-- Q5 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem; border-left:4px solid #dc3545;">
+        <h4>Q5. \(\mu_0\) Constantly Changing <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#dc3545;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">FATAL</span></h4>
+        <blockquote style="border-left:3px solid #999;padding:0.5rem 1rem;margin:0.75rem 0;background:#f9f9f9;font-style:italic;">
+            The SR player's belief \(\mu_0\) about the state evolves over time as they observe actions, so there is no fixed belief to condition on — the entire analysis must track a dynamic belief process.
+        </blockquote>
+        <p>Unlike the i.i.d. case where SR beliefs about the state "reset" each period, in the Markov case the belief \(\mu_t\) is updated based on the entire action history. This means the reputation game is fundamentally non-stationary from the SR perspective, and the static optimal transport framework cannot be directly applied.</p>
+    </div>
+
+    <!-- Q6 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem; border-left:4px solid #fd7e14;">
+        <h4>Q6. Pei (2020) Extra Assumptions <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#fd7e14;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">SERIOUS</span></h4>
+        <blockquote style="border-left:3px solid #999;padding:0.5rem 1rem;margin:0.75rem 0;background:#f9f9f9;font-style:italic;">
+            The extension claims to interpolate between Luo-Wolitzky (i.i.d.) and Pei (2020, persistent states), but Pei requires extra assumptions (state-independent actions, specific monitoring structures) that the extension doesn't address.
+        </blockquote>
+        <p>Pei (2020) handles persistent states but under restrictive conditions. Simply claiming the Markov extension "interpolates" between the two frameworks requires showing it recovers Pei's results in the appropriate limit — which demands engaging with Pei's additional assumptions.</p>
+    </div>
+
+    <!-- Q7 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem; border-left:4px solid #ffc107;">
+        <h4>Q7. Smaller Errors — "AI Slop" <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#ffc107;color:#333;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">MODERATE</span></h4>
+        <blockquote style="border-left:3px solid #999;padding:0.5rem 1rem;margin:0.75rem 0;background:#f9f9f9;font-style:italic;">
+            Beyond the structural issues, there are numerous small errors — incorrect subscripts, inconsistent notation, claims stated without justification — characteristic of "AI slop."
+        </blockquote>
+        <p>Scattered throughout are minor but telling errors: notation that shifts between sections, claims presented as "straightforward" that actually require argument, and occasionally circular reasoning. These small errors compound and make the paper unreliable even where the high-level ideas are sound.</p>
+    </div>
+
+    <!-- Q8 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem; border-left:4px solid #dc3545;">
+        <h4>Q8. State-Revealing Beliefs Never Settle <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#dc3545;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">FATAL</span></h4>
+        <blockquote style="border-left:3px solid #999;padding:0.5rem 1rem;margin:0.75rem 0;background:#f9f9f9;font-style:italic;">
+            When states are persistent and actions reveal information about states, SR beliefs about the state never converge — they keep fluctuating as new information arrives each period. This prevents the reputation from "settling" in the way the i.i.d. argument requires.
+        </blockquote>
+        <p>The i.i.d. reputation argument works because, eventually, SR players become nearly certain about the LR player's type (rational vs. commitment). With Markov states, even after learning the type, SR beliefs about the <em>state</em> keep evolving. This ongoing uncertainty means the SR best response keeps changing, preventing the convergence that the reputation result relies on.</p>
+    </div>
+
+    <!-- Summary -->
+    <div class="theorem-box" style="margin-top:2rem;">
+        <div class="box-title">Summary of Severity Distribution</div>
+        <table style="box-shadow:none;">
+            <thead>
+                <tr>
+                    <th>Severity</th>
+                    <th>Count</th>
+                    <th>Points</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#dc3545;color:white;font-weight:bold;">FATAL</span></td>
+                    <td><strong>4</strong></td>
+                    <td>R5, Q4, Q5, Q8</td>
+                </tr>
+                <tr>
+                    <td><span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#fd7e14;color:white;font-weight:bold;">SERIOUS</span></td>
+                    <td><strong>3</strong></td>
+                    <td>R6, Q2, Q6</td>
+                </tr>
+                <tr>
+                    <td><span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#ffc107;color:#333;font-weight:bold;">MODERATE</span></td>
+                    <td><strong>7</strong></td>
+                    <td>R1, R2, R3, R4, Q1, Q3, Q7</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="result-box" style="margin-top:1.5rem;">
+        <div class="box-title">Key Takeaway</div>
+        <p>The four <strong>FATAL</strong> issues all stem from a single root cause: the i.i.d. assumption is not merely a convenience for obtaining stationarity — it is <em>essential</em> for controlling the information structure that SR players face. Extending to Markov states requires fundamentally new ideas, not just a mechanical lifting construction.</p>
+        <p style="margin-bottom:0;">See the <strong>Revision</strong> tab for how each critique was addressed in the revised version.</p>
+    </div>
+</div>

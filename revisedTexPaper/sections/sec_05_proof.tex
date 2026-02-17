@@ -1,0 +1,84 @@
+% ================================================================
+\section{Proof Sketch}\label{sec:proof}
+
+The proof follows the five-step structure of the original paper (Section~4.2). At each step, we identify where the i.i.d.\ assumption was used and how belief-robustness or the corrected bound handles it.
+
+\subsection{Overview: Where i.i.d.\ Is Actually Used}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Proof Step} & \textbf{i.i.d.\ used?} & \textbf{Fix needed} \\
+\midrule
+Step 0: OT / confound-defeating & No & Replace $Y_0$ with $\tilde\Theta$ \\
+\textbf{Step 1: Lemma 1 (equilibrium)} & \textbf{Yes} & \textbf{SR belief issue} \\
+Step 2: Lemma 2 (KL bound) & \textbf{No} & None \\
+Step 3: Lemma 3 (martingale) & Partially & Ergodicity + filter stability \\
+Step 4: Lemma 4 (combining) & No & Uses corrected BR \\
+\textbf{Step 5: Payoff bound} & \textbf{Yes} & \textbf{Belief-robust or $V_{\mathrm{Markov}}$} \\
+\bottomrule
+\end{tabular}
+\caption{Where the i.i.d.\ assumption enters the proof. Bold rows indicate where the original argument fails and correction is needed.}
+\label{tab:iid_usage}
+\end{table}
+
+\subsection{Step 0: OT / Confound-Defeating Extension}
+
+The OT problem $\OT(\tilde\rho, \phi; \alpha_2)$ on $\tilde\Theta \times A_1$ is a finite-dimensional linear program, structurally identical to the original. The cyclical monotonicity characterization (Proposition~5 of Luo--Wolitzky) applies directly on the expanded state space. No modification is needed.
+
+\textbf{Computational evidence:} OT support stability margin $\geq \OTStabilityMargin$ in \OTStabilityPct\% of the $(\alpha,\beta)$ parameter space (Figure~\ref{fig:ot_robustness}), confirming that the confound-defeating property is robust to the belief perturbations that arise from Markov dynamics.
+
+\subsection{Step 1: Lemma 1 --- Equilibrium Implications}
+
+\textbf{This is where the i.i.d.\ assumption first matters substantively.}
+
+In the i.i.d.\ case, the one-shot deviation objective is $u_1(\theta, a_1, \alpha_2) + \delta V_{\mathrm{cont}}^{a_1}$, where $V_{\mathrm{cont}}^{a_1}$ depends only on $a_1$ (future states are independent of $\theta$). Adding a function of $a_1$ alone does not change the OT solution.
+
+In the Markov case, $V_{\mathrm{cont}}(\theta_t, a_1, h_t)$ depends on $\theta_t$ (future states depend on $\theta_t$ via the transition kernel). This can change the OT solution.
+
+\textbf{Resolution:}
+\begin{itemize}
+    \item \emph{Belief-robust case (Theorem~\ref{thm:belief_robust}):} Under supermodularity, the co-monotone coupling is optimal for all objectives $u_1 + g$ where $g$ preserves supermodularity. Since belief-robustness ensures SR behavior is constant across states, the continuation value perturbation is absorbed.
+    \item \emph{General case (Theorem~\ref{thm:general}):} The state-contingent Nash correspondence $B(s_1^*, F(\cdot|\theta_t))$ replaces the static $B(s_1^*, \pi)$. The per-period LR payoff is state-dependent.
+\end{itemize}
+
+\subsection{Step 2: Lemma 2 --- KL Counting Bound}
+
+\textbf{No modification needed.} This is the key surprise of the extension.
+
+\begin{lemma}[Extension of Lemma 2]\label{lem:KL}
+For any $\eta > 0$:
+\begin{equation}\label{eq:KL_bound}
+    \E_Q\!\left[\#\{t : h_t \notin H_t^\eta\}\right] \;\leq\; \bar{T}(\eta, \mu_0) \;:=\; \frac{-2\log\mu_0(\omega_{s_1^*})}{\eta^2}.
+\end{equation}
+The bound is identical to the i.i.d.\ case.
+\end{lemma}
+
+The proof uses three ingredients, none requiring i.i.d.: (a) the chain rule for KL divergence (holds for arbitrary joint distributions; see Appendix~\ref{app:kl}); (b) the total KL bound from Bayesian updating (uses only Bayes' rule); (c) Pinsker's inequality (per-period).
+
+\textbf{Computational evidence:} Monte Carlo verification ($N=\KLMonteCarloN$, $T=\KLMonteCarloPeriods$) confirms Markov and i.i.d.\ bounds are nearly identical (Figure~\ref{fig:kl_bound}).
+
+\subsection{Step 3: Lemma 3 --- Martingale Convergence}
+
+The posterior $\mu_t(\omega | h)$ over types is a bounded martingale under $Q$ and converges $Q$-a.s.\ by the martingale convergence theorem. The convergence to $\{\omega^R, \omega_{s_1^*}\}$ uses the KL bound (unchanged) plus the not-behaviorally-confounded condition.
+
+The additional ingredient for Markov states is \textbf{filter stability}: for ergodic HMMs on finite state spaces, the filtering distribution forgets initial conditions exponentially (Chigansky \& Liptser 2004).
+
+\textbf{Computational evidence:} Fitted forgetting rate $\lambda \approx |1-\alpha-\beta|$ with correlation $r > \FilterCorrelation$ across a $\FilterGridSize \times \FilterGridSize$ parameter grid (Figure~\ref{fig:filter_stability}).
+
+\subsection{Step 4: Lemma 4 --- Combining the Pieces}
+
+Per-period argument combining Lemma~\ref{lem:KL} with the posterior concentration. Uses only stage-game structure. No i.i.d.\ required.
+
+\subsection{Step 5: Payoff Bound}
+
+\textbf{This is the second place where i.i.d.\ matters.}
+
+In ``good'' periods (non-distinguishing, posterior concentrated):
+\begin{itemize}
+    \item \emph{Belief-robust:} SR plays the same best response for all $\theta$, so LR gets at least $\inf_{B(s_1^*)} u_1 = V(s_1^*)$ per period. Result: $\liminf_{\delta\to 1} \underline{U}_1(\delta) \geq V(s_1^*)$.
+    \item \emph{General:} SR plays best response $B(s_1^*, F(\cdot|\theta_t))$ which depends on $\theta_t$. LR gets at least $\inf_{B(s_1^*, F(\cdot|\theta_t))} u_1$ in state $\theta_t$. Averaging over the ergodic distribution: $\liminf_{\delta\to 1} \underline{U}_1(\delta) \geq V_{\mathrm{Markov}}(s_1^*)$.
+\end{itemize}
+
+Front-loading bad periods and taking $\delta \to 1$ gives the result, exactly as in the original.

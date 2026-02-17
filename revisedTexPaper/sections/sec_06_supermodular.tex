@@ -1,0 +1,39 @@
+% ================================================================
+\section{The Supermodular Case}\label{sec:supermodular}
+
+\subsection{Monotonicity on the Lifted Space}
+
+\begin{proposition}[Extension of Proposition 7]\label{prop:supermodular}
+Suppose $u_1$ is \textbf{strictly supermodular} in $(\tilde\theta, a_1)$ for some orders $\succeq_{\tilde\Theta}$ on $\tilde\Theta$ and $\succeq_{A_1}$ on $A_1$, for all $\alpha_2$. Then:
+\begin{enumerate}[label=(\arabic*)]
+    \item $s_1^*$ is confound-defeating if and only if it is monotone on $\tilde\Theta$.
+    \item The co-monotone coupling is the unique OT solution.
+\end{enumerate}
+\end{proposition}
+
+\subsection{Payoffs Depending Only on $\theta_t$}
+
+When $u_1(\tilde\theta, a_1, \alpha_2) = u_1(\theta_t, a_1, \alpha_2)$, the relevant order on $\tilde\Theta$ is the \emph{first-coordinate order}: $(\theta_t, \theta_{t-1}) \succeq (\theta_t', \theta_{t-1}')$ iff $\theta_t \succeq \theta_t'$. Under this order, supermodularity of $u_1$ in $(\theta_t, a_1)$ implies supermodularity in $(\tilde\theta, a_1)$.
+
+\textbf{Computational evidence:} For $\theta_t$-dependent payoffs, \SupermodFraction{} out of \SupermodTotal{} orderings of the 9-element lifted space $\tilde\Theta$ preserve supermodularity---exactly those consistent with the first-coordinate ranking (Figure~\ref{fig:monotonicity}).
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/fig_monotonicity.png}
+\caption{Supermodularity fraction by payoff type on the lifted space. For $\theta_t$-only payoffs, \SupermodFraction/\SupermodTotal{} orderings preserve supermodularity. For transition-dependent payoffs, the fraction drops dramatically.}
+\label{fig:monotonicity}
+\end{figure}
+
+\subsection{Transition-Dependent Payoffs}
+
+When payoffs depend on the full lifted state $(\theta_t, \theta_{t-1})$---e.g., escalation penalties that depend on whether the state deteriorated---the ordering problem becomes harder. Only a small fraction of orderings on $\tilde\Theta$ preserve supermodularity in general. This is a genuine limitation of the Markov extension for non-standard payoff structures.
+
+\subsection{Extended Bounds}
+
+\begin{corollary}[Extended Lower Bound]\label{cor:lower}
+Under supermodularity with $\theta_t$-only payoffs:
+\begin{equation}
+    \liminf_{\delta \to 1}\, \underline{U}_1(\delta) \;\geq\; v_{\mathrm{mon}} \;:=\; \sup\left\{V_{\mathrm{Markov}}(s_1) : s_1 \text{ monotone on } \tilde\Theta,\; \omega_{s_1} \in \Omega\right\}.
+\end{equation}
+Under belief-robustness, $V_{\mathrm{Markov}}(s_1)$ can be replaced by $V(s_1)$.
+\end{corollary}

@@ -1,0 +1,219 @@
+{
+  "start_time": "2026-02-17T00:34:11.174638",
+  "end_time": "2026-02-17T00:42:04.298058",
+  "total_duration_seconds": 473.12342,
+  "sa_statuses": {
+    "SA1_SRBeliefs": {
+      "status": "completed",
+      "success": 3,
+      "total": 3,
+      "duration": 202.358629
+    },
+    "SA2_StateRevealing": {
+      "status": "completed",
+      "success": 3,
+      "total": 3,
+      "duration": 4.227901
+    },
+    "SA3_KLBound": {
+      "status": "completed",
+      "success": 3,
+      "total": 3,
+      "duration": 142.788726
+    },
+    "SA4_FilterStability": {
+      "status": "completed",
+      "success": 3,
+      "total": 3,
+      "duration": 54.074479
+    },
+    "SA5_OTSensitivity": {
+      "status": "completed",
+      "success": 3,
+      "total": 3,
+      "duration": 18.977507
+    },
+    "SA6_NashDynamics": {
+      "status": "completed",
+      "success": 3,
+      "total": 3,
+      "duration": 3.375489
+    },
+    "SA7_Monotonicity": {
+      "status": "completed",
+      "success": 3,
+      "total": 3,
+      "duration": 47.317124
+    }
+  },
+  "results": [
+    {
+      "script": "/Users/kylemathewson/mathTest/Agent1206_workspace/SA1_SRBeliefs/SSA1_1_MarkovSim/markov_sim.py",
+      "status": "completed",
+      "stderr": "",
+      "returncode": 0,
+      "sa": "SA1_SRBeliefs",
+      "ssa": "SSA1_1_MarkovSim"
+    },
+    {
+      "script": "/Users/kylemathewson/mathTest/Agent1206_workspace/SA1_SRBeliefs/SSA1_2_BayesFilter/bayes_filter.py",
+      "status": "completed",
+      "stderr": "",
+      "returncode": 0,
+      "sa": "SA1_SRBeliefs",
+      "ssa": "SSA1_2_BayesFilter"
+    },
+    {
+      "script": "/Users/kylemathewson/mathTest/Agent1206_workspace/SA1_SRBeliefs/SSA1_3_BeliefViz/belief_viz.py",
+      "status": "completed",
+      "stderr": "",
+      "returncode": 0,
+      "sa": "SA1_SRBeliefs",
+      "ssa": "SSA1_3_BeliefViz"
+    },
+    {
+      "script": "/Users/kylemathewson/mathTest/Agent1206_workspace/SA2_StateRevealing/SSA2_1_RevealingSim/revealing_sim.py",
+      "status": "completed",
+      "stderr": "",
+      "returncode": 0,
+      "sa": "SA2_StateRevealing",
+      "ssa": "SSA2_1_RevealingSim"
+    },
+    {
+      "script": "/Users/kylemathewson/mathTest/Agent1206_workspace/SA2_StateRevealing/SSA2_2_DivergenceAnalysis/divergence_analysis.py",
+      "status": "completed",
+      "stderr": "",
+      "returncode": 0,
+      "sa": "SA2_StateRevealing",
+      "ssa": "SSA2_2_DivergenceAnalysis"
+    },
+    {
+      "script": "/Users/kylemathewson/mathTest/Agent1206_workspace/SA2_StateRevealing/SSA2_3_Counterexample/counterexample.py",
+      "status": "completed",
+      "stderr": "",
+      "returncode": 0,
+      "sa": "SA2_StateRevealing",
+      "ssa": "SSA2_3_Counterexample"
+    },
+    {
+      "script": "/Users/kylemathewson/mathTest/Agent1206_workspace/SA3_KLBound/SSA3_1_SignalSim/signal_sim.py",
+      "status": "completed",
+      "stderr": "",
+      "returncode": 0,
+      "sa": "SA3_KLBound",
+      "ssa": "SSA3_1_SignalSim"
+    },
+    {
+      "script": "/Users/kylemathewson/mathTest/Agent1206_workspace/SA3_KLBound/SSA3_2_KLEngine/kl_engine.py",
+      "status": "completed",
+      "stderr": "",
+      "returncode": 0,
+      "sa": "SA3_KLBound",
+      "ssa": "SSA3_2_KLEngine"
+    },
+    {
+      "script": "/Users/kylemathewson/mathTest/Agent1206_workspace/SA3_KLBound/SSA3_3_MonteCarlo/monte_carlo.py",
+      "status": "completed",
+      "stderr": "",
+      "returncode": 0,
+      "sa": "SA3_KLBound",
+      "ssa": "SSA3_3_MonteCarlo"
+    },
+    {
+      "script": "/Users/kylemathewson/mathTest/Agent1206_workspace/SA4_FilterStability/SSA4_1_HMMFilter/hmm_filter.py",
+      "status": "completed",
+      "stderr": "",
+      "returncode": 0,
+      "sa": "SA4_FilterStability",
+      "ssa": "SSA4_1_HMMFilter"
+    },
+    {
+      "script": "/Users/kylemathewson/mathTest/Agent1206_workspace/SA4_FilterStability/SSA4_2_DualInit/dual_init.py",
+      "status": "completed",
+      "stderr": "",
+      "returncode": 0,
+      "sa": "SA4_FilterStability",
+      "ssa": "SSA4_2_DualInit"
+    },
+    {
+      "script": "/Users/kylemathewson/mathTest/Agent1206_workspace/SA4_FilterStability/SSA4_3_DecayFit/decay_fit.py",
+      "status": "completed",
+      "stderr": "",
+      "returncode": 0,
+      "sa": "SA4_FilterStability",
+      "ssa": "SSA4_3_DecayFit"
+    },
+    {
+      "script": "/Users/kylemathewson/mathTest/Agent1206_workspace/SA5_OTSensitivity/SSA5_1_OTSetup/ot_setup.py",
+      "status": "completed",
+      "stderr": "",
+      "returncode": 0,
+      "sa": "SA5_OTSensitivity",
+      "ssa": "SSA5_1_OTSetup"
+    },
+    {
+      "script": "/Users/kylemathewson/mathTest/Agent1206_workspace/SA5_OTSensitivity/SSA5_2_PerturbSweep/perturb_sweep.py",
+      "status": "completed",
+      "stderr": "",
+      "returncode": 0,
+      "sa": "SA5_OTSensitivity",
+      "ssa": "SSA5_2_PerturbSweep"
+    },
+    {
+      "script": "/Users/kylemathewson/mathTest/Agent1206_workspace/SA5_OTSensitivity/SSA5_3_SupportStability/support_stability.py",
+      "status": "completed",
+      "stderr": "",
+      "returncode": 0,
+      "sa": "SA5_OTSensitivity",
+      "ssa": "SSA5_3_SupportStability"
+    },
+    {
+      "script": "/Users/kylemathewson/mathTest/Agent1206_workspace/SA6_NashDynamics/SSA6_1_BestResponse/best_response.py",
+      "status": "completed",
+      "stderr": "",
+      "returncode": 0,
+      "sa": "SA6_NashDynamics",
+      "ssa": "SSA6_1_BestResponse"
+    },
+    {
+      "script": "/Users/kylemathewson/mathTest/Agent1206_workspace/SA6_NashDynamics/SSA6_2_GameSim/game_sim.py",
+      "status": "completed",
+      "stderr": "",
+      "returncode": 0,
+      "sa": "SA6_NashDynamics",
+      "ssa": "SSA6_2_GameSim"
+    },
+    {
+      "script": "/Users/kylemathewson/mathTest/Agent1206_workspace/SA6_NashDynamics/SSA6_3_BVisualization/b_visualization.py",
+      "status": "completed",
+      "stderr": "",
+      "returncode": 0,
+      "sa": "SA6_NashDynamics",
+      "ssa": "SSA6_3_BVisualization"
+    },
+    {
+      "script": "/Users/kylemathewson/mathTest/Agent1206_workspace/SA7_Monotonicity/SSA7_1_GameSetup/game_setup.py",
+      "status": "completed",
+      "stderr": "",
+      "returncode": 0,
+      "sa": "SA7_Monotonicity",
+      "ssa": "SSA7_1_GameSetup"
+    },
+    {
+      "script": "/Users/kylemathewson/mathTest/Agent1206_workspace/SA7_Monotonicity/SSA7_2_SupermodCheck/supermod_check.py",
+      "status": "completed",
+      "stderr": "/Users/kylemathewson/mathTest/Agent1206_workspace/SA7_Monotonicity/SSA7_2_SupermodCheck/supermod_check.py:225: UserWarning: Tight layout not applied. The bottom and top margins cannot be made large enough to accommodate all Axes decorations.\n  plt.tight_layout()\n",
+      "returncode": 0,
+      "sa": "SA7_Monotonicity",
+      "ssa": "SSA7_2_SupermodCheck"
+    },
+    {
+      "script": "/Users/kylemathewson/mathTest/Agent1206_workspace/SA7_Monotonicity/SSA7_3_OTOrders/ot_orders.py",
+      "status": "completed",
+      "stderr": "",
+      "returncode": 0,
+      "sa": "SA7_Monotonicity",
+      "ssa": "SSA7_3_OTOrders"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+% ================================================================
+\section{Computational Framework}\label{app:computational}
+
+This appendix documents the computational analysis that informed the revision. All scripts and figures are available in the project repository.
+
+\subsection{Analysis Modules}
+
+Seven analysis modules (SA1--SA7) systematically tested each claim from the original submission:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}clcc@{}}
+\toprule
+\textbf{Module} & \textbf{Focus} & \textbf{Scripts} & \textbf{Key Finding} \\
+\midrule
+SA1 & Belief deviation & 3 & Mean TV = \TVMean \\
+SA2 & State-revealing analysis & 3 & Gap = \BeliefGapBaseline{} (analytical) \\
+SA3 & KL bound verification & 3 & Extends verbatim \\
+SA4 & Filter stability & 3 & $r > \FilterCorrelation$ \\
+SA5 & OT robustness & 3 & \OTStabilityPct\% stable \\
+SA6 & Nash dynamics & 3 & \PayoffOverestimation\% overestimation \\
+SA7 & Monotonicity & 3 & \SupermodFraction/\SupermodTotal \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Total: 21 scripts, 8 diagnostic figures. Runtime: approximately 8 minutes on a standard laptop. No GPU required.
+
+\subsection{Reproducibility}
+
+The analysis pipeline is fully reproducible:
+\begin{enumerate}[label=(\arabic*)]
+    \item Dependencies: \texttt{numpy}, \texttt{scipy}, \texttt{matplotlib}, \texttt{seaborn} (Python 3.8+).
+    \item Entry point: \texttt{scripts/generate\_paper.sh} runs the statistics extraction and paper compilation.
+    \item Statistics are auto-generated: \texttt{scripts/extract\_stats.py} reads SA report files and produces \texttt{stats.tex}, ensuring the paper always reflects the latest computational results.
+\end{enumerate}
+
+\subsection{Additional Figures}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/fig_filter_stability.png}
+\caption{Filter forgetting rate $\lambda$ vs.\ $|1-\alpha-\beta|$ across a $\FilterGridSize\times\FilterGridSize$ parameter grid. The fitted correlation exceeds $r = \FilterCorrelation$, confirming exponential forgetting with rate proportional to the chain's second eigenvalue. More informative signals accelerate forgetting.}
+\label{fig:filter_stability}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/fig_ot_robustness.png}
+\caption{OT support stability margin across the $(\alpha,\beta)$ parameter space. The co-monotone coupling $(G\to A, B\to F)$ remains the OT solution for perturbations up to $\varepsilon = \OTStabilityMargin$, with stability margin $\geq \OTStabilityMargin$ in \OTStabilityPct\% of the parameter space.}
+\label{fig:ot_robustness}
+\end{figure}

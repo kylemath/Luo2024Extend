@@ -1,0 +1,160 @@
+\documentclass[12pt,a4paper]{article}
+
+% ========== Packages ==========
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{thmtools}
+\usepackage{xcolor}
+\usepackage{natbib}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{fancyhdr}
+
+\geometry{margin=1in, headheight=14.5pt}
+\onehalfspacing
+
+% ========== Theorem Environments ==========
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{remark}[theorem]{Remark}
+
+% ========== Custom Commands ==========
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\KL}{D_{\mathrm{KL}}}
+\newcommand{\TV}[2]{\left\|#1 - #2\right\|}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\conv}{\operatorname{conv}}
+\DeclareMathOperator*{\argmax}{argmax}
+\newcommand{\OT}{\mathrm{OT}}
+\DeclareMathOperator*{\liminff}{\underline{\lim}}
+\DeclareMathOperator*{\limsupf}{\overline{\lim}}
+
+% ========== Auto-generated Statistics ==========
+\input{stats}
+
+% ========== Header/Footer ==========
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\small Extending Marginal Reputation to Markov States}
+\lhead{\small \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ========== Colors for hyperref ==========
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!70!black,
+    citecolor=green!50!black,
+    urlcolor=blue!60!black
+}
+
+% ================================================================
+\begin{document}
+
+% ========== Title Page ==========
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+
+{\LARGE\bfseries Extending Marginal Reputation to Markov States:\\[6pt]
+A Corrected Analysis}
+
+\vspace{1.5cm}
+
+{\large
+Kyle Elliott Mathewson\textsuperscript{1} \\[6pt]
+with AI Collaborators
+}
+
+\vspace{1.5cm}
+
+{\large \PaperDate}
+
+\vspace{1cm}
+
+\noindent\textsuperscript{1}Faculty of Science, University of Alberta
+
+\vspace{2cm}
+
+\begin{abstract}
+\noindent
+We extend the main result (Theorem~1) of Luo \& Wolitzky (2024), ``Marginal Reputation,'' from i.i.d.\ states to persistent Markovian states. Our initial attempt overclaimed that the extension requires no correction. Following expert critique (Luo, 2026), we conducted systematic computational testing (7 analysis modules, 8 diagnostic figures) that identified precisely where the original proof breaks: short-run player beliefs permanently deviate from the stationary distribution when the Stackelberg strategy reveals the state. We present two corrected results. \textbf{Theorem~1\textsuperscript{$\prime$}} (belief-robust case): when short-run best responses are invariant to the filtering belief $F(\cdot|\theta)$, the original commitment payoff $V(s_1^*)$ holds exactly. \textbf{Theorem~1\textsuperscript{$\prime\prime$}} (general case): the corrected bound $V_{\mathrm{Markov}}(s_1^*) = \sum_\theta \pi(\theta) \cdot \inf_{B(s_1^*, F(\cdot|\theta))} u_1 \leq V(s_1^*)$ always holds, with equality iff the game is belief-robust. For the deterrence game with baseline parameters ($\alpha=\BaseAlpha$, $\beta=\BaseBeta$), the overestimation from ignoring state-contingent beliefs is \PayoffOverestimation\%. We quantify the cost of persistence in reputation games and demonstrate a correction methodology combining AI conjecture, expert critique, and computational verification.
+\end{abstract}
+
+\vspace{0.5cm}
+
+\noindent\textbf{Keywords:} Reputation, repeated games, Markov states, optimal transport, belief-robustness, corrected bounds
+
+\vspace{0.5cm}
+
+\noindent\textbf{Original Paper:} ``Marginal Reputation'' by Daniel Luo and Alexander Wolitzky, MIT Department of Economics, December 2024.
+
+\end{titlepage}
+
+% ========== Table of Contents ==========
+\tableofcontents
+\newpage
+
+% ========== Main Sections ==========
+\input{sections/sec_01_intro}
+\input{sections/sec_02_model}
+\input{sections/sec_03_belief_robustness}
+\input{sections/sec_04_theorems}
+\input{sections/sec_05_proof}
+\input{sections/sec_06_supermodular}
+\input{sections/sec_07_example}
+\input{sections/sec_08_interpolation}
+\input{sections/sec_09_methodology}
+\input{sections/sec_10_discussion}
+
+% ========== Appendices ==========
+\appendix
+\input{sections/app_A_kl_verification}
+\input{sections/app_B_computational}
+
+% ========== References ==========
+\section*{References}
+\addcontentsline{toc}{section}{References}
+
+\begin{enumerate}[label={[\arabic*]}, leftmargin=*, itemsep=3pt]
+\item Chigansky, P.\ and R.\ Liptser (2004). ``Stability of nonlinear filters in nonmixing case.'' \textit{Annals of Applied Probability}, 14(4): 2038--2056.
+
+\item Cover, T.\ M.\ and J.\ A.\ Thomas (2006). \textit{Elements of Information Theory}, 2nd ed. Wiley.
+
+\item Del Moral, P.\ (2004). \textit{Feynman--Kac Formulae: Genealogical and Interacting Particle Systems with Applications}. Springer.
+
+\item Fudenberg, D.\ and D.\ K.\ Levine (1992). ``Maintaining a Reputation When Strategies Are Imperfectly Observed.'' \textit{Review of Economic Studies}, 59(3): 561--579.
+
+\item Gossner, O.\ (2011). ``Simple Bounds on the Value of a Reputation.'' \textit{Econometrica}, 79(5): 1627--1651.
+
+\item Luo, D.\ and A.\ Wolitzky (2024). ``Marginal Reputation.'' MIT Department of Economics Working Paper.
+
+\item Mailath, G.\ J.\ and L.\ Samuelson (2006). \textit{Repeated Games and Reputations: Long-Run Relationships}. Oxford University Press.
+
+\item Pei, H.\ (2020). ``Reputation Effects under Interdependent Values.'' \textit{Econometrica}, 88(5): 2175--2202.
+
+\item Rochet, J.-C.\ (1987). ``A Necessary and Sufficient Condition for Rationalizability in a Quasi-linear Context.'' \textit{Journal of Mathematical Economics}, 16(2): 191--200.
+
+\item Santambrogio, F.\ (2015). ``Optimal Transport for Applied Mathematicians.'' Birkh\"auser.
+\end{enumerate}
+
+\end{document}

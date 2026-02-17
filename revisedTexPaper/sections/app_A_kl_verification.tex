@@ -1,0 +1,45 @@
+% ================================================================
+\section{KL Chain Rule Verification}\label{app:kl}
+
+For completeness, we verify that the chain rule for KL divergence holds for general stochastic processes---the key technical fact ensuring the counting bound (Lemma~\ref{lem:KL}) requires no modification for Markov states.
+
+\subsection{The Chain Rule for KL Divergence}
+
+\begin{lemma}\label{lem:kl_chain}
+Let $P$ and $Q$ be probability measures on $(X_0, X_1, \ldots, X_{T-1})$. Then:
+\[
+    \KL(P \| Q) = \sum_{t=0}^{T-1} \E_P\!\left[\KL\!\left(P(X_t | X_0, \ldots, X_{t-1}) \;\big\|\; Q(X_t | X_0, \ldots, X_{t-1})\right)\right].
+\]
+\end{lemma}
+
+\begin{proof}
+By the chain rule for probability distributions:
+\begin{align}
+    \KL(P \| Q) &= \E_P\!\left[\log \frac{P(X_0, \ldots, X_{T-1})}{Q(X_0, \ldots, X_{T-1})}\right] \\
+    &= \E_P\!\left[\log \prod_{t=0}^{T-1} \frac{P(X_t | X_0, \ldots, X_{t-1})}{Q(X_t | X_0, \ldots, X_{t-1})}\right] \\
+    &= \sum_{t=0}^{T-1} \E_P\!\left[\log \frac{P(X_t | X_0, \ldots, X_{t-1})}{Q(X_t | X_0, \ldots, X_{t-1})}\right] \\
+    &= \sum_{t=0}^{T-1} \E_P\!\left[\KL(P(X_t | X_0, \ldots, X_{t-1}) \| Q(X_t | X_0, \ldots, X_{t-1}))\right].
+\end{align}
+No independence assumption is used anywhere. The decomposition follows purely from the chain rule for joint distributions $P(X_0, \ldots, X_{T-1}) = \prod_t P(X_t | X_{<t})$ and linearity of expectation.
+\end{proof}
+
+\subsection{Filter Stability for Ergodic HMMs}
+
+\begin{proposition}[Filter Stability; cf.\ Chigansky \& Liptser 2004]\label{prop:filter_stability}
+Let $(\theta_t)$ be an ergodic Markov chain on finite $\Theta$ with transition kernel $F$, observed through a channel $y_t \sim g(\cdot | \theta_t)$ (where $g$ has full support). Then the filter $\pi_t(\cdot) = \Prob(\theta_t = \cdot | y_0, \ldots, y_t)$ satisfies:
+\[
+    \sup_{\pi_0, \pi_0'} \|\pi_t - \pi_t'\| \;\leq\; C \cdot \lambda^t
+\]
+for some $C > 0$ and $\lambda \in (0,1)$, where $\pi_t$ and $\pi_t'$ are filters starting from priors $\pi_0$ and $\pi_0'$ respectively.
+\end{proposition}
+
+This ensures that the initial condition of the Markov chain is ``forgotten'' exponentially fast, so the per-period signal distribution converges to a limit determined by the observation process alone---the key property used in Step~3 of the proof.
+
+\subsection{Monte Carlo Verification}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/fig_kl_bound.png}
+\caption{KL counting bound comparison: Markov vs.\ i.i.d.\ settings. Monte Carlo simulation with $N=\KLMonteCarloN$ runs and $T=\KLMonteCarloPeriods$ periods confirms the bound $\bar{T}(\eta, \mu_0) = -2\log\mu_0(\omega_{s_1^*})/\eta^2$ is valid and nearly identical in both settings.}
+\label{fig:kl_bound}
+\end{figure}

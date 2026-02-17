@@ -1,0 +1,41 @@
+% ================================================================
+\section{Methodology: The Correction Process}\label{sec:methodology}
+
+This section documents the correction methodology as a case study in AI-assisted mathematical research. The story of ``AI generated a plausible-looking proof that was wrong in specific ways, identified computationally and fixed'' is itself a contribution to the AI-for-math literature.
+
+\subsection{The Correction Pipeline}
+
+The revision followed a four-stage pipeline:
+
+\medskip
+\noindent\textbf{Stage 1: AI Conjecture.}
+Multiple specialized AI agents (paper parsing, proof verification, example computation) developed the initial extension claim in under 5 hours. The claim: Theorem~1 extends to Markov states with no correction needed, using the lifted state $\tilde\theta_t = (\theta_t, \theta_{t-1})$.
+
+\medskip
+\noindent\textbf{Stage 2: Expert Critique.}
+Daniel Luo identified the fatal flaw: i.i.d.\ disciplines SR information sets. With Markov states and state-revealing strategies, SR beliefs are $F(\cdot|\theta_t)$, not $\pi$. The Nash correspondence $B(s_1^*, \mu)$ changes period-to-period.
+
+\medskip
+\noindent\textbf{Stage 3: Computational Testing.}
+Seven analysis modules (21 scripts, 40+ figures) systematically tested each claim:
+\begin{itemize}
+    \item SA1--SA2: Belief deviation quantification (confirmed: mean TV = \TVMean, gap = \BeliefGapBaseline)
+    \item SA3: KL bound verification (confirmed: extends verbatim)
+    \item SA4: Filter stability (confirmed: $r > \FilterCorrelation$)
+    \item SA5: OT robustness (confirmed: \OTStabilityPct\% stability)
+    \item SA6: Nash dynamics (identified: \SRDisagreement\% disagreement, \PayoffOverestimation\% overestimation)
+    \item SA7: Monotonicity (confirmed: \SupermodFraction/\SupermodTotal{} orderings for $\theta_t$-only payoffs)
+\end{itemize}
+
+\medskip
+\noindent\textbf{Stage 4: Corrected Results.}
+The computational evidence guided two corrected theorems: Theorem~\ref{thm:belief_robust} (belief-robust, exact) and Theorem~\ref{thm:general} (general, corrected bound). Both are supported by computational verification.
+
+\subsection{Lessons for AI-Assisted Research}
+
+\begin{enumerate}[label=(\arabic*)]
+    \item \textbf{AI proof sketches require adversarial testing.} The initial proof was ``nicely written nonsense''---aesthetically convincing but mathematically flawed in specific ways.
+    \item \textbf{Computational testing can precisely localize errors.} The seven analysis modules identified exactly which claims survive and which fail, enabling targeted correction rather than wholesale rejection.
+    \item \textbf{The correction is more interesting than the original claim.} Belief-robustness and $V_{\mathrm{Markov}}$ are genuinely new economic concepts that the i.i.d.\ framework cannot capture.
+    \item \textbf{Transparency enables scientific progress.} All agent transcripts, analysis scripts, and figures are available in the project repository.
+\end{enumerate}

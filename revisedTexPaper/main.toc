@@ -1,0 +1,58 @@
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}What We Attempted and What Went Wrong}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Systematic Computational Testing}{3}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Corrected Results}{4}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Outline}{4}{subsection.1.4}%
+\contentsline {section}{\numberline {2}The Extended Model}{4}{section.2}%
+\contentsline {subsection}{\numberline {2.1}State Process}{4}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Lifted State Space}{5}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Stage Game}{6}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Joint Distribution and Commitment Types}{6}{subsection.2.4}%
+\contentsline {section}{\numberline {3}Belief-Robustness: The Key New Concept}{6}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Filtering Beliefs}{6}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}The Belief-Robustness Condition}{7}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}When Does Belief-Robustness Hold?}{7}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Corrected Theorems}{8}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Definitions on the Expanded State Space}{8}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Theorem~1$'$ (Belief-Robust Extension)}{8}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Theorem~1$''$ (General Corrected Bound)}{9}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Proof Sketch}{9}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Overview: Where i.i.d.\ Is Actually Used}{10}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Step 0: OT / Confound-Defeating Extension}{10}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Step 1: Lemma 1 --- Equilibrium Implications}{10}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Step 2: Lemma 2 --- KL Counting Bound}{10}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}Step 3: Lemma 3 --- Martingale Convergence}{11}{subsection.5.5}%
+\contentsline {subsection}{\numberline {5.6}Step 4: Lemma 4 --- Combining the Pieces}{11}{subsection.5.6}%
+\contentsline {subsection}{\numberline {5.7}Step 5: Payoff Bound}{11}{subsection.5.7}%
+\contentsline {section}{\numberline {6}The Supermodular Case}{12}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Monotonicity on the Lifted Space}{12}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Payoffs Depending Only on $\theta _t$}{12}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Transition-Dependent Payoffs}{12}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Extended Bounds}{12}{subsection.6.4}%
+\contentsline {section}{\numberline {7}Worked Example: Deterrence Game}{12}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Setup}{13}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Version 1: Belief-Robust ($\mu ^* = 0.60$)}{13}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Version 2: Non-Belief-Robust ($\mu ^* = 0.60$)}{13}{subsection.7.3}%
+\contentsline {subsection}{\numberline {7.4}The Overestimation Gap}{13}{subsection.7.4}%
+\contentsline {subsection}{\numberline {7.5}Comparison Table}{14}{subsection.7.5}%
+\contentsline {subsection}{\numberline {7.6}Figures}{14}{subsection.7.6}%
+\contentsline {section}{\numberline {8}Interpolation Between i.i.d.\ and Persistent}{14}{section.8}%
+\contentsline {subsection}{\numberline {8.1}The Interpolation Landscape}{14}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Recovery of Existing Results}{14}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}The Cost of Persistence}{15}{subsection.8.3}%
+\contentsline {section}{\numberline {9}Methodology: The Correction Process}{15}{section.9}%
+\contentsline {subsection}{\numberline {9.1}The Correction Pipeline}{15}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Lessons for AI-Assisted Research}{16}{subsection.9.2}%
+\contentsline {section}{\numberline {10}Discussion and Open Questions}{16}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Summary}{16}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Open Questions}{17}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}Conclusion}{17}{subsection.10.3}%
+\contentsline {section}{\numberline {A}KL Chain Rule Verification}{18}{appendix.A}%
+\contentsline {subsection}{\numberline {A.1}The Chain Rule for KL Divergence}{18}{subsection.A.1}%
+\contentsline {subsection}{\numberline {A.2}Filter Stability for Ergodic HMMs}{18}{subsection.A.2}%
+\contentsline {subsection}{\numberline {A.3}Monte Carlo Verification}{19}{subsection.A.3}%
+\contentsline {section}{\numberline {B}Computational Framework}{19}{appendix.B}%
+\contentsline {subsection}{\numberline {B.1}Analysis Modules}{19}{subsection.B.1}%
+\contentsline {subsection}{\numberline {B.2}Reproducibility}{19}{subsection.B.2}%
+\contentsline {subsection}{\numberline {B.3}Additional Figures}{20}{subsection.B.3}%
+\contentsline {section}{References}{20}{section*.2}%

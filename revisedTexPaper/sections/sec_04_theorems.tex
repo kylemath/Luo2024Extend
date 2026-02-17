@@ -1,0 +1,67 @@
+% ================================================================
+\section{Corrected Theorems}\label{sec:theorems}
+
+We state two results. Theorem~1$'$ recovers the exact i.i.d.\ bound under belief-robustness. Theorem~1$''$ provides a corrected bound for the general case.
+
+\subsection{Definitions on the Expanded State Space}
+
+All definitions from the original paper carry over to $\tilde\Theta$, with strategies mapping $\tilde\Theta \to \Delta(A_1)$.
+
+\begin{definition}[Confound-Defeating, Extended]\label{def:CD_extended}
+A Markov strategy $s_1^* : \tilde\Theta \to \Delta(A_1)$ is \textbf{confound-defeating} if for every $(\alpha_0, \alpha_2) \in B_0(s_1^*)$, the joint distribution $\gamma(\alpha_0, s_1^*)$ is the \emph{unique solution} to:
+\begin{equation}\label{eq:OT_extended}
+    \OT\bigl(\tilde\rho(\alpha_0),\, \phi(\alpha_0, s_1^*);\, \alpha_2\bigr): \quad \max_{\gamma \in \Delta(\tilde\Theta \times A_1)} \int u_1(\tilde\theta, a_1, \alpha_2)\, d\gamma
+\end{equation}
+subject to $\pi_{\tilde\Theta}(\gamma) = \tilde\rho(\alpha_0)$ and $\pi_{A_1}(\gamma) = \phi(\alpha_0, s_1^*)$.
+\end{definition}
+
+\begin{definition}[Not Behaviorally Confounded, Extended]\label{def:NBC_extended}
+$s_1^*$ is \textbf{not behaviorally confounded} if for any $\omega_{s_1'} \in \Omega$ with $s_1' \neq s_1^*$ and any $(\alpha_0, \alpha_2) \in B_1(s_1^*)$, we have $p(\alpha_0, s_1^*, \alpha_2) \neq p(\alpha_0, s_1', \alpha_2)$.
+\end{definition}
+
+\subsection{Theorem~1\texorpdfstring{$'$}{'} (Belief-Robust Extension)}
+
+\begin{theorem}[Belief-Robust Markov Extension]\label{thm:belief_robust}
+Let $\theta_t$ follow a stationary ergodic Markov chain on finite $\Theta$ (Assumption~\ref{ass:markov}). Let $\tilde\theta_t = (\theta_t, \theta_{t-1})$ with stationary distribution $\tilde\rho$. Suppose:
+\begin{enumerate}[label=(\roman*)]
+    \item $\omega_{s_1^*} \in \Omega$, where $s_1^* : \tilde\Theta \to \Delta(A_1)$ is a Markov strategy;
+    \item $s_1^*$ is confound-defeating on $\tilde\Theta$ (Definition~\ref{def:CD_extended});
+    \item $s_1^*$ is not behaviorally confounded (Definition~\ref{def:NBC_extended});
+    \item The game is \textbf{belief-robust} with respect to $s_1^*$ and $(\Theta, F)$ (Definition~\ref{def:belief_robust}).
+\end{enumerate}
+Then:
+\begin{equation}\label{eq:thm_br}
+    \boxed{\liminf_{\delta \to 1}\, \underline{U}_1(\delta) \;\geq\; V(s_1^*)}
+\end{equation}
+where $V(s_1^*) = \inf_{(\alpha_0, \alpha_2) \in B(s_1^*)} u_1(\alpha_0, s_1^*, \alpha_2)$ is the commitment payoff, identical to the i.i.d.\ case.
+\end{theorem}
+
+\begin{remark}
+Under belief-robustness, the SR belief gap is irrelevant: SR plays the same best response regardless of the filtering belief $F(\cdot|\theta)$. All the confirmed proof machinery---KL counting bound, OT robustness, monotonicity---applies without modification.
+\end{remark}
+
+\subsection{Theorem~1\texorpdfstring{$''$}{''} (General Corrected Bound)}
+
+\begin{definition}[Markov Commitment Payoff]\label{def:V_markov}
+The \textbf{Markov commitment payoff} is
+\begin{equation}\label{eq:V_markov}
+    V_{\mathrm{Markov}}(s_1^*) := \sum_{\theta \in \Theta} \pi(\theta) \cdot \inf_{(\alpha_0, \alpha_2) \in B(s_1^*, F(\cdot|\theta))} u_1(\theta, s_1^*(\theta), \alpha_2).
+\end{equation}
+This averages over states using the stationary distribution $\pi$, but uses the \textbf{state-contingent} Nash correspondence $B(s_1^*, F(\cdot|\theta))$ at each state.
+\end{definition}
+
+\begin{theorem}[General Markov Extension]\label{thm:general}
+Under conditions (i)--(iii) of Theorem~\ref{thm:belief_robust}, with ergodic Markov states and confound-defeating $s_1^*$ on $\tilde\Theta$:
+\begin{equation}\label{eq:thm_general}
+    \boxed{\liminf_{\delta \to 1}\, \underline{U}_1(\delta) \;\geq\; V_{\mathrm{Markov}}(s_1^*)}
+\end{equation}
+where $V_{\mathrm{Markov}}(s_1^*) \leq V(s_1^*)$, with equality if and only if the game is belief-robust.
+\end{theorem}
+
+\begin{remark}[Relationship Between Theorems]
+The two results are nested: Theorem~\ref{thm:belief_robust} is the special case of Theorem~\ref{thm:general} where belief-robustness forces $V_{\mathrm{Markov}} = V(s_1^*)$. The gap $V(s_1^*) - V_{\mathrm{Markov}}$ is the ``cost of persistence''---the payoff the LR player loses because state persistence causes SR to adjust behavior state-by-state.
+\end{remark}
+
+\begin{remark}[Continuity in Chain Parameters]
+$V_{\mathrm{Markov}}(s_1^*)$ is a continuous function of the chain parameters $(\alpha, \beta)$. As $\alpha + \beta \to 1$ (the i.i.d.\ limit), $F(\cdot|\theta) \to \pi(\cdot)$ for all $\theta$, so $V_{\mathrm{Markov}} \to V(s_1^*)$. The gap vanishes continuously.
+\end{remark}

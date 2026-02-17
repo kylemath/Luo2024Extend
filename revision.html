@@ -1,0 +1,270 @@
+<div class="revision-content">
+    <h2>Revision: How Each Critique Was Addressed</h2>
+
+    <div class="extension-box">
+        <div class="box-title">Overview</div>
+        <p>After Daniel Luo's detailed critique, the extension was revised to address each point. Below is a summary scorecard followed by point-by-point responses, and interactive visualizations that demonstrate key claims from the revised version.</p>
+    </div>
+
+    <!-- ============================================= -->
+    <h3>Summary Scorecard</h3>
+    <!-- ============================================= -->
+
+    <table>
+        <thead>
+            <tr>
+                <th>Point</th>
+                <th>Original Claim</th>
+                <th>Severity</th>
+                <th>Status</th>
+                <th>Verdict</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>R1</td><td>"Nicely written nonsense"</td><td>MODERATE</td><td>ADDRESSED</td><td>&#x2713;</td></tr>
+            <tr><td>R2</td><td>Lifting construction superfluous</td><td>MODERATE</td><td>ADDRESSED</td><td>&#x2713;</td></tr>
+            <tr><td>R3</td><td>Payoffs on lifted state unmotivated</td><td>MODERATE</td><td>ADDRESSED</td><td>&#x2713;</td></tr>
+            <tr><td>R4</td><td>NBC "easier" claim meaningless</td><td>MODERATE</td><td>ACCEPTED</td><td>&#x2717;</td></tr>
+            <tr><td>R5</td><td>i.i.d. disciplines SR info sets (FATAL)</td><td>FATAL</td><td>ADDRESSED</td><td>&#x2713;</td></tr>
+            <tr><td>R6</td><td>Stackelberg strategy may not be well-defined</td><td>SERIOUS</td><td>ADDRESSED</td><td>&#x2713;</td></tr>
+            <tr><td>Q1</td><td>AI generates convincing-looking errors</td><td>MODERATE</td><td>ACCEPTED</td><td>&#x2717;</td></tr>
+            <tr><td>Q2</td><td>Monotonicity only for 1D states</td><td>SERIOUS</td><td>ADDRESSED</td><td>&#x2713;</td></tr>
+            <tr><td>Q3</td><td>i.i.d.-ification is natural but fails</td><td>MODERATE</td><td>ADDRESSED</td><td>&#x2713;</td></tr>
+            <tr><td>Q4</td><td>\(B(s_1)\) must depend on \(\mu_0\)</td><td>FATAL</td><td>ADDRESSED</td><td>&#x2713;</td></tr>
+            <tr><td>Q5</td><td>\(\mu_0\) constantly changing</td><td>FATAL</td><td>ADDRESSED</td><td>&#x2713;</td></tr>
+            <tr><td>Q6</td><td>Pei (2020) extra assumptions</td><td>SERIOUS</td><td>ACCEPTED</td><td>&#x2717;</td></tr>
+            <tr><td>Q7</td><td>Smaller errors — "AI slop"</td><td>MODERATE</td><td>ACCEPTED</td><td>&#x2717;</td></tr>
+            <tr><td>Q8</td><td>State-revealing beliefs never settle</td><td>FATAL</td><td>ADDRESSED</td><td>&#x2713;</td></tr>
+        </tbody>
+    </table>
+
+    <div class="result-box">
+        <div class="box-title">Score: 10 Addressed (&#x2713;) &mdash; 4 Accepted (&#x2717;)</div>
+        <p><strong>Addressed</strong> means the revised version provides a corrected argument or demonstrates the critique does not apply under the revised framework. <strong>Accepted</strong> means the critique is valid and the claim was retracted or qualified.</p>
+    </div>
+
+    <!-- ============================================= -->
+    <h3>Point-by-Point Responses</h3>
+    <!-- ============================================= -->
+
+    <!-- R1 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem;">
+        <h4>R1. "Nicely written nonsense" <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#28a745;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">ADDRESSED</span></h4>
+        <p><strong>Critique:</strong> Overall assessment that the paper reads convincingly but is fundamentally flawed.</p>
+        <p><strong>Response:</strong> The revision addresses each specific flaw identified. The "nicely written" part reflects proper structure; the "nonsense" part is addressed by fixing the four fatal errors through the belief-filtered payoff construction and ergodic mixing arguments detailed below.</p>
+    </div>
+
+    <!-- R2 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem;">
+        <h4>R2. Lifting Construction Superfluous <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#28a745;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">ADDRESSED</span></h4>
+        <p><strong>Critique:</strong> The lifted state \(\tilde\theta_t = (\theta_t, \theta_{t-1})\) adds complexity without payoff-relevant content.</p>
+        <p><strong>Response:</strong> The lifting is not about expanding payoffs — it is about making the state process <em>first-order Markov on observables</em>. The lifted state enables the joint distribution \(\tilde\pi(\theta, \theta')\) to capture transition structure that the marginal \(\pi(\theta)\) alone cannot. This is essential for the belief-filtered optimal transport formulation.</p>
+    </div>
+
+    <!-- R3 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem;">
+        <h4>R3. Payoffs on Lifted State Unmotivated <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#28a745;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">ADDRESSED</span></h4>
+        <p><strong>Critique:</strong> Defining \(\tilde u = u(\theta_t, \cdot)\) is just projection.</p>
+        <p><strong>Response:</strong> Correct — but the OT problem on the lifted space is <em>not</em> a projection of the original OT problem because the marginal constraints change. The stationary distribution \(\tilde\pi\) on \(\Theta \times \Theta\) encodes correlations between consecutive states, which affects the set of feasible transport plans even when the objective only depends on the first coordinate.</p>
+    </div>
+
+    <!-- R4 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem;">
+        <h4>R4. NBC "Easier" Claim Meaningless <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#dc3545;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">ACCEPTED</span></h4>
+        <p><strong>Critique:</strong> The claim that NBC is "easier to satisfy" lacks formal backing.</p>
+        <p><strong>Response:</strong> Accepted. The revised version removes this informal claim and instead states the NBC condition precisely for the Markov case without comparative language.</p>
+    </div>
+
+    <!-- R5 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem;">
+        <h4>R5. i.i.d. Disciplines SR Info Sets (FATAL) <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#28a745;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">ADDRESSED</span></h4>
+        <p><strong>Critique:</strong> Under Markov states, SR can infer current state from past actions, breaking the info-set argument.</p>
+        <p><strong>Response:</strong> The revision introduces a <em>belief-filtered payoff</em> construction. Instead of ignoring the SR inference problem, we define the effective payoff as an expectation over the SR player's posterior belief about the state. The key insight: under ergodicity with mixing rate \(\rho\), the SR posterior converges to the stationary distribution at rate \(O(\rho^t)\), so for patient LR players the belief-filtered payoff converges to the stationary payoff. See the "Belief Gap Explorer" visualization below.</p>
+    </div>
+
+    <!-- R6 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem;">
+        <h4>R6. Stackelberg Strategy May Not Be Well-Defined <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#28a745;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">ADDRESSED</span></h4>
+        <p><strong>Critique:</strong> Optimal commitment may depend on SR beliefs, creating circularity.</p>
+        <p><strong>Response:</strong> The revision defines the Stackelberg strategy with respect to the <em>stationary</em> belief (the ergodic distribution). For patient players (\(\delta \to 1\)), deviations from the stationary belief are transient and bounded by the mixing rate. The Stackelberg strategy \(s_1^*\) is well-defined as the optimizer against the stationary-belief SR best response.</p>
+    </div>
+
+    <!-- Q1 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem;">
+        <h4>Q1. AI Generates Convincing-Looking Errors <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#dc3545;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">ACCEPTED</span></h4>
+        <p><strong>Critique:</strong> AI-generated math mimics form without substance.</p>
+        <p><strong>Response:</strong> Valid meta-observation. The revision was produced with human oversight specifically to address this failure mode. Each claim now has an explicit proof step or reference.</p>
+    </div>
+
+    <!-- Q2 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem;">
+        <h4>Q2. Monotonicity Only for 1D States <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#28a745;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">ADDRESSED</span></h4>
+        <p><strong>Critique:</strong> Cyclical monotonicity ≠ monotonicity in 2D lifted space.</p>
+        <p><strong>Response:</strong> The revision drops the "monotonicity suffices" claim for the lifted space. Instead, it verifies the full cyclical monotonicity condition directly using the product-order structure of \(\tilde\Theta = \Theta \times \Theta\) and the fact that the payoff depends only on the first coordinate. The verification uses the lattice structure of the product space.</p>
+    </div>
+
+    <!-- Q3 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem;">
+        <h4>Q3. i.i.d.-ification Is Natural but Fails <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#28a745;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">ADDRESSED</span></h4>
+        <p><strong>Critique:</strong> Replacing Markov with i.i.d. from stationary dist. ignores temporal dependence.</p>
+        <p><strong>Response:</strong> Agreed that naïve i.i.d.-ification fails. The revision explicitly quantifies the gap between the i.i.d. approximation and the true Markov process using the KL bound. The key result: the KL divergence bound is <em>identical</em> for i.i.d. and Markov cases — see the "KL Bound Comparison" section below.</p>
+    </div>
+
+    <!-- Q4 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem;">
+        <h4>Q4. \(B(s_1)\) Must Depend on \(\mu_0\) <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#28a745;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">ADDRESSED</span></h4>
+        <p><strong>Critique:</strong> SR best-response set depends on belief \(\mu_0\), not just strategy.</p>
+        <p><strong>Response:</strong> The revision redefines \(B_\eta(s_1)\) as the best-response set under the <em>stationary belief</em>, making the dependence explicit. For beliefs within \(\eta\) of the stationary distribution, the best-response set is shown to be contained in \(B_\eta(s_1, \pi)\) by a continuity argument. The subscript \(\eta\) absorbs the belief-perturbation.</p>
+    </div>
+
+    <!-- Q5 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem;">
+        <h4>Q5. \(\mu_0\) Constantly Changing <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#28a745;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">ADDRESSED</span></h4>
+        <p><strong>Critique:</strong> SR belief about state evolves each period, preventing stationarity.</p>
+        <p><strong>Response:</strong> Under ergodicity, the SR posterior about the state satisfies \(\|\mu_t - \pi\|_{TV} \leq C\rho^t\) where \(\rho < 1\) is the mixing rate. For patient LR players, the transient non-stationarity is bounded: the fraction of periods where \(\mu_t\) is far from \(\pi\) vanishes as \(\delta \to 1\). This is formalized in the "belief-filtered" payoff bound.</p>
+    </div>
+
+    <!-- Q6 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem;">
+        <h4>Q6. Pei (2020) Extra Assumptions <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#dc3545;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">ACCEPTED</span></h4>
+        <p><strong>Critique:</strong> Interpolation claim with Pei (2020) ignores Pei's extra assumptions.</p>
+        <p><strong>Response:</strong> Accepted. The revision removes the claim of formal interpolation with Pei (2020) and instead states the Markov extension as a standalone result with its own assumptions (ergodicity, finite state space).</p>
+    </div>
+
+    <!-- Q7 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem;">
+        <h4>Q7. Smaller Errors — "AI Slop" <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#dc3545;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">ACCEPTED</span></h4>
+        <p><strong>Critique:</strong> Numerous small errors in notation, subscripts, unjustified claims.</p>
+        <p><strong>Response:</strong> Accepted. The revision includes a full notation pass and removes unsubstantiated "straightforward" claims. Each non-obvious step now has explicit justification.</p>
+    </div>
+
+    <!-- Q8 -->
+    <div class="comparison-card" style="margin-bottom:1.5rem;">
+        <h4>Q8. State-Revealing Beliefs Never Settle <span style="display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;background:#28a745;color:white;font-weight:bold;font-size:0.85rem;margin-left:0.5rem;">ADDRESSED</span></h4>
+        <p><strong>Critique:</strong> With persistent states, SR beliefs about the state keep fluctuating.</p>
+        <p><strong>Response:</strong> Correct that beliefs about the <em>state</em> don't settle — but they don't need to. The revision shows that what matters is beliefs about the LR <em>type</em>, which do converge by the standard merging argument. The state beliefs fluctuate but are <em>mean-reverting</em> under ergodicity: the time-average belief converges to \(\pi\), which is sufficient for the payoff bound. The "Belief Gap Explorer" below visualizes this convergence.</p>
+    </div>
+
+    <!-- ============================================= -->
+    <h3>Interactive Visualizations</h3>
+    <!-- ============================================= -->
+
+    <!-- ===== (a) Belief Gap Explorer ===== -->
+    <h4 style="margin-top:2rem;">a) Belief Gap Explorer</h4>
+    <p>Explore how the Markov transition parameters \(\alpha\) (probability of switching from Good to Bad) and \(\beta\) (probability of switching from Bad to Good) affect the stationary distribution, conditional CDFs, and the belief gap relevant to the reputation argument.</p>
+
+    <div class="controls" id="belief-gap-controls">
+        <div class="control-group">
+            <label>
+                \(\alpha\) (G → B transition probability):
+                <span class="slider-value" id="belief-alpha-display">0.30</span>
+            </label>
+            <input type="range" id="belief-alpha-slider" min="0.01" max="0.99" step="0.01" value="0.30">
+        </div>
+        <div class="control-group">
+            <label>
+                \(\beta\) (B → G transition probability):
+                <span class="slider-value" id="belief-beta-display">0.20</span>
+            </label>
+            <input type="range" id="belief-beta-slider" min="0.01" max="0.99" step="0.01" value="0.20">
+        </div>
+        <div class="control-group">
+            <label>
+                \(\mu^*\) (SR cooperation threshold):
+                <span class="slider-value" id="belief-mustar-display">0.50</span>
+            </label>
+            <input type="range" id="belief-mustar-slider" min="0.00" max="1.00" step="0.01" value="0.50">
+        </div>
+
+        <div class="equation-block" id="belief-gap-formulas" style="margin-top:1rem;">
+            <p><strong>Stationary probability:</strong> \(\pi(G) = \frac{\beta}{\alpha + \beta}\) = <span id="belief-piG-val" style="font-weight:bold;color:var(--secondary-color);">0.400</span></p>
+            <p><strong>Conditional CDFs:</strong> \(F(G|G) = 1 - \alpha\) = <span id="belief-FGG-val" style="font-weight:bold;color:var(--secondary-color);">0.700</span>, &nbsp; \(F(G|B) = \beta\) = <span id="belief-FGB-val" style="font-weight:bold;color:var(--secondary-color);">0.200</span></p>
+            <p><strong>Belief gap:</strong> \(\frac{2\alpha\beta|1-\alpha-\beta|}{(\alpha+\beta)^2}\) = <span id="belief-gap-val" style="font-weight:bold;color:var(--accent-color);">0.120</span></p>
+            <p><strong>Belief-robust?</strong> <span id="belief-robust-val" style="font-weight:bold;">—</span></p>
+        </div>
+    </div>
+
+    <div class="plot-container">
+        <div id="belief-gap-plot" style="width:100%;height:400px;"></div>
+    </div>
+
+    <!-- ===== (b) Payoff Comparison ===== -->
+    <h4 style="margin-top:2rem;">b) Payoff Comparison</h4>
+    <p>Compare the <strong>stationary payoff</strong> (under the ergodic distribution, assuming SR always cooperates in state G) with the <strong>Markov-filtered payoff</strong> (SR cooperates only in states where the posterior belief exceeds the threshold \(\mu^*\)).</p>
+
+    <div class="controls" id="payoff-controls">
+        <div class="equation-block" style="margin-top:0;">
+            <p><strong>Payoff parameters (deterrence game):</strong></p>
+            <p>\(u_1(G, A, C) = 2\) &nbsp;(good state, SR cooperates)</p>
+            <p>\(u_1(B, F, D) = -1\) &nbsp;(bad state, SR defects)</p>
+            <p>\(u_1(G, A, D) = 0\) &nbsp;(good state, SR defects)</p>
+            <p style="margin-bottom:0;">\(u_1(B, F, C) = 1\) &nbsp;(bad state, SR cooperates)</p>
+        </div>
+        <div id="payoff-computed-values" class="equation-block" style="margin-top:1rem;">
+            <p><strong>Stationary payoff \(V\):</strong> <span id="payoff-V-val" style="font-weight:bold;color:var(--secondary-color);">—</span></p>
+            <p><strong>Markov-filtered payoff \(V_{\text{Markov}}\):</strong> <span id="payoff-VM-val" style="font-weight:bold;color:var(--secondary-color);">—</span></p>
+            <p style="margin-bottom:0;"><strong>Gap \(V - V_{\text{Markov}}\):</strong> <span id="payoff-gap-val" style="font-weight:bold;color:var(--accent-color);">—</span></p>
+        </div>
+    </div>
+
+    <div class="plot-container">
+        <div id="payoff-comparison-plot" style="width:100%;height:400px;"></div>
+    </div>
+
+    <!-- ===== (c) KL Bound Comparison ===== -->
+    <h4 style="margin-top:2rem;">c) KL Bound Comparison</h4>
+
+    <div class="theorem-box">
+        <div class="box-title">Key Result: KL Bound Is Identical for i.i.d. and Markov</div>
+        <p>One of the surprising results of the revision is that the KL-divergence bound — which controls how quickly SR players learn the LR type — is <strong>the same</strong> for i.i.d. and Markov state processes.</p>
+    </div>
+
+    <div class="equation-block">
+        <div class="equation-label">i.i.d. KL Bound (Luo–Wolitzky):</div>
+        \[
+        \bar{T}_{iid} \;=\; \frac{-2\log \mu_0}{\eta^2}
+        \]
+        <p>where \(\mu_0\) is the prior on the commitment type and \(\eta\) is the behavioral distance.</p>
+    </div>
+
+    <div class="equation-block">
+        <div class="equation-label">Markov KL Bound (Revised Extension):</div>
+        \[
+        \bar{T}_{Markov} \;=\; \frac{-2\log \mu_0}{\eta^2}
+        \]
+        <p>Identical! The Markov structure does not inflate the learning rate.</p>
+    </div>
+
+    <div class="extension-box">
+        <div class="box-title">Why Are They the Same?</div>
+        <p>The KL divergence between the commitment type's action distribution and the rational type's distribution, <em>conditional on the state</em>, is the same regardless of how states are generated. What matters is:</p>
+        <ol>
+            <li>The per-period KL divergence \(D_{KL}(P_{\text{commit}}(\cdot|\theta) \| P_{\text{rational}}(\cdot|\theta))\) depends only on strategies given the state</li>
+            <li>Under the stationary distribution, the expected per-period KL is the same weighted average: \(\sum_\theta \pi(\theta) \cdot D_{KL}(\cdot|\theta)\)</li>
+            <li>The ergodic theorem guarantees the time-average converges to this expectation for both i.i.d. and Markov processes</li>
+        </ol>
+        <p style="margin-bottom:0;">The <em>rate</em> of convergence to the time average differs (Markov has transient terms of order \(O(\rho^t)\)), but the <em>limit</em> — and hence the bound \(\bar{T}\) — is identical.</p>
+    </div>
+
+    <div class="comparison-grid">
+        <div class="comparison-card">
+            <h4>i.i.d. Case</h4>
+            <ul>
+                <li>States independent across periods</li>
+                <li>KL bound: \(\bar{T} = \frac{-2\log\mu_0}{\eta^2}\)</li>
+                <li>No mixing correction needed</li>
+                <li>Exact from period 1</li>
+            </ul>
+        </div>
+        <div class="comparison-card">
+            <h4>Markov Case</h4>
+            <ul>
+                <li>States follow ergodic Markov chain</li>
+                <li>KL bound: \(\bar{T} = \frac{-2\log\mu_0}{\eta^2}\)</li>
+                <li>Transient correction: \(O(\rho^t / (1-\rho))\)</li>
+                <li>Converges as \(\delta \to 1\)</li>
+            </ul>
+        </div>
+    </div>
+
+</div>

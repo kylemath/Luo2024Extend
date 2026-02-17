@@ -40,6 +40,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 initComparisonTab();
             } else if (tabName === 'example') {
                 initExampleTab();
+            } else if (tabName === 'author-review') {
+                initAuthorReviewTab();
+            } else if (tabName === 'revision') {
+                initRevisionTab();
             } else if (tabName === 'prompt-history') {
                 initPromptHistoryTab();
             }
@@ -676,24 +680,36 @@ function plotExamplePersistence() {
 // ===============================================
 
 const PROMPT_FILES = [
-    { id: '00db3062-78f8-43af-84b0-1d7bfab41c15', size: '39K' },
-    { id: '0415a79b-369d-49ea-813a-d86501b1afae', size: '24K' },
-    { id: '05901914-1f2f-41ff-b7fc-2d454c04c8a9', size: '77K' },
-    { id: '14f9ea16-84d3-4de0-83bd-aeeb7b4c0098', size: '2.0K' },
-    { id: '37c9635e-ffa1-45dc-bf2d-db130079dcbe', size: '97K' },
-    { id: '439ed1fc-6ac2-4b22-8a46-245d71b90f96', size: '66K' },
     { id: '67b86cd4-146c-42a1-aa17-5d027ed88b38', size: '44K' },
-    { id: '8f39fab3-3f8d-486b-802d-8744444c6f2e', size: '86K' },
-    { id: '94eb98ad-3e42-4d4d-9e32-65f01fc2416d', size: '23K' },
-    { id: 'b540e723-991b-4036-89f9-28a860364864', size: '69K' },
     { id: 'c5083db6-e06c-42e4-80a4-80f954d8d282', size: '60K' },
-    { id: 'cd01fc35-7e6d-47e9-943f-b1362eded047', size: '149K' }
+    { id: '0415a79b-369d-49ea-813a-d86501b1afae', size: '24K' },
+    { id: '00db3062-78f8-43af-84b0-1d7bfab41c15', size: '39K' },
+    { id: '439ed1fc-6ac2-4b22-8a46-245d71b90f96', size: '66K' },
+    { id: '8f39fab3-3f8d-486b-802d-8744444c6f2e', size: '86K' },
+    { id: 'b540e723-991b-4036-89f9-28a860364864', size: '69K' },
+    { id: '94eb98ad-3e42-4d4d-9e32-65f01fc2416d', size: '23K' },
+    { id: '37c9635e-ffa1-45dc-bf2d-db130079dcbe', size: '97K' },
+    { id: '05901914-1f2f-41ff-b7fc-2d454c04c8a9', size: '77K' },
+    { id: 'cd01fc35-7e6d-47e9-943f-b1362eded047', size: '149K' },
+    { id: 'b1f67f41-ac2c-4f9d-9fed-7201f74c8424', size: '6K' },
+    { id: '5959a99a-05d9-4e23-ab48-73d96d2a3417', size: '64K' },
+    { id: '14f9ea16-84d3-4de0-83bd-aeeb7b4c0098', size: '7K' },
+    { id: '628e5ccb-256f-4e04-b418-ce60072c3e35', size: 'new' }
 ];
 
 function initPromptHistoryTab() {
     const cardsGrid = document.getElementById('prompt-cards-grid');
     const modal = document.getElementById('transcript-modal');
     const modalClose = document.querySelector('.modal-close');
+    
+    if (!cardsGrid) {
+        console.error('prompt-cards-grid not found');
+        return;
+    }
+
+    // Update session count
+    const countEl = document.getElementById('ph-total-count');
+    if (countEl) countEl.textContent = PROMPT_FILES.length;
     
     // Clear existing cards
     cardsGrid.innerHTML = '';
@@ -704,13 +720,15 @@ function initPromptHistoryTab() {
     });
     
     // Close modal handlers
-    modalClose.addEventListener('click', () => {
-        modal.classList.remove('active');
-    });
+    if (modalClose) {
+        modalClose.addEventListener('click', () => {
+            if (modal) modal.style.display = 'none';
+        });
+    }
     
     window.addEventListener('click', (e) => {
         if (e.target === modal) {
-            modal.classList.remove('active');
+            modal.style.display = 'none';
         }
     });
 }
@@ -815,13 +833,15 @@ function openTranscriptModal(file, content, index) {
     const modalTitle = document.getElementById('modal-title');
     const modalBody = document.getElementById('modal-body');
     
+    if (!modal || !modalTitle || !modalBody) return;
+    
     modalTitle.textContent = `Agent Session ${index + 1} - ${file.id.substring(0, 8)}...`;
     
     // Parse and format the transcript
     const formattedContent = formatTranscript(content);
     modalBody.innerHTML = formattedContent;
     
-    modal.classList.add('active');
+    modal.style.display = 'block';
 }
 
 function formatTranscript(content) {
@@ -1016,4 +1036,178 @@ function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = String(text);
     return div.innerHTML;
+}
+
+// ===============================================
+// Author Review Tab
+// ===============================================
+function initAuthorReviewTab() {
+    // Static content — no interactive elements needed.
+    // MathJax re-render is handled by the main loadTab function.
+}
+
+// ===============================================
+// Revision Tab — Interactive Plotly Visualizations
+// ===============================================
+function initRevisionTab() {
+    setupBeliefGapExplorer();
+    setupPayoffComparison();
+}
+
+function setupBeliefGapExplorer() {
+    const alphaSlider = document.getElementById('belief-alpha-slider');
+    const betaSlider = document.getElementById('belief-beta-slider');
+    const mustarSlider = document.getElementById('belief-mustar-slider');
+
+    if (!alphaSlider || !betaSlider || !mustarSlider) return;
+
+    function update() {
+        const a = parseFloat(alphaSlider.value);
+        const b = parseFloat(betaSlider.value);
+        const mustar = parseFloat(mustarSlider.value);
+
+        document.getElementById('belief-alpha-display').textContent = a.toFixed(2);
+        document.getElementById('belief-beta-display').textContent = b.toFixed(2);
+        document.getElementById('belief-mustar-display').textContent = mustar.toFixed(2);
+
+        const piG = b / (a + b);
+        const gap = (2 * a * b * Math.abs(1 - a - b)) / Math.pow(a + b, 2);
+        const FGG = 1 - a;
+        const FGB = b;
+
+        document.getElementById('belief-piG-val').textContent = piG.toFixed(4);
+        document.getElementById('belief-FGG-val').textContent = FGG.toFixed(4);
+        document.getElementById('belief-FGB-val').textContent = FGB.toFixed(4);
+        document.getElementById('belief-gap-val').textContent = gap.toFixed(4);
+
+        const isRobust = mustar < FGB || mustar > FGG;
+        const robustEl = document.getElementById('belief-robust-val');
+        if (isRobust) {
+            robustEl.textContent = 'Yes — μ* is outside [β, 1−α], so cooperation is belief-robust';
+            robustEl.style.color = '#28a745';
+        } else {
+            robustEl.textContent = 'No — μ* ∈ [β, 1−α], so SR cooperation depends on beliefs';
+            robustEl.style.color = '#dc3545';
+        }
+
+        const barColors = ['#2ecc71', '#3498db', '#e67e22', '#e74c3c'];
+        const barData = [{
+            x: ['F(G|G) = 1−α', 'π(G)', 'F(G|B) = β', 'μ*'],
+            y: [FGG, piG, FGB, mustar],
+            type: 'bar',
+            marker: { color: barColors },
+            text: [FGG.toFixed(3), piG.toFixed(3), FGB.toFixed(3), mustar.toFixed(3)],
+            textposition: 'outside'
+        }];
+
+        const layout = {
+            title: 'Belief Thresholds and Stationary Distribution',
+            yaxis: { title: 'Probability', range: [0, 1.15] },
+            xaxis: { title: '' },
+            plot_bgcolor: '#fafafa',
+            paper_bgcolor: 'white',
+            font: { family: 'Helvetica, Arial, sans-serif' },
+            shapes: [{
+                type: 'line',
+                x0: -0.5, x1: 3.5,
+                y0: mustar, y1: mustar,
+                line: { color: '#e74c3c', width: 2, dash: 'dash' }
+            }],
+            annotations: [{
+                x: 3.5, y: mustar,
+                text: 'μ* threshold',
+                showarrow: false,
+                xanchor: 'right',
+                yanchor: 'bottom',
+                font: { color: '#e74c3c', size: 11 }
+            }],
+            margin: { t: 50, b: 60, l: 60, r: 30 }
+        };
+
+        Plotly.newPlot('belief-gap-plot', barData, layout, { responsive: true });
+    }
+
+    alphaSlider.addEventListener('input', update);
+    betaSlider.addEventListener('input', update);
+    mustarSlider.addEventListener('input', update);
+    update();
+}
+
+function setupPayoffComparison() {
+    const alphaSlider = document.getElementById('belief-alpha-slider');
+    const betaSlider = document.getElementById('belief-beta-slider');
+    const mustarSlider = document.getElementById('belief-mustar-slider');
+
+    if (!alphaSlider || !betaSlider || !mustarSlider) return;
+
+    const uGAC = 2;
+    const uBFD = -1;
+    const uGAD = 0;
+    const uBFC = 1;
+
+    function updatePayoff() {
+        const a = parseFloat(alphaSlider.value);
+        const b = parseFloat(betaSlider.value);
+        const mustar = parseFloat(mustarSlider.value);
+
+        const piG = b / (a + b);
+        const piB = a / (a + b);
+
+        const V = piG * uGAC + piB * uBFD;
+
+        const FGG = 1 - a;
+        const FGB = b;
+
+        let VM;
+        if (mustar <= FGB) {
+            VM = piG * uGAC + piB * uBFC;
+        } else if (mustar >= FGG) {
+            VM = piG * uGAD + piB * uBFD;
+        } else {
+            VM = piG * uGAC + piB * uBFD;
+        }
+
+        const gapVal = V - VM;
+
+        document.getElementById('payoff-V-val').textContent = V.toFixed(4);
+        document.getElementById('payoff-VM-val').textContent = VM.toFixed(4);
+        document.getElementById('payoff-gap-val').textContent = gapVal.toFixed(4);
+
+        const barData = [{
+            x: ['Stationary V', 'Markov-filtered V_Markov', 'Gap (V − V_Markov)'],
+            y: [V, VM, gapVal],
+            type: 'bar',
+            marker: {
+                color: ['#3498db', '#2ecc71', gapVal >= 0 ? '#e67e22' : '#e74c3c']
+            },
+            text: [V.toFixed(3), VM.toFixed(3), gapVal.toFixed(3)],
+            textposition: 'outside'
+        }];
+
+        const yMin = Math.min(V, VM, gapVal, 0) - 0.5;
+        const yMax = Math.max(V, VM, gapVal, 0) + 0.5;
+
+        const layout = {
+            title: 'Stationary vs. Markov-Filtered Payoff',
+            yaxis: { title: 'Payoff', range: [yMin, yMax] },
+            xaxis: { title: '' },
+            plot_bgcolor: '#fafafa',
+            paper_bgcolor: 'white',
+            font: { family: 'Helvetica, Arial, sans-serif' },
+            shapes: [{
+                type: 'line',
+                x0: -0.5, x1: 2.5,
+                y0: 0, y1: 0,
+                line: { color: '#999', width: 1, dash: 'dot' }
+            }],
+            margin: { t: 50, b: 60, l: 60, r: 30 }
+        };
+
+        Plotly.newPlot('payoff-comparison-plot', barData, layout, { responsive: true });
+    }
+
+    alphaSlider.addEventListener('input', updatePayoff);
+    betaSlider.addEventListener('input', updatePayoff);
+    mustarSlider.addEventListener('input', updatePayoff);
+    updatePayoff();
 }
