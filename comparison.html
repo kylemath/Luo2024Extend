@@ -80,6 +80,11 @@
         </tbody>
     </table>
 
+    <div class="result-box">
+        <div class="box-title">⚠️ Caveat: Continuation Value (General Case Only)</div>
+        <p>In the Markov case, the continuation value depends on θ<sub>t</sub>, changing the one-shot deviation objective from u₁ to u₁ + δg(θ<sub>t</sub>, a₁). This does <strong>not</strong> affect the supermodular case (where all applications fall), but requires additional care for the general theorem. See <a href="agent852_output/marginal_reputation_markov_extension.pdf" style="color: var(--secondary-color);">full paper, Remark 4.5</a>.</p>
+    </div>
+
     <h3>The Surprise: Where i.i.d. Was NOT Used</h3>
     
     <div class="extension-box">
@@ -188,6 +193,16 @@
             <li><strong>Unconditional strategy:</strong> "Fight 30% randomly" → no temporal structure</li>
         </ul>
         <p>Persistence thus <strong>strengthens identification</strong>, making confound-defeating conditions easier to satisfy!</p>
+    </div>
+
+    <div class="extension-box">
+        <div class="box-title">New Economic Content from the Markov Framework</div>
+        <ul>
+            <li><strong>Temporal patterns as identification:</strong> Autocorrelation in actions provides an additional channel beyond marginal frequencies, shrinking the set of behaviorally confounded strategies.</li>
+            <li><strong>Transition-contingent commitment types:</strong> The lifted state allows types that condition on state <em>transitions</em> (e.g., "fight only when state deteriorates from G to B") — natural in dynamic settings with no i.i.d. counterpart.</li>
+            <li><strong>Persistence is a blessing:</strong> The commitment payoff bound is identical to i.i.d. Persistence affects only convergence rate, not limiting payoff. The long-run player's patience (δ → 1) compensates for slower learning.</li>
+            <li><strong>Regime-dependent reputation:</strong> In settings with regime shifts, the framework directly links transition rates to the value of reputation: V(s₁*) = β/(α+β).</li>
+        </ul>
     </div>
 
     <h3>Summary Table</h3>

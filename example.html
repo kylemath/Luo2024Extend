@@ -6,7 +6,8 @@
     <p>Consider a deterrence game where:</p>
     <ul>
         <li>The state θ<sub>t</sub> ∈ {G(ood), B(ad)} indicates whether an attack is occurring</li>
-        <li>The long-run player chooses to Fight (F) or Acquiesce (A)</li>
+        <li>The long-run player chooses a₁ ∈ {A(cquiesce), F(ight)}</li>
+        <li>The short-run player chooses a₂ ∈ {C(ooperate), D(efect)}; D is dominant</li>
         <li>Attacks follow a <strong>Markov chain</strong> (attacks come in clusters!)</li>
     </ul>
 
@@ -220,7 +221,7 @@
                 <td><strong>Fast mixing</strong></td>
                 <td>α, β large (~0.5)</td>
                 <td>Small</td>
-                <td>≈ 0.5</td>
+                <td>β/(α+β)</td>
                 <td>Luo-Wolitzky (i.i.d.)</td>
             </tr>
             <tr>

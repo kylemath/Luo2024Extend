@@ -27,6 +27,8 @@
 
     <p><strong>Key property:</strong> The lifted state θ̃<sub>t</sub> has a fixed, known stationary distribution, playing precisely the role of the i.i.d. signal distribution in the original paper!</p>
 
+    <p><strong>Note:</strong> If F(θ | θ') = 0 for some pair, the lifted state (θ, θ') is never visited. The effective state space is Θ̃₊ = {(θ, θ') : F(θ | θ') > 0} ⊆ Θ̃. All results hold on Θ̃₊.</p>
+
     <h3>Interactive Markov Chain Visualization</h3>
     
     <p>Consider a two-state Markov chain θ<sub>t</sub> ∈ {G, B} with transition probabilities:</p>
@@ -189,7 +191,7 @@
             <tr>
                 <td>Lemma 1 (equilibrium)</td>
                 <td>❌ No</td>
-                <td>Replace strategy space</td>
+                <td>Replace strategy space<sup>*</sup></td>
             </tr>
             <tr>
                 <td><strong>Lemma 2 (KL bound)</strong></td>
@@ -213,6 +215,13 @@
             </tr>
         </tbody>
     </table>
+
+    <div class="result-box">
+        <div class="box-title">⚠️ Caveat: Continuation Value Subtlety (Lemma 1<sup>*</sup>)</div>
+        <p>In the i.i.d. case, the continuation value depends only on the action a₁ (since future states are independent of θ<sub>t</sub>). In the Markov case, the continuation value depends on θ<sub>t</sub> (since future states depend on it through F), which changes the effective one-shot deviation objective.</p>
+        <p><strong>Supermodular case (all applications):</strong> Unaffected — the co-monotone coupling is optimal for all objectives preserving supermodularity.</p>
+        <p><strong>General case:</strong> Requires either a strengthened confound-defeating condition or a continuity argument via filter stability. See <a href="agent852_output/marginal_reputation_markov_extension.pdf" style="color: var(--secondary-color);">the full paper (Remark 4.5)</a> for details.</p>
+    </div>
 
     <h3>Additional Condition: Ergodicity</h3>
     
