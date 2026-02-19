@@ -1,0 +1,14 @@
+% ---- Response to Comment C10: Missing content in Appendix A.3 ----
+
+\textbf{Comment C10 (HIGH):} \emph{``A.3 Monte Carlo Verification'' appears to be empty (header only). Main text (Section~5.4) relies on it.}
+
+\medskip
+\noindent\textbf{Response:} We thank the reviewer for identifying this omission. The subsection contained only a figure without explanatory text describing the simulation methodology. We have added a detailed description of the Monte Carlo verification procedure, including:
+
+\begin{itemize}
+    \item The simulation setup: two parallel processes (a Markov chain with parameters $(\alpha, \beta)$ and an i.i.d.\ process with the same stationary distribution $\pi$) are simulated for $T = 5{,}000$ periods across $N = 500$ independent runs.
+    \item The methodology: for each run and each period $t$, Bayesian posteriors are computed and the distinguishing-period indicator $\mathbf{1}\{\|p_t - q_t\| > \eta\}$ is evaluated; the total count of distinguishing periods is recorded.
+    \item The key finding: the empirical mean distinguishing-period count is $8.1$ (i.i.d.) vs.\ $12.7$ (Markov), both well below the theoretical bound $\bar{T}(\eta, \mu_0) = -2\log\mu_0(\omega_{s_1^*})/\eta^2$, confirming that the KL counting bound requires no mixing-time correction.
+\end{itemize}
+
+\noindent The revised Appendix~A.3 now provides full methodological detail for the figure referenced in Section~5.2.

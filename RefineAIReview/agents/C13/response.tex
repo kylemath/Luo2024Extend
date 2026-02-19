@@ -1,0 +1,29 @@
+% ============================================================
+% Response to Comment C13: Confusion of reputation dynamics with state-belief dynamics
+% ============================================================
+
+\subsection*{Comment C13 (MEDIUM): Confusion of Reputation Dynamics with State-Belief Dynamics}
+
+\textbf{Reviewer comment.} Section~9.2 writes the Nash correspondence as $B(s_1^*, \mu_0(h_t))$ and says the one-shot deviation argument fails ``since $\mu_0$ changes.'' But $\mu_0$ is the fixed prior over types; posteriors are~$\mu_t$. The real new phenomenon is that~$B$ becomes state-dependent via $F(\cdot|\theta_t)$, not that type-beliefs change (they already did in the i.i.d.\ case).
+
+\medskip
+\textbf{Disposition: Fully accepted.}
+
+\medskip
+\textbf{Response.} The reviewer identifies two errors in our paraphrase of the expert critique in Section~9.2:
+
+\begin{enumerate}
+    \item \textbf{Notational error.} The text writes $B(s_1^*, \mu_0(h_t))$ and ``$\mu_0$ changes,'' but $\mu_0 \in \Delta(\Omega)$ is the \emph{fixed} prior over types. The evolving object is the posterior $\mu_t(\cdot | h_t)$, not $\mu_0$.
+
+    \item \textbf{Misidentification of the novel phenomenon.} In the i.i.d.\ case, the type-posterior $\mu_t$ already evolves with history---this is the standard reputation dynamics mechanism. What is genuinely new under Markov states is that the Nash correspondence becomes \emph{state-contingent}: a state-revealing strategy allows the short-run player to form the belief $F(\cdot|\theta_t)$ about the next state, and this belief depends on the realized state~$\theta_t$. The resulting best-response set $B(s_1^*, F(\cdot|\theta_t))$ varies across states, which is the phenomenon that the belief-robustness condition (Definition~\ref{def:belief_robust}) addresses.
+\end{enumerate}
+
+We have corrected the notation and reframed the description to accurately reflect the core insight: the novel challenge of Markov states is the state-dependence of the short-run player's best response via the filtering distribution $F(\cdot|\theta_t)$, not the evolution of type-posteriors (which is common to both the i.i.d.\ and Markov settings).
+
+\medskip
+\textbf{Changes made:}
+\begin{itemize}
+    \item Section~9.2: Corrected $\mu_0(h_t)$ to $\mu_t(\cdot|h_t)$ and ``$\mu_0$ changes'' to ``$\mu_t$ evolves.''
+    \item Section~9.2: Reframed the description to identify the state-contingent Nash correspondence $B(s_1^*, F(\cdot|\theta_t))$ as the genuinely novel phenomenon, distinguishing it from the standard evolution of type-posteriors that already occurs in the i.i.d.\ case.
+    \item Added explicit reference to Definition~\ref{def:belief_robust} (belief-robustness) as the formal resolution of this state-dependence.
+\end{itemize}

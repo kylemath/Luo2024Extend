@@ -1,0 +1,14 @@
+% ---- Proposed Edits for C17: Confusing motivation for lifted state ----
+% File: revisedTexPaper/sections/sec_01_intro.tex
+
+% ============================================================
+% EDIT 1: Revise the lifted-state motivation sentence in Section 1.1
+% ============================================================
+
+% --- OLD (line 8, partial) ---
+We employ a \emph{lifted state} construction $\tilde\theta_t = (\theta_t, \theta_{t-1})$, which provides a stationary distribution $\tilde\rho$ on the expanded space and allows the optimal transport framework to apply directly.
+% --- END OLD ---
+
+% --- NEW ---
+We employ a \emph{lifted state} construction $\tilde\theta_t = (\theta_t, \theta_{t-1})$, which encodes the long-run player's Markov private information---the current transition---into a type space $\tilde\Theta = \Theta \times \Theta$. The original chain $\theta_t$ already has a stationary distribution $\pi$; the lifting provides an expanded stationary distribution $\tilde\rho$ on $\tilde\Theta$ that plays the role of the i.i.d.\ signal distribution in the Luo--Wolitzky optimal transport framework, allowing it to apply directly to Markov strategies $s_1 : \tilde\Theta \to \Delta(A_1)$.
+% --- END NEW ---

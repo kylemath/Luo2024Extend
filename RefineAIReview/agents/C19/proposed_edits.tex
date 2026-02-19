@@ -1,0 +1,15 @@
+% ============================================================
+% Proposed Edits for C19: Imprecise terminology in Appendix A
+% Target file: app_A_kl_verification.tex
+% ============================================================
+
+% ---- EDIT 1: Replace the paragraph after Proposition A.2 (line 36) ----
+
+% CURRENT TEXT (line 36):
+% This ensures that the initial condition of the Markov chain is ``forgotten''
+% exponentially fast, so the per-period signal distribution converges to a limit
+% determined by the observation process alone---the key property used in Step~3
+% of the proof.
+
+% REPLACEMENT TEXT:
+This ensures that the filter's dependence on its initial prior $\pi_0$ is ``forgotten'' exponentially fast: regardless of the prior $\pi_0$ used to initialize the Bayesian filter, the posterior $\pi_t(\cdot | y_0, \ldots, y_t)$ converges to the same limit, so the filter's predictions become insensitive to initialization. (This is distinct from \emph{chain mixing}, which concerns the Markov chain's marginal distribution $P(\theta_t \in \cdot)$ forgetting the initial \emph{state}~$\theta_0$; filter stability concerns the filter forgetting the initial \emph{prior}~$\pi_0$.) This prior-forgetting property is used in Step~3 of the proof.

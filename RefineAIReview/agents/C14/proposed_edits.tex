@@ -1,0 +1,22 @@
+% ---- Proposed Edits for C14: Ambiguous definition of best-response set in Lemma 5.8 ----
+% File: revisedTexPaper/sections/sec_05_proof.tex
+
+% ============================================================
+% EDIT 1: Add clarifying remark before Lemma 5.8 (lem:combining)
+% ============================================================
+
+% --- OLD (lines 174-176) ---
+\subsection{Step 4: Lemma 4 --- Combining the Pieces}\label{subsec:step4}
+
+\begin{lemma}[Extension of Lemma 4]\label{lem:combining}
+% --- END OLD ---
+
+% --- NEW ---
+\subsection{Step 4: Lemma 4 --- Combining the Pieces}\label{subsec:step4}
+
+\begin{remark}[Notation: Confirmed vs.\ State-Contingent Best-Response Sets]\label{rem:B_hat_notation}
+The set $\hat{B}_{\xi}(s_1^*)$ below denotes the \emph{$\xi$-confirmed best-response set} of Luo--Wolitzky (2024, Definition~3): the set of short-run best-response profiles $(\alpha_0, \alpha_2)$ that remain optimal when the posterior over types concentrates within total variation $\xi$ of $\{\omega^R, \omega_{s_1^*}\}$. This is distinct from the \emph{state-contingent} Nash correspondence $B(s_1^*, F(\cdot|\theta))$ introduced in Definition~\ref{def:V_markov}, which captures short-run behavior under filtering beliefs in state~$\theta$. The confirmed set $\hat{B}_{\xi}(s_1^*)$ governs behavior conditional on the posterior being near the commitment type; the state-contingent set $B(s_1^*, F(\cdot|\theta))$ governs behavior conditional on the revealed state. Under belief-robustness, $B(s_1^*, F(\cdot|\theta))$ is constant across $\theta$ and the distinction is immaterial for Step~5.
+\end{remark}
+
+\begin{lemma}[Extension of Lemma 4]\label{lem:combining}
+% --- END NEW ---

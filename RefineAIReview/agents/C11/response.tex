@@ -1,0 +1,30 @@
+% ============================================================
+% Response to Comment C11: Incorrect inference from filter stability
+% ============================================================
+
+\subsection*{Comment C11 (HIGH): Incorrect Inference from Filter Stability}
+
+\textbf{Reviewer comment.} Same core issue as C07, also in Section~10.2. ``Filter stability (SA4) suggests that beliefs may converge to the stationary distribution'' conflates two distinct notions.
+
+\medskip
+\textbf{Disposition: Fully accepted.}
+
+\medskip
+\textbf{Response.} We agree that the inference is invalid. Filter stability is a statement about the \emph{contraction rate} of the filtering operator: two filters initialized at different priors converge to each other. The \emph{fixed point} to which they converge is determined by the observation channel, not by the stationary distribution of the hidden chain. For an informative channel (small $\varepsilon$), the filter's fixed point tracks the current hidden state $\theta_t$ rather than the unconditional distribution~$\pi$.
+
+The structural analogy is precise: filter stability tells us that a contraction mapping has a unique fixed point, but does not determine where that fixed point lies. The inference ``filter stability $\Rightarrow$ beliefs converge to $\pi$'' would require the additional premise that $\pi$ is the filter's fixed point, which holds only when the observation channel is uninformative.
+
+This comment targets the same passage as C07, and the correction described in our response to C07 resolves both issues simultaneously. The revised paragraph:
+\begin{enumerate}
+    \item Correctly states that filter stability guarantees prior forgetting, not convergence to~$\pi$;
+    \item Explains that for small~$\varepsilon$, the filter tracks~$\theta_t$ rather than settling at~$\pi$;
+    \item Includes a footnote explicitly distinguishing filter stability, chain mixing, and belief convergence to~$\pi$.
+\end{enumerate}
+
+We additionally note that the revised text avoids the invalid inference by reframing the benefit of $\varepsilon$-perturbation: the strategy degrades state revelation, reducing the effective belief gap, rather than causing beliefs to converge to~$\pi$.
+
+\medskip
+\textbf{Changes made:}
+\begin{itemize}
+    \item Section~10.2: Same revision as C07 (rewritten $\varepsilon$-perturbed strategies paragraph); the joint fix addresses both the conceptual error (C07) and the invalid inference (C11).
+\end{itemize}

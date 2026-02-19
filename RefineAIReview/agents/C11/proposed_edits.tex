@@ -1,0 +1,15 @@
+% ============================================================
+% Proposed Edits for C11: Incorrect inference from filter stability
+% Target file: sec_10_discussion.tex
+% ============================================================
+
+% NOTE: The primary edit is shared with C07 (same passage, same fix).
+% See C07/proposed_edits.tex for the full replacement of the epsilon-perturbed
+% strategies paragraph in Section 10.2.
+
+% ---- SUPPLEMENTARY EDIT: Add clarifying remark after the epsilon paragraph ----
+% INSERT after the rewritten epsilon-perturbed strategies paragraph:
+
+\begin{remark}[Filter Fixed Points vs.\ Contraction]\label{rem:filter_fixed_point}
+Filter stability is a contraction property: $\sup_{\pi_0,\pi_0'}\|\pi_t - \pi_t'\| \leq C\lambda^t$. It guarantees that the filtering operator has a unique fixed point, but does not identify that fixed point with the hidden chain's stationary distribution~$\pi$. When the observation channel $g(\cdot|\theta)$ is informative about~$\theta$, the filter's fixed point is a posterior that concentrates near the true state, not at~$\pi$. For $\varepsilon$-perturbed observations, the filter's fixed-point distribution conditional on $\theta_t = \theta$ is approximately a point mass near $\theta$ for small~$\varepsilon$ and converges to~$\pi$ only as $\varepsilon \to 1$.
+\end{remark}

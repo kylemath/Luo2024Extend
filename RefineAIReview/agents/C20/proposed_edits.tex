@@ -1,0 +1,21 @@
+% ---- Proposed Edits for C20: Missing discussion of Stackelberg well-definedness ----
+% File: revisedTexPaper/sections/sec_10_discussion.tex
+
+% ============================================================
+% EDIT 1: Add Stackelberg well-definedness paragraph to Section 10.2
+% Insert after the "non-revealing strategies" paragraph (last open question)
+% ============================================================
+
+% --- OLD (lines 22-23, end of Section 10.2) ---
+A related notion of \textbf{approximate belief-robustness}, defined as $\sup_{\theta,\theta'} d_H(B(s_1^*, F(\cdot|\theta)), B(s_1^*, F(\cdot|\theta'))) \leq \varepsilon$, may yield a bound of the form $V_{\mathrm{Markov}} \geq V(s_1^*) - C\varepsilon$ for some constant $C$.
+
+\subsection{Conclusion}
+% --- END OLD ---
+
+% --- NEW ---
+A related notion of \textbf{approximate belief-robustness}, defined as $\sup_{\theta,\theta'} d_H(B(s_1^*, F(\cdot|\theta)), B(s_1^*, F(\cdot|\theta'))) \leq \varepsilon$, may yield a bound of the form $V_{\mathrm{Markov}} \geq V(s_1^*) - C\varepsilon$ for some constant $C$.
+
+For \textbf{persuasion games}, the Stackelberg strategy is defined via Bayesian persuasion---specifically, concavification of the sender's value function over the receiver's belief space. Under Markov dynamics, the receiver's prior varies state-by-state through the filtering distribution $F(\cdot|\theta)$, and the optimal persuasion scheme (the concavification) may differ for each prior. Whether a single state-independent Stackelberg strategy exists that is simultaneously optimal across all filtering priors, or whether the Stackelberg strategy must itself become state-contingent $s_1^*(\theta)$, remains an open question. This issue, first identified by Luo~(2026), is specific to games where the commitment strategy solves an optimization over belief distributions rather than over actions directly, and does not arise in the deterrence and trust games analyzed in this paper.
+
+\subsection{Conclusion}
+% --- END NEW ---

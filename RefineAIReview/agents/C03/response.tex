@@ -1,0 +1,22 @@
+% C03 Response: Contradictory i.i.d. benchmark values
+
+\noindent\textbf{Comment C03.} \emph{The paper uses two different ``i.i.d.\ benchmarks'': Section~7.6 computes $V(s_1^*)=0.625$, while Section~7.7 gives ``Stationary beliefs'' payoff as $0.777$. Also $V_{\mathrm{Markov}}=0.628>V(s_1^*)=0.625$ violates $V_{\mathrm{Markov}}\leq V$.}
+
+\medskip
+\noindent\textbf{Response.} We thank the reviewer for identifying this notational confusion, which obscured the relationship between three distinct quantities in the worked example. We have revised Sections~7.6--7.7 to clearly distinguish them.
+
+The three values are:
+\begin{enumerate}
+    \item \textbf{Worst-case commitment payoff} (against SR defection): $V_{\min}(s_1^*) = \pi(G)\cdot u_1(G,A,D) + \pi(B)\cdot u_1(B,F,D) = 0.625$. This is $\beta/(\alpha+\beta)$ from Proposition~\ref{prop:deterrence} and equals the LR payoff when all SR players defect. It serves as a universal lower bound.
+    \item \textbf{i.i.d.\ equilibrium payoff}: $V_{\text{iid}}(s_1^*) = \pi(G)\cdot u_1(G,A,C) + \pi(B)\cdot u_1(B,F,C) = 0.777$. Under stationary beliefs ($\mu=\pi(G)=0.625>\mu^*=0.60$), SR always cooperates. This is the payoff relevant to the i.i.d.\ regime of Theorem~\ref{thm:belief_robust}.
+    \item \textbf{Markov equilibrium payoff}: $V_{\mathrm{Markov}}(s_1^*) = \pi(G)\cdot u_1(G,A,C) + \pi(B)\cdot u_1(B,F,D) = 0.628$. Under filtered beliefs, SR cooperates in $G$ (where $F(G|G)=0.70>\mu^*$) but defects in $B$ (where $F(G|B)=0.50<\mu^*$).
+\end{enumerate}
+
+The correct ordering is $V_{\min}(s_1^*) \leq V_{\mathrm{Markov}}(s_1^*) \leq V_{\text{iid}}(s_1^*)$, i.e., $0.625 \leq 0.628 \leq 0.777$. The comparison table's claim ``$V_{\mathrm{Markov}} \leq V(s_1^*)$'' holds when $V(s_1^*)$ refers to the i.i.d.\ equilibrium payoff ($0.628 \leq 0.777$), not the worst-case bound ($0.628 > 0.625$). The original text conflated these by using $V(s_1^*)$ for both.
+
+We have:
+\begin{itemize}
+    \item Relabeled the Section~7.6 computation as the ``worst-case commitment payoff (against defection)'' to distinguish it from the equilibrium commitment payoff.
+    \item Added a bridging paragraph in Section~7.7 explicitly stating the three-way ordering.
+    \item Updated the comparison table to use $V_{\text{iid}}(s_1^*)$ for the i.i.d.\ equilibrium payoff, making $V_{\mathrm{Markov}} \leq V_{\text{iid}}(s_1^*)$ unambiguous.
+\end{itemize}

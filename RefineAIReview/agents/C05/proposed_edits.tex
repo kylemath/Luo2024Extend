@@ -1,0 +1,27 @@
+% ============================================================
+% C05: Proposed edit to sec_05_proof.tex, Remark 5.4, line 72
+% ============================================================
+
+% OLD (line 72, relevant sentence):
+% "Since $g(\theta_t, a_1, h_t)$ is supermodular in $(\theta_t, a_1)$
+% whenever $V_{\mathrm{cont}}$ is increasing in $\theta_t$ for each $a_1$
+% (which holds when higher states have higher continuation values),
+% the OT solution is unchanged."
+
+% NEW:
+% "Since state transitions are exogenous (independent of actions),
+% the continuation value $V_{\mathrm{cont}}(\theta_t) = \sum_{\theta'}
+% F(\theta'|\theta_t) V(\theta')$ depends on $\theta_t$ alone and not on $a_1$.
+% Adding a function of $\theta_t$ alone to a supermodular objective preserves
+% supermodularity: the $g(\theta_t)$ terms cancel exactly in the
+% increasing-differences comparison, so the OT solution is unchanged."
+
+% ============================================================
+% Full replacement of Remark 5.4, belief-robust paragraph (line 72):
+% ============================================================
+
+% OLD:
+\textbf{Resolution for the belief-robust case.} Under strict supermodularity of $u_1$ in $(\tilde\theta, a_1)$, the co-monotone coupling is optimal for all objectives of the form $u_1 + g$ provided $g$ preserves the supermodular structure. Since $g(\theta_t, a_1, h_t)$ is supermodular in $(\theta_t, a_1)$ whenever $V_{\mathrm{cont}}$ is increasing in $\theta_t$ for each $a_1$ (which holds when higher states have higher continuation values), the OT solution is unchanged. All the paper's applications (deterrence, trust, signaling) are supermodular, and under belief-robustness the SR behavior is constant across states, so the continuation value perturbation is absorbed by the supermodular structure and the OT solution remains unchanged.
+
+% NEW:
+\textbf{Resolution for the belief-robust case.} Under strict supermodularity of $u_1$ in $(\tilde\theta, a_1)$, the co-monotone coupling is optimal for all objectives of the form $u_1 + g$ provided $g$ preserves the supermodular structure. In the paper's model, state transitions are exogenous: $\theta_t$ evolves via $F(\cdot|\theta_{t-1})$ independently of actions. Consequently, $g(\theta_t, h_t) = \delta\, V_{\mathrm{cont}}(\theta_t)$ depends on $\theta_t$ alone and \emph{not on $a_1$}. Adding a function of $\theta_t$ alone to a supermodular function of $(\tilde\theta, a_1)$ preserves supermodularity, since the $g(\theta_t)$ terms cancel in the increasing-differences comparison. (If the model were extended to action-dependent state transitions, the correct requirement would be that $g(\theta_t, a_1)$ has increasing differences in $(\theta_t, a_1)$, which is strictly stronger than mere monotonicity in $\theta_t$.) Under belief-robustness, SR behavior is constant across states, so the OT solution remains unchanged.

@@ -1,0 +1,13 @@
+\subsection*{C18: Strict Supermodularity on the Lifted Space (Section~6.2)}
+
+\textbf{Reviewer comment:}
+\begin{quote}
+``$u_1(\tilde\theta, a_1, \alpha_2) = u_1(\theta_t, a_1, \alpha_2)$'' suggests tension with strict supermodularity since the payoff is constant in the second coordinate of $\tilde\theta = (\theta_t, \theta_{t-1})$.
+\end{quote}
+
+\textbf{Response:}
+The reviewer correctly identifies a subtlety and, as they note, the issue is resolved by the choice of order on $\tilde\Theta$. We agree the paper should state this explicitly.
+
+Under the first-coordinate order $(\theta_t, \theta_{t-1}) \succeq (\theta_t', \theta_{t-1}')$ iff $\theta_t \succeq \theta_t'$, two lifted states that share the same first coordinate---such as $(G, G)$ and $(G, B)$---are \emph{not comparable}. Strict supermodularity requires strict increasing differences only between \emph{strictly ordered} pairs. Since no pair of lifted states differing only in $\theta_{t-1}$ is strictly ordered, the constancy of $u_1$ in $\theta_{t-1}$ imposes no constraint and is perfectly consistent with strict supermodularity.
+
+We have added the following clarification to Section~6.2: ``Under the first-coordinate order, lifted states $(\theta_t, \theta_{t-1})$ and $(\theta_t, \theta_{t-1}')$ with the same current state are \emph{incomparable}. Strict increasing differences is required only between strictly ordered pairs, so the constancy of $u_1$ in $\theta_{t-1}$ is consistent with strict supermodularity.''

@@ -1,0 +1,16 @@
+\subsection*{C01: Scaling of Continuation Values (Remark 5.4)}
+
+\textbf{Reviewer comment:}
+\begin{quote}
+``Combined with $\delta\to 1$ (which makes the continuation value perturbation small relative to the stage-game payoff)''---the paper claims $\delta\to 1$ makes continuation values small relative to stage payoff, but under $(1-\delta)u_1 + \delta \mathbb{E}[V]$, as $\delta\to 1$ continuation becomes MORE important, not less.
+\end{quote}
+
+\textbf{Response:}
+The reviewer is correct, and we thank them for catching this error. Under the standard normalization $(1-\delta)u_1 + \delta \mathbb{E}[V]$, the continuation value receives weight $\delta$, which increases as $\delta \to 1$. The original sentence inverts the direction.
+
+The argument we intended relies on two \emph{distinct} mechanisms working together:
+\begin{enumerate}
+    \item \textbf{Filter stability} (Proposition~3.2): The filtering distribution $\pi_t(h_t)$ converges to the stationary distribution $\tilde\rho$ exponentially fast. This makes the $\theta_t$-dependent variation in the continuation value small for sufficiently large $t$, because the filtering beliefs settle and the state-dependent component of $g(\theta_t, a_1, h_t)$ diminishes.
+    \item \textbf{Front-loading via $\delta \to 1$}: The standard front-loading argument ensures that any finite number of initial periods (where filter stability has not yet taken effect) become negligible in the discounted payoff as $\delta \to 1$.
+\end{enumerate}
+These are separate effects: filter stability handles the asymptotic regime, while the discount factor handles the transient regime. We have corrected Remark~5.4 to properly attribute each mechanism. No formal results are affected, as the proof of Theorems~1$'$ and~1$''$ in Section~5.5 uses the front-loading argument directly without relying on the incorrect claim.

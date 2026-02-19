@@ -1,0 +1,30 @@
+% ============================================================
+% C01: Proposed edit to sec_05_proof.tex, Remark 5.4 (rem:continuation)
+% Location: Line 74, the "general case" paragraph
+% ============================================================
+
+% OLD TEXT (line 74):
+% "Combined with $\delta \to 1$ (which makes the continuation value perturbation
+% small relative to the stage-game payoff), this yields the result."
+
+% NEW TEXT:
+% "Combined with $\delta \to 1$---which, via the standard front-loading argument,
+% makes the finite initial transient (where filter stability has not yet taken
+% effect) negligible in the discounted payoff---this yields the result.
+% Note that $\delta \to 1$ does \emph{not} make the continuation value small
+% relative to the stage-game payoff; indeed, under the normalization
+% $(1-\delta)u_1 + \delta\mathbb{E}[V]$, the continuation value weight
+% $\delta$ increases toward 1. Rather, it is filter stability that
+% makes the $\theta_t$-dependent perturbation in $g(\theta_t, a_1, h_t)$
+% vanish for large $t$, while $\delta \to 1$ ensures the early periods
+% (before filter stability takes hold) are discounted away."
+
+% ============================================================
+% Full replacement of the relevant sentence in context:
+% ============================================================
+
+% OLD (lines 73-75 of sec_05_proof.tex):
+\textbf{Resolution for the general case.} Two approaches are available. First, one may strengthen the confound-defeating condition: require $s_1^*$ to be confound-defeating for all objectives of the form $u_1 + g$ where $g : \tilde\Theta \times A_1 \to \R$ is bounded. This is stronger than the Luo--Wolitzky condition but closes the gap. Second, a continuity argument is available: by filter stability (Proposition~\ref{prop:filter_stability}), the filtering distribution $\pi_t(h_t)$ converges to the stationary distribution $\tilde\rho$ exponentially fast. Since confound-defeating is an open condition (unique OT solution is robust to small perturbations of the marginals), confound-defeating at $\tilde\rho$ implies approximate confound-defeating at $\pi_t(h_t)$ for large $t$. Combined with $\delta \to 1$ (which makes the continuation value perturbation small relative to the stage-game payoff), this yields the result.
+
+% NEW:
+\textbf{Resolution for the general case.} Two approaches are available. First, one may strengthen the confound-defeating condition: require $s_1^*$ to be confound-defeating for all objectives of the form $u_1 + g$ where $g : \tilde\Theta \times A_1 \to \R$ is bounded. This is stronger than the Luo--Wolitzky condition but closes the gap. Second, a continuity argument is available, relying on two distinct mechanisms. By filter stability (Proposition~\ref{prop:filter_stability}), the filtering distribution $\pi_t(h_t)$ converges to the stationary distribution $\tilde\rho$ exponentially fast. This convergence makes the $\theta_t$-dependent perturbation in $g(\theta_t, a_1, h_t)$ vanish for large $t$, so confound-defeating at $\tilde\rho$ implies approximate confound-defeating at $\pi_t(h_t)$ beyond a finite horizon $T_0$. Since confound-defeating is an open condition (unique OT solution is robust to small perturbations of the marginals), this approximate confound-defeating suffices. The standard front-loading argument then ensures that the finite initial transient (periods $t < T_0$ where filter stability has not yet taken full effect) becomes negligible in the discounted payoff as $\delta \to 1$. Note that $\delta \to 1$ does \emph{not} make the continuation value perturbation small relative to the stage-game payoff---under the normalization $(1-\delta)u_1 + \delta\E[V]$, the continuation weight $\delta$ increases toward~1. Rather, it is filter stability that drives the perturbation to zero, while $\delta \to 1$ discounts away the early periods before convergence.

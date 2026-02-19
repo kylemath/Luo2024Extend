@@ -1,0 +1,27 @@
+% ---- Proposed Edits for C10: Missing content in Appendix A.3 ----
+% File: revisedTexPaper/sections/app_A_kl_verification.tex
+
+% ============================================================
+% EDIT 1: Add explanatory text between subsection header and figure
+% ============================================================
+
+% --- OLD (lines 38-40) ---
+\subsection{Monte Carlo Verification}
+
+\begin{figure}[ht]
+% --- END OLD ---
+
+% --- NEW ---
+\subsection{Monte Carlo Verification}
+
+To empirically verify that the KL counting bound (Lemma~\ref{lem:KL}) requires no modification for Markov states, we conduct the following Monte Carlo experiment. Two data-generating processes are simulated in parallel:
+\begin{enumerate}[label=(\roman*)]
+    \item \textbf{Markov process:} A two-state chain $\theta_t \in \{G, B\}$ with transition parameters $(\alpha, \beta) = (\BaseAlpha, \BaseBeta)$, observed through a state-revealing Stackelberg strategy $s_1^*(G) = A$, $s_1^*(B) = F$. The commitment type plays $s_1^*$ in every period.
+    \item \textbf{I.I.D.\ baseline:} An independent process $\theta_t \sim \pi$ with the same stationary distribution $\pi(G) = \beta/(\alpha+\beta)$, using the same Stackelberg strategy and observation structure.
+\end{enumerate}
+For each process, $N = \KLMonteCarloN$ independent runs of $T = \KLMonteCarloPeriods$ periods are simulated. In each run, a rational type plays a fixed alternative strategy $\sigma_1 \neq s_1^*$, and we compute the Bayesian posterior $\mu_t(\omega_{s_1^*} | h_t)$ at each period using the likelihood ratio. A period~$t$ is classified as \emph{distinguishing} if $\|p(\sigma_0^*, s_1^*, \sigma_2^* | h_t) - p(\sigma_0^*, \sigma_1, \sigma_2^* | h_t)\| > \eta$ for threshold $\eta = 0.1$. The total number of distinguishing periods per run is recorded and compared against the theoretical bound $\bar{T}(\eta, \mu_0) = -2\log\mu_0(\omega_{s_1^*})/\eta^2$.
+
+The results confirm the analytical prediction: the empirical mean distinguishing-period count is $\statIidMeanCount$ (i.i.d.) and $\statMarkovMeanCount$ (Markov), both well below the theoretical upper bound. While the Markov process produces slightly more distinguishing periods on average (reflecting the additional signal structure from state persistence), the bound holds with substantial margin in both cases. Figure~\ref{fig:kl_bound} displays the empirical cumulative distribution functions.
+
+\begin{figure}[ht]
+% --- END NEW ---

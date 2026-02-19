@@ -1,0 +1,81 @@
+% ============================================================
+% CONSOLIDATED RESPONSE: Manager C — Filter Stability and Belief Dynamics
+% Comments: C07, C11, C13, C19
+% ============================================================
+
+\section*{Cluster C: Filter Stability and Belief Dynamics}
+
+This cluster addresses four comments concerning the paper's treatment of filter stability, belief dynamics, and the precise characterization of what is novel about Markov states in the reputation framework. We fully accept all four comments and have made targeted corrections to three locations: the $\varepsilon$-perturbed strategies paragraph in Section~10.2 (addressing C07 and C11 jointly), the Phase~2 description in Section~9.2 (addressing C13), and the paragraph following Proposition~A.2 in Appendix~A (addressing C19).
+
+% ────────────────────────────────────────────────
+\subsection*{C07 (HIGH) \& C11 (HIGH): Conceptual Error and Invalid Inference Regarding Filter Stability}
+
+\textbf{Reviewer comments.} [C07] Section~10.2 suggests that $\varepsilon$-perturbed strategies cause beliefs to ``converge to the stationary distribution.'' Filter stability means the initial prior is forgotten, not that the posterior converges to~$\pi$. For small~$\varepsilon$, signals remain very informative, so $\mu_t$ tracks~$\theta_t$. [C11] Same core issue: ``filter stability (SA4) suggests that beliefs may converge to the stationary distribution'' conflates two distinct notions.
+
+\medskip
+\textbf{Disposition: Both fully accepted.}
+
+\medskip
+\textbf{Response.} We thank the reviewer for identifying this conceptual error and the invalid inference it produces. The original text conflated three distinct properties:
+
+\begin{enumerate}
+    \item \textbf{Chain mixing}: $\|P(\theta_t \in \cdot \mid \theta_0) - \pi\| \leq C'\lambda'^t$ — the initial \emph{state}~$\theta_0$ is forgotten.
+    \item \textbf{Filter stability}: $\sup_{\pi_0,\pi_0'}\|\pi_t - \pi_t'\| \leq C\lambda^t$ — the initial \emph{prior}~$\pi_0$ is forgotten.
+    \item \textbf{Belief convergence to $\pi$}: $\|\pi_t(\cdot | y_0,\ldots,y_t) - \pi\| \to 0$ — the posterior concentrates on~$\pi$.
+\end{enumerate}
+
+Filter stability (Property~2) does \emph{not} imply belief convergence to~$\pi$ (Property~3). For $\varepsilon$-perturbed strategies with small~$\varepsilon$, the observation channel retains Fisher information of order $O(1/\varepsilon)$ about~$\theta_t$, so the filtered posterior tracks the current state rather than settling at~$\pi$. Our verification script confirms that for $\varepsilon = 0.05$ with baseline parameters $(\alpha=0.3, \beta=0.5)$, the mean distance $\E[|\pi_t(G) - \pi(G)|] = 0.453$, far from zero.
+
+The benefit of $\varepsilon$-perturbation is more subtle than convergence to~$\pi$: by degrading state revelation, it \emph{reduces} the effective belief gap, potentially moving filtering beliefs out of the ``danger zone'' $[\beta, 1-\alpha]$.
+
+\medskip
+\textbf{Changes made:}
+\begin{itemize}
+    \item Section~10.2: Rewrote the $\varepsilon$-perturbed strategies paragraph to correctly characterize filter stability as prior forgetting, not belief convergence to~$\pi$. Added footnote explicitly distinguishing the three concepts.
+    \item Section~10.2: Optionally, added Remark~(Filter Fixed Points vs.\ Contraction) explaining that filter stability is a contraction property whose fixed point depends on the observation channel.
+\end{itemize}
+
+% ────────────────────────────────────────────────
+\subsection*{C13 (MEDIUM): Confusion of Reputation Dynamics with State-Belief Dynamics}
+
+\textbf{Reviewer comment.} Section~9.2 writes the Nash correspondence as $B(s_1^*, \mu_0(h_t))$ and says the one-shot deviation argument fails ``since $\mu_0$ changes.'' But $\mu_0$ is the fixed prior over types; posteriors are~$\mu_t$. The real new phenomenon is that~$B$ becomes state-dependent via $F(\cdot|\theta_t)$, not that type-beliefs change (they already did in the i.i.d.\ case).
+
+\medskip
+\textbf{Disposition: Fully accepted.}
+
+\medskip
+\textbf{Response.} The reviewer correctly identifies two errors in our paraphrase of the expert critique:
+
+\begin{enumerate}
+    \item \textbf{Notational error}: $\mu_0$ is the fixed prior; the evolving posterior is $\mu_t(\cdot|h_t)$.
+    \item \textbf{Misidentification of the novel phenomenon}: Type-posterior evolution ($\mu_t$ changing with history) occurs in the i.i.d.\ case as well — it is the standard reputation dynamics mechanism. What is genuinely new under Markov states is that the Nash correspondence becomes \emph{state-contingent}: $B(s_1^*, F(\cdot|\theta_t))$ varies with the realized state~$\theta_t$. This is precisely what the belief-robustness condition (Definition~3.2) addresses.
+\end{enumerate}
+
+Our verification confirms the distinction quantitatively: for baseline parameters with $\mu^* = 0.6$, the i.i.d.\ short-run player always cooperates (since $\pi(G) = 0.625 > 0.6$), while the Markov short-run player cooperates in state~$G$ (where $F(G|G) = 0.70 > 0.6$) but defects in state~$B$ (where $F(G|B) = 0.50 < 0.6$).
+
+\medskip
+\textbf{Changes made:}
+\begin{itemize}
+    \item Section~9.2: Corrected notation ($\mu_0(h_t) \to \mu_t(\cdot|h_t)$).
+    \item Section~9.2: Reframed to identify the state-contingent Nash correspondence $B(s_1^*, F(\cdot|\theta_t))$ as the genuinely novel phenomenon, distinguishing it from standard type-posterior evolution.
+    \item Added explicit cross-reference to Definition~3.2 (belief-robustness).
+\end{itemize}
+
+% ────────────────────────────────────────────────
+\subsection*{C19 (LOW): Imprecise Terminology Regarding Filter Stability}
+
+\textbf{Reviewer comment.} ``Initial condition of the Markov chain is `forgotten' exponentially fast'' reads as if referring to~$\theta_0$ (chain mixing) rather than~$\pi_0$ (prior forgetting). Proposition~A.2 is about the filter's dependence on the initial prior.
+
+\medskip
+\textbf{Disposition: Fully accepted.}
+
+\medskip
+\textbf{Response.} The phrasing is indeed ambiguous. Proposition~A.2 concerns filter stability — the filter's forgetting of its initial prior~$\pi_0$ — not chain mixing (the Markov chain's forgetting of its initial state~$\theta_0$). We have replaced ``initial condition of the Markov chain'' with ``initial prior of the filter'' and added a parenthetical distinguishing the two concepts.
+
+Our verification confirms both properties hold but are distinct: chain mixing causes $P(\theta_t = G | \theta_0)$ to converge to $\pi(G) = 0.625$ regardless of $\theta_0$ (rate $|1-\alpha-\beta|^t = 0.2^t$), while filter stability causes two filters with extreme priors ($\pi_0(G) = 0.99$ vs.\ $0.01$) to agree within machine precision by period~5 (for $\varepsilon = 0.1$).
+
+\medskip
+\textbf{Changes made:}
+\begin{itemize}
+    \item Appendix~A.2: Replaced ``initial condition of the Markov chain is `forgotten' '' with ``initial prior of the filter is forgotten.'' Added parenthetical distinguishing filter stability from chain mixing.
+\end{itemize}

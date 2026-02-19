@@ -1,0 +1,24 @@
+\subsection*{C02: Generality of $V_{\mathrm{Markov}} \leq V$ (Theorem~4.8)}
+
+\textbf{Reviewer comment:}
+\begin{quote}
+``$V_{\mathrm{Markov}}(s_1^*) \leq V(s_1^*)$ holds generally''---The inequality is claimed in the abstract and Theorem~4.8 but never proved. When $\pi(G) < \mu^*$ but $F(G|G) > \mu^*$ while $F(G|B) < \mu^*$, persistence enables cooperation in good states only, so $V_{\mathrm{Markov}} > V$ is possible.
+\end{quote}
+
+\textbf{Response:}
+The reviewer is correct: the inequality $V_{\mathrm{Markov}}(s_1^*) \leq V(s_1^*)$ does not hold in general, and we are grateful for this important correction. The counterexample is valid and instructive.
+
+The key insight is that state-contingent SR information can either help or hurt the LR player, depending on the direction of the belief perturbation relative to the SR indifference threshold:
+\begin{itemize}
+    \item When $\pi(G) > \mu^*$ (SR cooperates under i.i.d.), state persistence can only cause defection in some states, so $V_{\mathrm{Markov}} \leq V$.
+    \item When $\pi(G) < \mu^*$ (SR defects under i.i.d.), state persistence can enable cooperation in favorable states, so $V_{\mathrm{Markov}} > V$ is possible.
+\end{itemize}
+
+We have corrected the paper as follows:
+\begin{enumerate}
+    \item Theorem~4.8 now states the relationship as $V_{\mathrm{Markov}} \leq V$ \emph{if and only if} the Markov structure does not cause the SR to take more favorable actions in any state than under the stationary belief. We provide a sufficient condition (Proposition~4.9) for games with threshold SR behavior.
+    \item The abstract now reads ``$V_{\mathrm{Markov}}(s_1^*)$\ldots may be above or below $V(s_1^*)$ depending on whether state-contingent SR beliefs lead to more or less favorable behavior for the long-run player.''
+    \item We add a remark noting that for the paper's running example ($\alpha=0.3$, $\beta=0.5$, $\pi(G)=0.625 > \mu^*=0.60$), $V_{\mathrm{Markov}} \leq V$ does hold, since SR cooperates under the stationary belief and persistence can only introduce defection in unfavorable states.
+\end{enumerate}
+
+This correction is substantive and strengthens the paper: the possibility that $V_{\mathrm{Markov}} > V$ means persistence can sometimes \emph{benefit} the long-run player, which is a genuinely new economic insight not present in the i.i.d.\ framework. We thank the reviewer for identifying this.

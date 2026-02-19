@@ -1,0 +1,55 @@
+% C03 Proposed Edits: Contradictory i.i.d. benchmark values
+% File: sec_07_example.tex
+
+%% ============================================================
+%% EDIT 1: Section 7.6 — Clarify the 0.625 computation
+%% ============================================================
+
+% OLD (lines 117-119):
+\noindent\textbf{Commitment payoff (i.i.d.\ benchmark):} Under $s_1^*(G) = A$, $s_1^*(B) = F$:
+\[
+    V(s_1^*) = \pi(G) \cdot u_1(G, A) + \pi(B) \cdot u_1(B, F) = 0.625 \times 1 + 0.375 \times 0 = 0.625.
+\]
+
+% NEW:
+\noindent\textbf{Worst-case commitment payoff (against SR defection):} Under $s_1^*(G) = A$, $s_1^*(B) = F$, with $a_2 = D$:
+\[
+    V_{\min}(s_1^*) = \pi(G) \cdot u_1(G, A, D) + \pi(B) \cdot u_1(B, F, D) = 0.625 \times 1 + 0.375 \times 0 = 0.625.
+\]
+This is $\beta/(\alpha+\beta)$ from Proposition~\ref{prop:deterrence}---the payoff guaranteed regardless of SR behavior. The \emph{equilibrium} payoff is higher when SR cooperates (see Section~\ref{subsec:overestimation}).
+
+%% ============================================================
+%% EDIT 2: Section 7.7 — Add bridging paragraph after the table
+%% ============================================================
+
+% OLD (after the overestimation table, before line 146):
+The overestimation arises because the i.i.d.\ analysis assumes SR always faces belief $\pi(G) = \BasePiG > \SRThreshold$, so SR always cooperates.
+
+% NEW:
+\noindent\textbf{Three payoff benchmarks.} The worked example involves three distinct payoff quantities:
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}llcc@{}}
+\toprule
+\textbf{Quantity} & \textbf{SR behavior} & \textbf{Value} \\
+\midrule
+$V_{\min}(s_1^*)$ (worst-case, against $D$) & SR always defects & 0.625 \\
+$V_{\mathrm{Markov}}(s_1^*)$ (filtered beliefs) & SR cooperates in $G$, defects in $B$ & \PayoffFiltered \\
+$V_{\text{iid}}(s_1^*)$ (stationary beliefs) & SR always cooperates & \PayoffStationary \\
+\bottomrule
+\end{tabular}
+\end{center}
+The ordering $V_{\min}(s_1^*) \leq V_{\mathrm{Markov}}(s_1^*) \leq V_{\text{iid}}(s_1^*)$ holds because cooperation benefits the LR player and the i.i.d.\ belief $\pi(G)=0.625$ exceeds $\mu^*$ in all states, while the filtered belief $F(G|B)=0.50$ falls below $\mu^*$ in bad states. The ``overestimation gap'' is $V_{\text{iid}} - V_{\mathrm{Markov}}$, not $V_{\text{iid}} - V_{\min}$.
+
+\medskip
+The overestimation arises because the i.i.d.\ analysis assumes SR always faces belief $\pi(G) = \BasePiG > \SRThreshold$, so SR always cooperates.
+
+%% ============================================================
+%% EDIT 3: Comparison table — use consistent notation
+%% ============================================================
+
+% OLD (line 176):
+Commitment payoff & $V(s_1^*)$ & $V(s_1^*)$ & $V_{\mathrm{Markov}} \leq V(s_1^*)$ \\
+
+% NEW:
+Commitment payoff & $V_{\text{iid}}(s_1^*)$ & $V_{\text{iid}}(s_1^*)$ & $V_{\mathrm{Markov}} \leq V_{\text{iid}}(s_1^*)$ \\

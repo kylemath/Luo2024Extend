@@ -1,0 +1,17 @@
+\subsection*{C05: Sufficient Condition for Supermodularity (Remark~5.4)}
+
+\textbf{Reviewer comment:}
+\begin{quote}
+``$g(\theta_t, a_1, h_t)$ is supermodular in $(\theta_t, a_1)$ whenever $V_{\mathrm{cont}}$ is increasing in $\theta_t$ for each $a_1$''---Monotonicity in $\theta_t$ for each $a_1$ does NOT imply increasing differences in $(\theta, a_1)$. Supermodularity requires $V_{\mathrm{cont}}(\theta_H, a_H) - V_{\mathrm{cont}}(\theta_H, a_L) \geq V_{\mathrm{cont}}(\theta_L, a_H) - V_{\mathrm{cont}}(\theta_L, a_L)$, which is strictly stronger than monotonicity.
+\end{quote}
+
+\textbf{Response:}
+The reviewer is correct that monotonicity does not imply supermodularity (increasing differences) in general, and we apologize for the imprecise statement. However, the conclusion of the remark is recoverable via a \emph{stronger} argument that we should have stated.
+
+In the paper's model, state transitions are \textbf{exogenous}: the chain $\theta_t$ evolves according to $F(\cdot|\theta_{t-1})$ independently of actions. Consequently, the continuation value conditional on the current state satisfies:
+\[
+    V_{\mathrm{cont}}(\theta_t) = \sum_{\theta'} F(\theta'|\theta_t)\, V(\theta'),
+\]
+which depends on $\theta_t$ but \textbf{not on $a_1$}. The perturbation $g(\theta_t, a_1, h_t) = \delta V_{\mathrm{cont}}(\theta_t)$ is therefore a function of $\theta_t$ alone. Adding a function that depends only on $\theta$ (not on $a_1$) to a supermodular objective $u_1(\tilde\theta, a_1, \alpha_2)$ preserves supermodularity trivially: the $g$ terms cancel in the increasing-differences comparison, leaving the original increasing differences of $u_1$ unchanged.
+
+We have corrected Remark~5.4 to state this argument directly rather than invoking the incorrect monotonicity-implies-supermodularity claim. We also note the caveat that if the continuation value depended on $a_1$ (e.g., through signal effects in a model with action-dependent transitions), the correct condition would be increasing differences of $g$ in $(\theta_t, a_1)$, not mere monotonicity.

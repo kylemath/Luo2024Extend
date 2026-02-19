@@ -1,0 +1,28 @@
+% ============================================================
+% Response to Comment C07: Conceptual error regarding filter stability
+% ============================================================
+
+\subsection*{Comment C07 (HIGH): Conceptual Error Regarding Filter Stability}
+
+\textbf{Reviewer comment.} Section~10.2 suggests that $\varepsilon$-perturbed strategies cause beliefs to ``converge to the stationary distribution.'' Filter stability means the initial \emph{prior} is forgotten, not that the posterior converges to~$\pi$. For small~$\varepsilon$, signals remain very informative, so $\mu_t$ tracks~$\theta_t$.
+
+\medskip
+\textbf{Disposition: Fully accepted.}
+
+\medskip
+\textbf{Response.} The reviewer is correct, and we thank them for identifying this conceptual conflation. Filter stability (Proposition~A.2) guarantees that
+\[
+    \sup_{\pi_0, \pi_0'} \|\pi_t - \pi_t'\| \leq C \cdot \lambda^t,
+\]
+which means the filter \emph{forgets its initial prior}---two observers with different priors $\pi_0, \pi_0'$ form asymptotically identical posteriors. This is fundamentally different from the posterior converging to the stationary distribution~$\pi$.
+
+For $\varepsilon$-perturbed strategies with small $\varepsilon > 0$, the observation channel retains Fisher information of order $O(1/\varepsilon)$ about~$\theta_t$, so the filtered posterior $\pi_t(\cdot | y_0, \ldots, y_t)$ continues to track the current state~$\theta_t$ closely via approximately $F(\cdot|\theta_t)$. Only in the degenerate limit $\varepsilon \to 1$ (fully uninformative signals) would the posterior converge to~$\pi$.
+
+We have revised the $\varepsilon$-perturbation paragraph in Section~10.2 to correctly characterize what filter stability provides: prior forgetting, not belief convergence to~$\pi$. The revised text explains that the potential benefit of $\varepsilon$-perturbation is that the strategy is no longer perfectly state-revealing, which \emph{reduces} the belief gap $|F(\cdot|\theta_t) - \pi|$ but does not eliminate it for small~$\varepsilon$. We also add a clarifying sentence distinguishing the three related but distinct concepts: chain mixing (marginal convergence of $\theta_t$ to~$\pi$), filter stability (prior forgetting), and belief convergence to~$\pi$ (requiring uninformative observations).
+
+\medskip
+\textbf{Changes made:}
+\begin{itemize}
+    \item Section~10.2: Rewrote $\varepsilon$-perturbed strategies paragraph to correctly characterize filter stability as prior forgetting, not belief convergence to~$\pi$.
+    \item Added explicit distinction between chain mixing, filter stability, and belief convergence.
+\end{itemize}

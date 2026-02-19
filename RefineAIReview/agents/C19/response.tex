@@ -1,0 +1,29 @@
+% ============================================================
+% Response to Comment C19: Imprecise terminology regarding filter stability
+% ============================================================
+
+\subsection*{Comment C19 (LOW): Imprecise Terminology Regarding Filter Stability}
+
+\textbf{Reviewer comment.} ``Initial condition of the Markov chain is `forgotten' exponentially fast'' reads as if referring to $\theta_0$ (chain mixing) rather than $\pi_0$ (prior forgetting). Proposition~A.2 is about the filter's dependence on the initial prior.
+
+\medskip
+\textbf{Disposition: Fully accepted.}
+
+\medskip
+\textbf{Response.} The reviewer correctly notes that the phrasing is ambiguous. Proposition~A.2 establishes filter stability:
+\[
+    \sup_{\pi_0, \pi_0'} \|\pi_t - \pi_t'\| \leq C \cdot \lambda^t,
+\]
+which concerns the \emph{filter's} dependence on its initial \emph{prior}~$\pi_0$, not the Markov chain's dependence on its initial \emph{state}~$\theta_0$. These are related but distinct properties:
+\begin{itemize}
+    \item \textbf{Chain mixing}: $\|P(\theta_t \in \cdot \mid \theta_0) - \pi\| \leq C' \lambda'^t$ --- the marginal distribution of $\theta_t$ forgets the initial state~$\theta_0$.
+    \item \textbf{Filter stability}: $\sup_{\pi_0,\pi_0'}\|\pi_t - \pi_t'\| \leq C\lambda^t$ --- the filter (posterior over $\theta_t$ given observations) forgets its initial prior~$\pi_0$.
+\end{itemize}
+
+We have replaced ``initial condition of the Markov chain'' with ``initial prior of the filter'' and added a parenthetical distinguishing the two concepts. The follow-up clause has also been tightened to clarify that filter stability ensures the filter's predictions are insensitive to initialization, not that the signal distribution itself changes.
+
+\medskip
+\textbf{Changes made:}
+\begin{itemize}
+    \item Appendix~A.2: Replaced ``initial condition of the Markov chain is `forgotten' '' with ``initial prior of the filter is forgotten,'' and added parenthetical distinguishing filter stability from chain mixing.
+\end{itemize}

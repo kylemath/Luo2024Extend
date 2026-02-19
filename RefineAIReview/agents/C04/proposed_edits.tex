@@ -1,0 +1,51 @@
+% ============================================================
+% C04: Proposed edit to sec_04_theorems.tex, Definition 4.5
+% ============================================================
+
+% OLD (lines 46-51):
+\begin{definition}[Markov Commitment Payoff]\label{def:V_markov}
+The \textbf{Markov commitment payoff} is
+\begin{equation}\label{eq:V_markov}
+    V_{\mathrm{Markov}}(s_1^*) := \sum_{\theta \in \Theta} \pi(\theta) \cdot \inf_{(\alpha_0, \alpha_2) \in B(s_1^*, F(\cdot|\theta))} u_1(\theta, s_1^*(\theta), \alpha_2).
+\end{equation}
+This averages over states using the stationary distribution $\pi$, but uses the \textbf{state-contingent} Nash correspondence $B(s_1^*, F(\cdot|\theta))$ at each state.
+\end{definition}
+
+% NEW:
+\begin{definition}[Markov Commitment Payoff]\label{def:V_markov}
+The \textbf{Markov commitment payoff} is
+\begin{equation}\label{eq:V_markov}
+    V_{\mathrm{Markov}}(s_1^*) := \sum_{\theta' \in \Theta} \pi(\theta') \cdot \inf_{(\alpha_0, \alpha_2) \in B(s_1^*, F(\cdot|\theta'))} \sum_{\theta \in \Theta} F(\theta|\theta') \cdot u_1\bigl(\theta,\, s_1^*(\theta, \theta'),\, \alpha_2\bigr).
+\end{equation}
+Here $\theta'$ indexes the previous state $\theta_{t-1}$ (observed by SR through the state-revealing strategy, determining the belief $F(\cdot|\theta')$ about $\theta_t$), while $\theta$ indexes the current state $\theta_t$ (entering the payoff $u_1$). The formula averages over the previous state using $\pi$, applies the state-contingent Nash correspondence $B(s_1^*, F(\cdot|\theta'))$, and takes the conditional expectation of the payoff over the current state.
+\end{definition}
+
+% ============================================================
+% EDIT 2: sec_05_proof.tex, Step 5 (line 219)
+% ============================================================
+
+% OLD (line 219):
+% The LR player receives at least $\inf_{B(s_1^*, F(\cdot|\theta_t))} u_1$ in state
+% $\theta_t$ during good periods. Averaging over the ergodic distribution of states
+% and applying the same front-loading argument gives
+% $\liminf_{\delta\to 1} \underline{U}_1(\delta) \geq V_{\mathrm{Markov}}(s_1^*)$.
+
+% NEW:
+% The LR player receives at least
+% $\inf_{B(s_1^*, F(\cdot|\theta_{t-1}))} \sum_\theta F(\theta|\theta_{t-1}) u_1(\theta, s_1^*(\theta, \theta_{t-1}), \alpha_2)$
+% in the period following state $\theta_{t-1}$ during good periods.
+% Averaging over the ergodic distribution of $\theta_{t-1}$ and applying the same
+% front-loading argument gives
+% $\liminf_{\delta\to 1} \underline{U}_1(\delta) \geq V_{\mathrm{Markov}}(s_1^*)$.
+
+% ============================================================
+% EDIT 3: main.tex, Abstract
+% ============================================================
+
+% OLD (in abstract):
+% V_{\mathrm{Markov}}(s_1^*) = \sum_\theta \pi(\theta) \cdot
+%   \inf_{B(s_1^*, F(\cdot|\theta))} u_1
+
+% NEW:
+% V_{\mathrm{Markov}}(s_1^*) = \sum_{\theta'} \pi(\theta') \cdot
+%   \inf_{B(s_1^*, F(\cdot|\theta'))} \mathbb{E}_{\theta \sim F(\cdot|\theta')}[u_1]

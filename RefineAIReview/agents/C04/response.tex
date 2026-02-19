@@ -1,0 +1,25 @@
+\subsection*{C04: Timing in Definition of $V_{\mathrm{Markov}}$ (Definition~4.5)}
+
+\textbf{Reviewer comment:}
+\begin{quote}
+Definition~4.5 pairs the belief argument $B(\cdot)$ with the same state $\theta$ that enters $u_1(\theta, \cdot, \cdot)$. Is the SR belief indexed by the current state $\theta_t$ or the previous state $\theta_{t-1}$? If SR observes history up to $t-1$, their belief about $\theta_t$ is $F(\cdot|\theta_{t-1})$, while the payoff depends on $\theta_t$.
+\end{quote}
+
+\textbf{Response:}
+The reviewer is correct that the formula as written has a timing ambiguity. We thank the reviewer for pressing this point. In the standard simultaneous-move timing:
+\begin{itemize}
+    \item SR at period $t$ has observed history $h_{t-1}$, from which (if $s_1^*$ is state-revealing) SR knows $\theta_{t-1}$.
+    \item SR's belief about $\theta_t$ is $F(\cdot|\theta_{t-1})$---the transition from the \emph{previous} state.
+    \item The period-$t$ payoff depends on $\theta_t$---the \emph{current} state.
+\end{itemize}
+The original formula uses the same $\theta$ for both, conflating $\theta_{t-1}$ (determining SR beliefs) and $\theta_t$ (determining payoffs).
+
+We have corrected Definition~4.5 to:
+\begin{equation}
+    V_{\mathrm{Markov}}(s_1^*) := \sum_{\theta' \in \Theta} \pi(\theta') \cdot \inf_{(\alpha_0, \alpha_2) \in B(s_1^*, F(\cdot|\theta'))} \sum_{\theta \in \Theta} F(\theta|\theta') \cdot u_1(\theta,\, s_1^*(\theta, \theta'),\, \alpha_2)
+\end{equation}
+where $\theta'$ indexes the previous state (known to SR, determining the belief $F(\cdot|\theta')$) and $\theta$ indexes the current state (determining the payoff $u_1$). The SR chooses $\alpha_2$ to best-respond given belief $F(\cdot|\theta')$, and the LR payoff is the conditional expectation over $\theta_t$ given $\theta_{t-1} = \theta'$.
+
+This correction is consistent with the lifted-state formulation: the sum can equivalently be written using $\tilde\rho(\theta, \theta') = \pi(\theta') \cdot F(\theta|\theta')$.
+
+We have verified that all subsequent results (Theorems~4.6 and~4.8, the proof in Section~5) carry through with the corrected formula, and that the baseline numerical values remain consistent.

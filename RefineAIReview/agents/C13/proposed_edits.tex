@@ -1,0 +1,19 @@
+% ============================================================
+% Proposed Edits for C13: Reputation dynamics vs. state-belief dynamics
+% Target file: sec_09_methodology.tex
+% ============================================================
+
+% ---- EDIT 1: Fix the Phase 2 description paragraph (lines 31-33) ----
+
+% CURRENT TEXT (lines 31-33):
+% The most consequential observations, appearing in five separate comments across
+% both threads, identified a single core issue from complementary angles: the i.i.d.\
+% assumption disciplines short-run player information sets about the state. Under
+% Markov dynamics with a state-revealing strategy, short-run player beliefs are given
+% by $F(\cdot|\theta_t)$ rather than $\pi$, and the Nash correspondence $B(s_1^*)$
+% must be written as $B(s_1^*, \mu_0(h_t))$---a dynamic, history-dependent object.
+% This renders the standard one-shot deviation argument inapplicable, since $\mu_0$
+% changes with each period's state revelation.
+
+% REPLACEMENT TEXT:
+The most consequential observations, appearing in five separate comments across both threads, identified a single core issue from complementary angles: the i.i.d.\ assumption disciplines short-run player information sets about the state. Under Markov dynamics with a state-revealing strategy, the short-run player learns $\theta_t$ and forms the one-step-ahead belief $F(\cdot|\theta_t)$ about $\theta_{t+1}$, which generically differs from the stationary distribution~$\pi$. The Nash correspondence therefore becomes \emph{state-contingent}: $B(s_1^*, F(\cdot|\theta_t))$ varies with the realized state~$\theta_t$, a phenomenon absent from the i.i.d.\ setting where $B(s_1^*, \pi)$ is state-independent. This state-contingency---not the evolution of type-posteriors $\mu_t(\cdot|h_t)$, which already occurs in the i.i.d.\ case---is what renders the standard payoff bound inapplicable and motivates the belief-robustness condition (Definition~\ref{def:belief_robust}).

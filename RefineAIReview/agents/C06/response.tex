@@ -1,0 +1,16 @@
+\subsection*{C06: One-Shot Deviation Argument (Section~5.2)}
+
+\textbf{Reviewer comment:}
+\begin{quote}
+``the one-shot deviation argument is identical'' followed by ``adding this $\theta_t$-dependent term can in principle change the OT solution''---These are contradictory. Need to disentangle: (i) conditional on a given objective $w$, the OT argument has the same structure; (ii) but $w$ itself differs in the Markov case.
+\end{quote}
+
+\textbf{Response:}
+The reviewer's diagnosis is exactly right, and we adopt their suggested disentanglement. The two statements are not logically contradictory but are misleadingly juxtaposed. We have restructured the passage to clearly separate two distinct claims:
+
+\begin{enumerate}
+    \item \textbf{Structural claim.} For any fixed objective function $w(\tilde\theta, a_1)$, the one-shot deviation analysis has the same combinatorial structure as in Luo--Wolitzky: a profitable deviation violates cyclical monotonicity of the support, contradicting the unique OT solution. This carries over to $\tilde\Theta$ without modification.
+    \item \textbf{Content claim.} The effective one-shot deviation objective is $w = u_1 + \delta g$ where $g(\theta_t, h_t)$ encodes the continuation value's dependence on the current state. Since $w \neq u_1$ in general, confound-defeating with respect to $u_1$ does not automatically guarantee confound-defeating with respect to $w$. This is where the i.i.d.\ assumption did real work: under i.i.d., $g$ depends only on $a_1$ (not on $\theta_t$), so adding $g$ does not change the OT solution.
+\end{enumerate}
+
+In the revised text, the first claim is stated at the end of the proof, and the second is introduced with a clear transition: ``While the proof structure carries over, the \emph{objective function} entering the OT problem differs\ldots''

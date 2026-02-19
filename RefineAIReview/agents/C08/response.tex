@@ -1,0 +1,22 @@
+% C08 Response: Arithmetic error in belief-robust condition
+
+\noindent\textbf{Comment C08.} \emph{``$\mu^*=0.60<\beta=0.5$'' is stated, but $0.60>0.5$. With $(\alpha,\beta)=(0.3,0.5)$, $\mu^*<\beta$ requires $\mu^*<0.5$, which $0.60$ violates.}
+
+\medskip
+\noindent\textbf{Response.} The reviewer is correct. This is an arithmetic error in the Version~1 (belief-robust) example. We have corrected it as follows.
+
+The belief-robust condition (Proposition~\ref{prop:br_condition}) requires $\mu^* \leq \min_\theta F(G|\theta)$. With $(\alpha,\beta)=(0.3,0.5)$:
+\[
+    F(G|G) = 1-\alpha = 0.70, \qquad F(G|B) = \beta = 0.50,
+\]
+so belief-robustness requires $\mu^* \leq 0.50$. The original text set $\mu^*=0.60$, which violates this condition.
+
+We have corrected the belief-robust example to use $\mu^*=0.40<\beta=0.50$. With this threshold:
+\begin{itemize}
+    \item $\mu^*=0.40 \leq F(G|B) = 0.50$ and $\mu^*=0.40 \leq F(G|G) = 0.70$, so SR cooperates in all states.
+    \item The game is belief-robust, and Theorem~\ref{thm:belief_robust} gives $\liminf_{\delta\to 1} \underline{U}_1(\delta) \geq V(s_1^*) = \beta/(\alpha+\beta) = 0.625$.
+\end{itemize}
+
+We have also corrected the payoff bound displayed in Section~7.4 from $0.60$ to $0.625 = \beta/(\alpha+\beta)$, consistent with Proposition~\ref{prop:deterrence}.
+
+The non-belief-robust example (Version~2, Section~7.5) is unaffected: it correctly uses $\mu^*=0.60 \in [\beta, 1-\alpha]=[0.50, 0.70]$, placing the threshold in the ``danger zone'' where SR behavior is state-contingent.

@@ -1,0 +1,15 @@
+% ---- Response to Comment C16: Ambiguity in "Not Behaviorally Confounded" application ----
+
+\textbf{Comment C16 (MEDIUM):} \emph{``Since $s_1^*$ is not behaviorally confounded, any type with the same asymptotic signal distribution must be $s_1^*$ itself'' relies on an implicit identification between asymptotic conditional signal distributions and stationary $p(\alpha_0, s_1, \alpha_2)$. Need to make explicit that filter stability + ergodicity ensure this.}
+
+\medskip
+\noindent\textbf{Response:} The reviewer is correct that in the Markov case, the step from ``asymptotic signal convergence'' to the application of the not-behaviorally-confounded condition requires an intermediate argument that is trivial in the i.i.d.\ case. We have expanded Part~A of Lemma~5.7 to make the reasoning explicit:
+
+\begin{enumerate}
+    \item The KL bound (Lemma~5.6) implies that the per-period signal distributions under types $\omega_{s_1}$ and $\omega_{s_1^*}$ converge in total variation, $Q$-a.s. This holds for arbitrary signal processes.
+    \item By filter stability (Proposition~A.2), the filtering distribution $\pi(\theta_t | h_t, s_1)$ converges exponentially fast to a limit $\pi_\infty(s_1)$ that depends only on the observation process (the strategy $s_1$ and the transition kernel $F$), not on the initial condition. This is a classical result for ergodic HMMs on finite state spaces (Chigansky \& Liptser, 2004).
+    \item The limiting per-period signal distribution under strategy $s_1$ is therefore the \emph{stationary} signal distribution $p(\alpha_0, s_1, \alpha_2) = \sum_\theta \pi_\infty(\theta; s_1) \cdot g(\cdot | s_1(\theta), \alpha_2)$. The identification between the asymptotic conditional distribution and this stationary quantity is mediated by filter convergence.
+    \item The not-behaviorally-confounded condition (Definition~4.3) states that $p(\alpha_0, s_1^*, \alpha_2) \neq p(\alpha_0, s_1', \alpha_2)$ for $s_1' \neq s_1^*$. Applied to the stationary signal distributions identified in step~3, this yields $\mu_\infty(\{\omega^R, \omega_{s_1^*}\} | h) = 1$.
+\end{enumerate}
+
+\noindent The revised text makes explicit that the bridge from asymptotic signal convergence to the not-behaviorally-confounded conclusion requires filter stability and ergodicity---a step that is automatic in the i.i.d.\ case.

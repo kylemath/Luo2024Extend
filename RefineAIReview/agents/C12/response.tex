@@ -1,0 +1,16 @@
+% C12 Response: Contradiction between Figure 6 caption and content
+
+\noindent\textbf{Comment C12.} \emph{Caption says distributions are ``nearly identical'' but means are $8.1$ vs $12.7$. Both are far below $921$, so the bound holds, but ``nearly identical'' overstates.}
+
+\medskip
+\noindent\textbf{Response.} The reviewer is correct that ``nearly identical'' mischaracterizes the relationship. The i.i.d.\ and Markov distributions of distinguishing-period counts have means of $8.1$ and $12.7$ respectively---a $57\%$ relative difference that is not ``nearly identical.''
+
+The important point is that both means are far below the analytical bound $\bar{T}(\eta, \mu_0) = 921$: the i.i.d.\ mean is $0.9\%$ and the Markov mean is $1.4\%$ of the bound. The KL counting bound holds with large margin in both settings, which is the substantive mathematical claim.
+
+We have revised the figure caption and the corresponding remark in Section~5.2 to state:
+
+\begin{quote}
+``\ldots confirms that the bound $\bar{T}(\eta, \mu_0) = 921$ is valid in both settings, with empirical means well below the bound (i.i.d.: $\statIidMeanCount$; Markov: $\statMarkovMeanCount$). The Markov process produces moderately more distinguishing periods due to autocorrelation, but both remain far below the theoretical bound.''
+\end{quote}
+
+This accurately describes the computational evidence without overstating distributional similarity.

@@ -1,0 +1,26 @@
+% ============================================================
+% C06: Proposed edit to sec_05_proof.tex, end of Lemma 5.1 proof
+%      and subsequent discussion (lines 64-69)
+% ============================================================
+
+% OLD (end of Lemma 5.1 proof, line 64):
+% "The strategy space is now Markov strategies on $\tilde\Theta$ instead of
+%  static strategies on $Y_0$, but the one-shot deviation argument is identical."
+
+% OLD (lines 67-69):
+% "In the Markov case, the continuation value $V_{\mathrm{cont}}(\theta_t, a_1, h_t)$
+%  depends on $\theta_t$ through the transition kernel $F$. The effective one-shot
+%  deviation objective becomes $w(\tilde\theta, a_1) = u_1(\tilde\theta, a_1, \alpha_2)
+%  + \delta g(\theta_t, a_1, h_t)$ for some history-dependent function $g$, and adding
+%  this $\theta_t$-dependent term can in principle change the OT solution."
+
+% ============================================================
+% NEW (end of Lemma 5.1 proof):
+
+The strategy space is now Markov strategies on $\tilde\Theta$ instead of static strategies on $Y_0$. The \emph{structure} of the one-shot deviation argument is identical: for any fixed objective $w(\tilde\theta, a_1)$, a profitable deviation violates cyclical monotonicity and contradicts the unique OT solution.
+
+% NEW (subsequent discussion):
+
+\textbf{Where i.i.d.\ matters for Step~1.} While the proof structure carries over, the \emph{objective function} entering the OT problem differs between the i.i.d.\ and Markov cases. In the i.i.d.\ case, the one-shot deviation objective takes the form $u_1(\theta, a_1, \alpha_2) + \delta V_{\mathrm{cont}}^{a_1}$, where the continuation value $V_{\mathrm{cont}}^{a_1}$ depends only on $a_1$ because future states are independent of the current state $\theta$. Adding a function of $a_1$ alone to the objective does not change the optimal transport solution, so confound-defeatingness with respect to $u_1$ suffices.
+
+In the Markov case, the continuation value $V_{\mathrm{cont}}(\theta_t, a_1, h_t)$ depends on $\theta_t$ through the transition kernel $F$. The effective one-shot deviation objective becomes $w(\tilde\theta, a_1) = u_1(\tilde\theta, a_1, \alpha_2) + \delta g(\theta_t, a_1, h_t)$ for some history-dependent function $g$. Because $g$ depends on $\theta_t$, confound-defeating with respect to $u_1$ alone does not automatically imply confound-defeating with respect to $w$. This is the precise sense in which the argument does \emph{not} carry over unchanged: the proof structure is the same, but the conditions under which it applies are more demanding.

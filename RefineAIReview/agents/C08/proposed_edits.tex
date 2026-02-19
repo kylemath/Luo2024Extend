@@ -1,0 +1,53 @@
+% C08 Proposed Edits: Arithmetic error in belief-robust condition
+
+%% ============================================================
+%% EDIT 1: stats.tex — Fix BRThreshold and BRPayoff
+%% ============================================================
+
+% OLD:
+\newcommand{\BRThreshold}{0.60}
+\newcommand{\BRPayoff}{0.60}
+
+% NEW:
+\newcommand{\BRThreshold}{0.40}
+\newcommand{\BRPayoff}{0.625}
+
+%% ============================================================
+%% EDIT 2: sec_07_example.tex, Section 7.4 — Fix subsection title
+%% ============================================================
+
+% OLD (line 65):
+\subsection{Version 1: Belief-Robust ($\mu^* = \BRThreshold$)}
+
+% NEW (no change needed — macro will now expand to 0.40):
+\subsection{Version 1: Belief-Robust ($\mu^* = \BRThreshold$)}
+
+%% ============================================================
+%% EDIT 3: sec_07_example.tex, Section 7.4 — Fix prose (line 67)
+%% ============================================================
+
+% OLD:
+With SR payoffs calibrated so the indifference threshold is $\mu^* = \BRThreshold < \beta = \BaseBeta$, the SR player always cooperates regardless of the revealed state, since $\mu^* = \BRThreshold < \beta = \BaseBeta \leq F(G|\theta)$ for all $\theta$. The game is \textbf{belief-robust} (Proposition~\ref{prop:br_condition}), and by Theorem~\ref{thm:belief_robust}:
+
+% NEW:
+With SR payoffs calibrated so the indifference threshold is $\mu^* = \BRThreshold < \beta = \BaseBeta$, the SR player always cooperates regardless of the revealed state, since $\mu^* = \BRThreshold < \beta = \BaseBeta \leq F(G|\theta)$ for all $\theta$. The game is \textbf{belief-robust} (Proposition~\ref{prop:br_condition}), and by Theorem~\ref{thm:belief_robust}:
+
+% NOTE: The text is correct as-is — the macros will now expand to
+% "mu* = 0.40 < beta = 0.50", which is true.
+% Verify rendering: "0.40 < 0.50 ≤ F(G|θ) for all θ":
+%   F(G|G) = 0.70 ≥ 0.50 ✓
+%   F(G|B) = 0.50 ≥ 0.50 ✓ (equality)
+
+%% ============================================================
+%% EDIT 4: sec_07_example.tex, Section 7.4 — BRPayoff in formula (line 69)
+%% ============================================================
+
+% OLD:
+\[
+    \liminf_{\delta\to 1} \underline{U}_1(\delta) \geq V(s_1^*) = \BRPayoff.
+\]
+
+% NEW (BRPayoff now expands to 0.625, matching β/(α+β)):
+\[
+    \liminf_{\delta\to 1} \underline{U}_1(\delta) \geq V(s_1^*) = \frac{\beta}{\alpha+\beta} = \BRPayoff.
+\]

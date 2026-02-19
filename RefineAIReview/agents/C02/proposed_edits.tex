@@ -1,0 +1,72 @@
+% ============================================================
+% C02: Proposed edits to sec_04_theorems.tex and main.tex
+% ============================================================
+
+% ============================================================
+% EDIT 1: sec_04_theorems.tex, Theorem 4.8 (line 58)
+% ============================================================
+
+% OLD (line 58):
+%     V_{\mathrm{Markov}}(s_1^*) \leq V(s_1^*), with equality if and only if the game is belief-robust.
+
+% NEW:
+%     with $V_{\mathrm{Markov}}(s_1^*) = V(s_1^*)$ if and only if the game is belief-robust.
+
+% ============================================================
+% EDIT 2: sec_04_theorems.tex, add new Remark after Theorem 4.8
+% ============================================================
+
+% INSERT after the existing Remark (Relationship Between Theorems):
+
+\begin{remark}[Ordering of $V_{\mathrm{Markov}}$ and $V$]\label{rem:ordering}
+The relationship between $V_{\mathrm{Markov}}(s_1^*)$ and $V(s_1^*)$ is \emph{ambiguous in general}. State-contingent SR beliefs can either help or hurt the long-run player:
+\begin{itemize}
+    \item $V_{\mathrm{Markov}} \leq V$ when the stationary belief $\pi$ induces the most favorable SR behavior (e.g., in the deterrence game when $\pi(G) > \mu^*$, so SR cooperates under i.i.d.\ and persistence can only introduce defection in some states).
+    \item $V_{\mathrm{Markov}} > V$ when the stationary belief induces unfavorable SR behavior that persistence partially reverses (e.g., when $\pi(G) < \mu^*$ but $F(G|G) > \mu^*$, so SR defects under i.i.d.\ but cooperates in favorable states under Markov).
+\end{itemize}
+For the baseline parameters ($\alpha=\BaseAlpha$, $\beta=\BaseBeta$, $\pi(G)=\BasePiG > \mu^*=\SRThreshold$), $V_{\mathrm{Markov}} \leq V$ holds. When $V_{\mathrm{Markov}} > V$, persistence is \emph{beneficial} for the long-run player---a new economic phenomenon not present in the i.i.d.\ framework.
+\end{remark}
+
+% ============================================================
+% EDIT 3: main.tex, Abstract (line 100)
+% ============================================================
+
+% OLD (in abstract):
+% V_{\mathrm{Markov}}(s_1^*) = \sum_\theta \pi(\theta) \cdot \inf_{B(s_1^*, F(\cdot|\theta))} u_1 \leq V(s_1^*)
+
+% NEW:
+% V_{\mathrm{Markov}}(s_1^*) = \sum_\theta \pi(\theta) \cdot \inf_{B(s_1^*, F(\cdot|\theta))} u_1$,
+% which equals $V(s_1^*)$ under belief-robustness and may lie above or below
+% $V(s_1^*)$ in general, depending on whether state-contingent SR beliefs
+% lead to more or less favorable behavior for the long-run player.
+
+% ============================================================
+% EDIT 4: sec_04_theorems.tex, Remark on Continuity (lines 65-67)
+% ============================================================
+
+% OLD:
+% $V_{\mathrm{Markov}}(s_1^*)$ is a continuous function of the chain parameters
+% $(\alpha, \beta)$. As $\alpha + \beta \to 1$ (the i.i.d.\ limit),
+% $F(\cdot|\theta) \to \pi(\cdot)$ for all $\theta$, so
+% $V_{\mathrm{Markov}} \to V(s_1^*)$. The gap vanishes continuously.
+
+% NEW:
+% $V_{\mathrm{Markov}}(s_1^*)$ is a continuous function of the chain parameters
+% $(\alpha, \beta)$. As $\alpha + \beta \to 1$ (the i.i.d.\ limit),
+% $F(\cdot|\theta) \to \pi(\cdot)$ for all $\theta$, so
+% $V_{\mathrm{Markov}} \to V(s_1^*)$. The difference
+% $V(s_1^*) - V_{\mathrm{Markov}}$ vanishes continuously
+% and may be positive or negative away from the i.i.d.\ line.
+
+% ============================================================
+% EDIT 5: sec_08_interpolation.tex, line 35 (cost of persistence)
+% ============================================================
+
+% OLD:
+% For the deterrence game with $\mu^* = \SRThreshold$, the cost equals
+% $\PayoffStationary - \PayoffFiltered = \PayoffGapAbsolute$
+
+% NEW:
+% For the deterrence game with $\mu^* = \SRThreshold$ and $\pi(G) = \BasePiG > \mu^*$
+% (where persistence can only reduce cooperation), the cost equals
+% $\PayoffStationary - \PayoffFiltered = \PayoffGapAbsolute$

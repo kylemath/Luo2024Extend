@@ -1,0 +1,8 @@
+% ---- Response to Comment C17: Confusing motivation for lifted state ----
+
+\textbf{Comment C17 (LOW):} \emph{Section~1.1 says lifted state ``provides a stationary distribution'' which reads as if the original chain lacked one. Actually $\theta_t$ already has $\pi$; lifting creates a type space for Markov private info.}
+
+\medskip
+\noindent\textbf{Response:} We agree that the original phrasing was misleading. The original chain $\theta_t$ already possesses a unique stationary distribution $\pi$ by Assumption~1(b). The purpose of the lifting $\tilde\theta_t = (\theta_t, \theta_{t-1})$ is not to create stationarity but to construct the appropriate \emph{type space} for Markov private information: each period, the long-run player observes the current transition $(\theta_t, \theta_{t-1})$, and commitment types are Markov strategies $s_1 : \tilde\Theta \to \Delta(A_1)$ on this expanded space. The stationary distribution $\tilde\rho$ on $\tilde\Theta$ then plays the role of the i.i.d.\ signal distribution $\rho$ in the Luo--Wolitzky optimal transport formulation.
+
+We have revised the sentence in Section~1.1 to make this distinction clear.

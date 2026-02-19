@@ -1,0 +1,34 @@
+% C21 Proposed Edits: Display full payoff matrix
+% File: sec_07_example.tex
+
+%% ============================================================
+%% EDIT 1: Section 7.1 — Add clarification after D-payoff display (after line 22)
+%% ============================================================
+
+% OLD (lines 18-22):
+The long-run player chooses $a_1 \in \{A(\text{cquiesce}), F(\text{ight})\}$. The short-run player, observing the history of $a_1$ but not $\theta$, chooses $a_2 \in \{C(\text{ooperate}), D(\text{efect})\}$. Payoffs conditional on $a_2 = D$ (or more generally against SR strategy $\alpha_2$) are:
+\begin{equation}
+    u_1(G, A) = 1, \quad u_1(G, F) = x, \quad u_1(B, A) = y, \quad u_1(B, F) = 0,
+\end{equation}
+with $x, y \in (0,1)$. (See Luo \& Wolitzky, Section~2.1, for the full payoff matrix with $(g, l)$ parameters.)
+
+% NEW:
+The long-run player chooses $a_1 \in \{A(\text{cquiesce}), F(\text{ight})\}$. The short-run player, observing the history of $a_1$ but not $\theta$, chooses $a_2 \in \{C(\text{ooperate}), D(\text{efect})\}$. Following Luo \& Wolitzky (2024, Section~2.1), the LR payoff matrix with cooperation gain $g > 0$ and defection loss $l > 0$ is:
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+& \multicolumn{2}{c}{$a_2 = C$} & \multicolumn{2}{c}{$a_2 = D$} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5}
+$(\theta, a_1)$ & $u_1$ & & $u_1$ & \\
+\midrule
+$(G, A)$ & $1 + g$ & & $1$ & \\
+$(G, F)$ & $x + g$ & & $x$ & \\
+$(B, A)$ & $y + g$ & & $y$ & \\
+$(B, F)$ & $g$ & & $0$ & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent with $x, y \in (0,1)$ and $g, l > 0$. The Stackelberg strategy $s_1^*(G) = A$, $s_1^*(B) = F$ maximizes the \emph{reputation payoff}---the expected payoff when SR best-responds to the commitment type---not the per-period payoff against defection. Note that against $D$ alone, $A$ dominates $F$ in state $B$ ($y > 0$); the optimality of $s_1^*(B) = F$ depends on the cooperation column, where it makes the commitment type identifiable and captures the surplus $g$ in good states.

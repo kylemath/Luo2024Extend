@@ -1,0 +1,13 @@
+% ---- Response to Comment C14: Ambiguous definition of best-response set in Lemma 5.8 ----
+
+\textbf{Comment C14 (MEDIUM):} \emph{$\hat{B}_{\xi(\eta)}(s_1^*)$ appears without redefinition in the Markov extension. Readers may confuse it with state-dependent $B(s_1^*, F(\cdot|\theta))$. Need to recall $\hat{B}$ is the static confirmed best-response set from Luo--Wolitzky.}
+
+\medskip
+\noindent\textbf{Response:} We agree that this notation requires clarification. The paper introduces the state-contingent correspondence $B(s_1^*, F(\cdot|\theta))$ as a new object (Definition~4.2), while the proof sketch in Section~5.4 uses $\hat{B}_{\xi(\eta)}(s_1^*)$ from Luo--Wolitzky (2024) without redefining it. This creates an avoidable ambiguity.
+
+We have added a clarifying remark before Lemma~5.8 that:
+\begin{itemize}
+    \item Recalls that $\hat{B}_{\xi}(s_1^*)$ is the \emph{$\xi$-confirmed best-response set} of Luo--Wolitzky (2024, Definition~3): the set of short-run player best-response profiles $(\alpha_0, \alpha_2)$ that remain optimal when the posterior concentrates within $\xi$ of $\{\omega^R, \omega_{s_1^*}\}$.
+    \item Distinguishes it from $B(s_1^*, F(\cdot|\theta))$, which captures the state-contingent Nash correspondence under filtering beliefs---a new object introduced in this paper.
+    \item Notes that under belief-robustness, $B(s_1^*, F(\cdot|\theta))$ is constant across $\theta$, so the distinction collapses and Lemma~5.8 applies exactly as in the i.i.d.\ case.
+\end{itemize}

@@ -1,0 +1,32 @@
+% ============================================================
+% C18: Proposed edit to sec_06_supermodular.tex, Section 6.2
+% ============================================================
+
+% OLD (line 21):
+% "The relevant order on $\tilde\Theta$ is the \emph{first-coordinate order}:
+%  $(\theta_t, \theta_{t-1}) \succeq (\theta_t', \theta_{t-1}')$ if and only if
+%  $\theta_t \succeq \theta_t'$. Under this order, the supermodularity condition
+%  is \textbf{unchanged} from the i.i.d.\ case: it depends only on the payoff
+%  structure in $(\theta_t, a_1)$, not on the Markov dynamics."
+
+% NEW:
+% "The relevant order on $\tilde\Theta$ is the \emph{first-coordinate order}:
+%  $(\theta_t, \theta_{t-1}) \succeq (\theta_t', \theta_{t-1}')$ if and only if
+%  $\theta_t \succeq \theta_t'$. Under this partial order, lifted states sharing
+%  the same first coordinate---such as $(G, G)$ and $(G, B)$---are
+%  \emph{incomparable}. Since $u_1(\tilde\theta, a_1, \alpha_2) = u_1(\theta_t,
+%  a_1, \alpha_2)$ is constant across incomparable states, no
+%  increasing-differences condition is imposed between them, and strict
+%  supermodularity is preserved. The supermodularity condition is therefore
+%  \textbf{unchanged} from the i.i.d.\ case: it depends only on the payoff
+%  structure in $(\theta_t, a_1)$, not on the Markov dynamics."
+
+% ============================================================
+% Full context replacement:
+% ============================================================
+
+% OLD:
+If $u_1(\tilde\theta, a_1, \alpha_2) = u_1(\theta_t, a_1, \alpha_2)$, then $u_1$ is supermodular in $(\tilde\theta, a_1)$ if and only if it is supermodular in $(\theta_t, a_1)$, using any order on $\tilde\Theta$ that is consistent with the order on the first coordinate (e.g., the lexicographic order). The relevant order on $\tilde\Theta$ is the \emph{first-coordinate order}: $(\theta_t, \theta_{t-1}) \succeq (\theta_t', \theta_{t-1}')$ if and only if $\theta_t \succeq \theta_t'$. Under this order, the supermodularity condition is \textbf{unchanged} from the i.i.d.\ case: it depends only on the payoff structure in $(\theta_t, a_1)$, not on the Markov dynamics.
+
+% NEW:
+If $u_1(\tilde\theta, a_1, \alpha_2) = u_1(\theta_t, a_1, \alpha_2)$, then $u_1$ is supermodular in $(\tilde\theta, a_1)$ if and only if it is supermodular in $(\theta_t, a_1)$, using any order on $\tilde\Theta$ that is consistent with the order on the first coordinate. The relevant order on $\tilde\Theta$ is the \emph{first-coordinate order}: $(\theta_t, \theta_{t-1}) \succeq (\theta_t', \theta_{t-1}')$ if and only if $\theta_t \succeq \theta_t'$. Under this partial order, lifted states sharing the same first coordinate---such as $(G, G)$ and $(G, B)$---are \emph{incomparable}. Since $u_1$ is constant across incomparable states (it does not depend on $\theta_{t-1}$), no increasing-differences condition is imposed between them, and strict supermodularity of $u_1$ in $(\theta_t, a_1)$ lifts to strict supermodularity in $(\tilde\theta, a_1)$ without difficulty. The supermodularity condition is therefore \textbf{unchanged} from the i.i.d.\ case: it depends only on the payoff structure in $(\theta_t, a_1)$, not on the Markov dynamics.

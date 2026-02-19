@@ -1,0 +1,76 @@
+% ================================================================
+% Consolidated Response: Numerical Errors and the Worked Example
+% Manager B — Comments C03, C08, C09, C12, C21
+% ================================================================
+
+\subsection*{Group B: Numerical Errors and the Worked Example}
+
+We thank the reviewer for the careful numerical scrutiny of the worked example and interpolation sections. Five distinct issues were identified, three of which involve clear arithmetic or logical errors. All have been corrected.
+
+\bigskip
+
+%% ────────────────────────────────────────────────
+\noindent\textbf{C03: Contradictory i.i.d.\ benchmark values (HIGH).}
+
+\emph{Concern: Section~7.6 computes $V(s_1^*)=0.625$, while Section~7.7 gives ``Stationary beliefs'' payoff as $0.777$; also $V_{\mathrm{Markov}}=0.628>V(s_1^*)=0.625$ violates $V_{\mathrm{Markov}}\leq V$.}
+
+\medskip
+The reviewer correctly identifies a notational overload. The paper uses $V(s_1^*)$ for two distinct quantities:
+\begin{enumerate}
+    \item $V_{\min}(s_1^*) = \pi(G)\cdot u_1(G,A,D) + \pi(B)\cdot u_1(B,F,D) = 0.625$ --- the worst-case commitment payoff against SR defection, equal to $\beta/(\alpha+\beta)$ from Proposition~\ref{prop:deterrence}.
+    \item $V_{\text{iid}}(s_1^*) = \pi(G)\cdot u_1(G,A,C) + \pi(B)\cdot u_1(B,F,C) = 0.777$ --- the equilibrium payoff when SR cooperates under stationary beliefs.
+\end{enumerate}
+The Markov payoff $V_{\mathrm{Markov}} = 0.628$ satisfies $V_{\mathrm{Markov}} \leq V_{\text{iid}} = 0.777$ but exceeds $V_{\min} = 0.625$. The comparison table's $V_{\mathrm{Markov}} \leq V(s_1^*)$ is correct when $V(s_1^*)$ means the i.i.d.\ equilibrium payoff.
+
+\textbf{Fix:} We have introduced separate notation ($V_{\min}$, $V_{\text{iid}}$, $V_{\mathrm{Markov}}$) in the revised Sections~7.6--7.7 and updated the comparison table.
+
+\bigskip
+
+%% ────────────────────────────────────────────────
+\noindent\textbf{C08: Arithmetic error in belief-robust condition (HIGH).}
+
+\emph{Concern: ``$\mu^*=0.60<\beta=0.5$'' is stated, but $0.60>0.5$.}
+
+\medskip
+This is an unambiguous arithmetic error. The belief-robust condition requires $\mu^* \leq \min_\theta F(G|\theta) = \beta = 0.50$, so $\mu^*=0.60$ violates it. Additionally, the displayed payoff bound $V(s_1^*)=0.60$ should be $0.625 = \beta/(\alpha+\beta)$.
+
+\textbf{Fix:} We have corrected the belief-robust threshold to $\mu^*=0.40<\beta=0.50$ and the payoff bound to $V(s_1^*)=0.625$ in both \texttt{stats.tex} and Section~7.4. The non-belief-robust example (Section~7.5, $\mu^*=0.60$) is unaffected.
+
+\bigskip
+
+%% ────────────────────────────────────────────────
+\noindent\textbf{C09: Arithmetic error and variable confusion (HIGH).}
+
+\emph{Concern: ``The cost equals $0.777-0.628=0.094$'' but $0.777-0.628=0.149$. Also $23.7\%$ is $0.149/0.628$, not ``of the i.i.d.\ payoff.''}
+
+\medskip
+Three errors in one sentence:
+\begin{enumerate}
+    \item $0.777-0.628 = 0.149$, not $0.094$. The value $0.094$ is the \emph{belief gap} from the formula $2\alpha\beta|1-\alpha-\beta|/(\alpha+\beta)^2$, a probability-space quantity. The \emph{payoff gap} is $0.149$.
+    \item $23.7\% = 0.149/0.628$ is the overestimation relative to the \emph{Markov} payoff, not ``of the i.i.d.\ payoff'' ($0.149/0.777 = 19.2\%$).
+    \item The macro \verb|\PayoffGapAbsolute| stored the belief gap where the payoff gap was needed.
+\end{enumerate}
+
+\textbf{Fix:} We have added a \verb|\PayoffGapPayoff{0.149}| macro, corrected Section~8.5, and added a sentence distinguishing the belief gap ($0.094$) from the payoff gap ($0.149$).
+
+\bigskip
+
+%% ────────────────────────────────────────────────
+\noindent\textbf{C12: ``Nearly identical'' distributions with different means (MEDIUM).}
+
+\emph{Concern: Caption says distributions are ``nearly identical'' but means are $8.1$ vs $12.7$.}
+
+\medskip
+The $57\%$ difference in means is not ``nearly identical.'' The important point is that both means are far below the analytical bound of $921$ ($<1.4\%$). We have revised the figure caption and the Section~5.2 remark to accurately report: ``both well below the analytical bound (i.i.d.: $8.1$; Markov: $12.7$),'' noting the moderate difference while emphasizing that the bound holds with large margin in both settings.
+
+\bigskip
+
+%% ────────────────────────────────────────────────
+\noindent\textbf{C21: Incomplete payoff display (LOW).}
+
+\emph{Concern: Only D-row payoffs shown; $A$ dominates $F$ in state $B$ against $D$ alone.}
+
+\medskip
+The reviewer is correct that the D-conditional payoffs alone make $s_1^*(B)=F$ appear suboptimal ($u_1(B,A,D)=0.4>u_1(B,F,D)=0$). The Stackelberg strategy is optimal in the full game (including C-column payoffs) because it satisfies the confound-defeating condition and enables reputation effects.
+
+\textbf{Fix:} We have added the full payoff matrix (both C and D columns) to Section~7.1, with a clarifying note that $s_1^*$ maximizes the reputation payoff, not the per-period payoff against defection.

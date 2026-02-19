@@ -1,0 +1,18 @@
+% ============================================================
+% Proposed Edits for C07: Filter stability conceptual correction
+% Target file: sec_10_discussion.tex
+% ============================================================
+
+% ---- EDIT 1: Replace the epsilon-perturbed strategies paragraph (line 16) ----
+% CURRENT TEXT:
+% A natural question concerns \textbf{$\varepsilon$-perturbed strategies}. If the
+% commitment type plays $s_1^\varepsilon(\theta) = (1-\varepsilon) s_1^*(\theta) +
+% \varepsilon \cdot \text{uniform}$ for small $\varepsilon > 0$, the strategy is no
+% longer state-revealing, and filter stability (SA4) suggests that beliefs may
+% converge to the stationary distribution. Whether $V_{\mathrm{Markov}}(s_1^\varepsilon)
+% \to V(s_1^*)$ as $\varepsilon \to 0$, uniformly in other parameters, would provide
+% a ``smoothing'' route to the full bound that circumvents the belief-robustness
+% requirement.
+
+% REPLACEMENT TEXT:
+A natural question concerns \textbf{$\varepsilon$-perturbed strategies}. If the commitment type plays $s_1^\varepsilon(\theta) = (1-\varepsilon) s_1^*(\theta) + \varepsilon \cdot \text{uniform}$ for small $\varepsilon > 0$, the strategy is no longer perfectly state-revealing. Filter stability (Proposition~\ref{prop:filter_stability}) guarantees that the filter forgets its initial prior exponentially fast, but this is distinct from the posterior converging to the stationary distribution~$\pi$. For small~$\varepsilon$, the observation channel retains substantial information about~$\theta_t$, so the filtered belief continues to track the current state rather than settling at~$\pi$. The benefit of $\varepsilon$-perturbation is more subtle: by degrading state revelation, it \emph{reduces} the belief gap $\E[|F(G|\theta_t) - \pi(G)|]$ continuously, potentially moving the effective filtering beliefs out of the ``danger zone'' $[\beta, 1-\alpha]$ even when the exact beliefs $F(\cdot|\theta_t)$ span it.\footnote{To be precise: filter stability means $\sup_{\pi_0,\pi_0'}\|\pi_t - \pi_t'\| \leq C\lambda^t$ (the initial \emph{prior} is forgotten); chain mixing means $\|P(\theta_t \in \cdot) - \pi\| \leq C'\lambda'^t$ (the initial \emph{state} is forgotten); belief convergence to~$\pi$ would require the observation channel to be uninformative, which fails for small~$\varepsilon$.} Whether $V_{\mathrm{Markov}}(s_1^\varepsilon) \to V(s_1^*)$ as $\varepsilon \to 0$, uniformly in other parameters, would provide a ``smoothing'' route to the full bound that circumvents the belief-robustness requirement.

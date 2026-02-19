@@ -1,0 +1,86 @@
+\section*{Part A: Formal Mathematics and Core Theory}
+
+We address seven reviewer comments concerning the formal mathematical content of the paper. We are grateful for the careful reading and the identification of several errors that improve the paper's rigor.
+
+% ============================================================
+\subsection*{C01: Scaling of Continuation Values (Remark 5.4)}
+
+\textbf{Reviewer comment:}
+\begin{quote}
+``Combined with $\delta\to 1$ (which makes the continuation value perturbation small relative to the stage-game payoff)''---the paper claims $\delta\to 1$ makes continuation values small relative to stage payoff, but under $(1-\delta)u_1 + \delta \mathbb{E}[V]$, as $\delta\to 1$ continuation becomes MORE important, not less.
+\end{quote}
+
+\textbf{Response:}
+The reviewer is correct. Under the normalization $(1-\delta)u_1 + \delta \mathbb{E}[V]$, the continuation value receives weight $\delta \to 1$. The original sentence inverts the direction. The argument relies on two distinct mechanisms: (1) filter stability makes the $\theta_t$-dependent perturbation vanish for large $t$; (2) $\delta \to 1$ makes the finite transient period negligible via front-loading. We have corrected Remark~5.4 accordingly. No formal results are affected.
+
+% ============================================================
+\subsection*{C02: Generality of $V_{\mathrm{Markov}} \leq V$ (Theorem~4.8)}
+
+\textbf{Reviewer comment:}
+\begin{quote}
+$V_{\mathrm{Markov}}(s_1^*) \leq V(s_1^*)$ is claimed but never proved. When $\pi(G) < \mu^*$ but $F(G|G) > \mu^*$, persistence enables cooperation in good states only, so $V_{\mathrm{Markov}} > V$ is possible.
+\end{quote}
+
+\textbf{Response:}
+The reviewer is correct: $V_{\mathrm{Markov}} \leq V$ does not hold in general. The counterexample is valid and verified computationally. When $\pi(G) < \mu^*$ (SR defects under i.i.d.), state persistence can enable cooperation after favorable states, yielding $V_{\mathrm{Markov}} > V$.
+
+We have made three changes: (1) Theorem~4.8 now states the ordering is parameter-dependent, with $V_{\mathrm{Markov}} = V$ iff belief-robust; (2) a new remark characterizes when $V_{\mathrm{Markov}} \lessgtr V$; (3) the abstract is corrected. The possibility that $V_{\mathrm{Markov}} > V$ is a new economic insight: persistence can \emph{benefit} the long-run player when the stationary belief is unfavorable.
+
+% ============================================================
+\subsection*{C04: Timing in $V_{\mathrm{Markov}}$ (Definition~4.5)}
+
+\textbf{Reviewer comment:}
+\begin{quote}
+Definition~4.5 pairs the belief argument $B(\cdot)$ with the same state $\theta$ that enters $u_1(\theta, \cdot, \cdot)$. Is the SR belief indexed by $\theta_t$ or $\theta_{t-1}$?
+\end{quote}
+
+\textbf{Response:}
+The reviewer correctly identifies a timing ambiguity that constitutes a genuine error. SR's belief at period $t$ is $F(\cdot|\theta_{t-1})$ (transition from the previous state), while payoffs depend on $\theta_t$ (the current state). The corrected formula is:
+\[
+    V_{\mathrm{Markov}}(s_1^*) = \sum_{\theta'} \pi(\theta') \cdot \inf_{B(s_1^*, F(\cdot|\theta'))} \sum_{\theta} F(\theta|\theta') \cdot u_1(\theta, s_1^*(\theta, \theta'), \alpha_2)
+\]
+where $\theta'$ indexes $\theta_{t-1}$ and $\theta$ indexes $\theta_t$. We have verified that the corrected formula produces a quantitative difference of 0.0375 at baseline parameters.
+
+% ============================================================
+\subsection*{C05: Sufficient Condition for Supermodularity (Remark~5.4)}
+
+\textbf{Reviewer comment:}
+\begin{quote}
+Monotonicity in $\theta_t$ for each $a_1$ does NOT imply increasing differences in $(\theta, a_1)$.
+\end{quote}
+
+\textbf{Response:}
+The reviewer is correct that monotonicity does not imply supermodularity in general. However, the conclusion is recoverable via a stronger argument: in the paper's model, state transitions are exogenous, so $g(\theta_t) = \delta V_{\mathrm{cont}}(\theta_t)$ does not depend on $a_1$. Adding a function of $\theta$ alone to a supermodular objective preserves supermodularity trivially (the $g$ terms cancel in the increasing-differences comparison). We have replaced the incorrect claim with this correct argument.
+
+% ============================================================
+\subsection*{C06: One-Shot Deviation Argument (Section~5.2)}
+
+\textbf{Reviewer comment:}
+\begin{quote}
+``the one-shot deviation argument is identical'' contradicts ``adding this $\theta_t$-dependent term can in principle change the OT solution.''
+\end{quote}
+
+\textbf{Response:}
+The reviewer's diagnosis is correct. The two statements are not logically contradictory but are misleadingly juxtaposed. We have restructured the passage to clearly separate: (1) the proof \emph{structure} is identical (for any fixed objective $w$, the OT logic carries over); (2) the \emph{objective} $w = u_1 + \delta g$ is different in the Markov case, so confound-defeating with respect to $u_1$ alone does not automatically suffice.
+
+% ============================================================
+\subsection*{C15: Confound-Defeating Under Persistence (Section~8.6)}
+
+\textbf{Reviewer comment:}
+\begin{quote}
+Section~6 shows the confound-defeating characterization is UNCHANGED. In what sense is it ``easier to satisfy''?
+\end{quote}
+
+\textbf{Response:}
+The mathematical characterization (Proposition~6.1) is indeed unchanged: confound-defeating $\Leftrightarrow$ monotonicity in the supermodular case. What we intended is that persistence provides a richer \emph{identification channel}: autocorrelated action sequences are more statistically distinguishable, facilitating empirical \emph{verification} of the condition. We have corrected the text to state this precisely.
+
+% ============================================================
+\subsection*{C18: Strict Supermodularity on the Lifted Space (Section~6.2)}
+
+\textbf{Reviewer comment:}
+\begin{quote}
+$u_1(\tilde\theta, a_1, \alpha_2) = u_1(\theta_t, a_1, \alpha_2)$ is constant in $\theta_{t-1}$, suggesting tension with strict supermodularity.
+\end{quote}
+
+\textbf{Response:}
+As the reviewer notes, this is resolved by the first-coordinate order: states differing only in $\theta_{t-1}$ are incomparable, so no increasing-differences condition is imposed between them. We have added an explicit sentence to Section~6.2 making this argument precise.

@@ -1,0 +1,28 @@
+% C09 Proposed Edits: Arithmetic error and variable confusion
+% File: sec_08_interpolation.tex and stats.tex
+
+%% ============================================================
+%% EDIT 1: stats.tex — Add payoff gap macro
+%% ============================================================
+
+% ADD after line 17 (\newcommand{\PayoffGapAbsolute}{0.094}):
+\newcommand{\PayoffGapPayoff}{0.149}
+
+%% ============================================================
+%% EDIT 2: sec_08_interpolation.tex, Section 8.5 (line 35)
+%% ============================================================
+
+% OLD:
+For the deterrence game with $\mu^* = \SRThreshold$, the cost equals $\PayoffStationary - \PayoffFiltered = \PayoffGapAbsolute$, representing \PayoffOverestimation\% of the i.i.d.\ payoff.
+
+% NEW:
+For the deterrence game with $\mu^* = \SRThreshold$, the payoff cost equals $\PayoffStationary - \PayoffFiltered = \PayoffGapPayoff$, a \PayoffOverestimation\% overestimation relative to the Markov payoff. The analytical belief gap $2\alpha\beta|1-\alpha-\beta|/(\alpha+\beta)^2 = \PayoffGapAbsolute$ measures the expected TV distance between filtered and stationary beliefs; the larger payoff gap of \PayoffGapPayoff{} reflects the economic amplification of this belief difference through the game's payoff structure.
+
+%% ============================================================
+%% EDIT 3: sec_08_interpolation.tex — Rename "cost" subsection
+%% for clarity (optional but recommended)
+%% ============================================================
+
+% The subsection title "The Cost of Persistence" (line 32) can remain,
+% but the text should use "payoff cost" rather than just "cost" to
+% distinguish from the belief gap.

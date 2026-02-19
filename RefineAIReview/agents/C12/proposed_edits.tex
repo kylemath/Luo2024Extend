@@ -1,0 +1,22 @@
+% C12 Proposed Edits: Figure caption and remark language
+% Files: app_A_kl_verification.tex and sec_05_proof.tex
+
+%% ============================================================
+%% EDIT 1: app_A_kl_verification.tex — Figure caption (line 43)
+%% ============================================================
+
+% OLD:
+\caption{KL counting bound comparison: Markov vs.\ i.i.d.\ settings. Monte Carlo simulation with $N=\KLMonteCarloN$ runs and $T=\KLMonteCarloPeriods$ periods confirms the bound $\bar{T}(\eta, \mu_0) = -2\log\mu_0(\omega_{s_1^*})/\eta^2$ is valid and nearly identical in both settings.}
+
+% NEW:
+\caption{KL counting bound comparison: Markov vs.\ i.i.d.\ settings. Monte Carlo simulation with $N=\KLMonteCarloN$ runs and $T=\KLMonteCarloPeriods$ periods confirms the bound $\bar{T}(\eta, \mu_0) = -2\log\mu_0(\omega_{s_1^*})/\eta^2$ is valid in both settings, with empirical means well below the bound (i.i.d.: \statIidMeanCount; Markov: \statMarkovMeanCount). The Markov process produces moderately more distinguishing periods due to autocorrelation, but both remain far below the theoretical bound of $921$.}
+
+%% ============================================================
+%% EDIT 2: sec_05_proof.tex — Remark after Step 2 (line 136)
+%% ============================================================
+
+% OLD:
+Monte Carlo verification ($N=\KLMonteCarloN$ simulations, $T=\KLMonteCarloPeriods$ periods) confirms that the empirical distribution of distinguishing-period counts is nearly identical for Markov and i.i.d.\ processes (Figure~\ref{fig:kl_bound}).
+
+% NEW:
+Monte Carlo verification ($N=\KLMonteCarloN$ simulations, $T=\KLMonteCarloPeriods$ periods) confirms that the empirical mean of distinguishing-period counts is well below the analytical bound in both settings: \statIidMeanCount{} (i.i.d.) and \statMarkovMeanCount{} (Markov), versus a bound of $921$ periods (Figure~\ref{fig:kl_bound}).

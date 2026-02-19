@@ -1,0 +1,24 @@
+% ---- Proposed Edits for C16: Ambiguity in "Not Behaviorally Confounded" application ----
+% File: revisedTexPaper/sections/sec_05_proof.tex
+
+% ============================================================
+% EDIT 1: Expand the NBC application in Part A of Lemma 5.7
+% ============================================================
+
+% --- OLD (lines 157-161) ---
+Third, the KL bound from Lemma~\ref{lem:KL} (which holds unchanged) implies:
+\begin{equation}\label{eq:signal_convergence}
+    \lim_{t \to \infty} \left\|p_{Y_1}(\sigma_0^*, s_1 | h_t) - p_{Y_1}(\sigma_0^*, \tilde{s}_1 | h_t, \Omega \setminus \{\omega^R\})\right\| = 0
+\end{equation}
+$Q$-a.s., exactly as in the Luo--Wolitzky proof of Lemma~9 (their Appendix~B.2). The KL chain rule argument that yields this convergence is valid for arbitrary signal processes. Since $s_1^*$ is not behaviorally confounded, any type with the same asymptotic signal distribution must be $s_1^*$ itself, hence $\mu_\infty(\{\omega^R, \omega_{s_1^*}\} | h) = 1$.
+% --- END OLD ---
+
+% --- NEW ---
+Third, the KL bound from Lemma~\ref{lem:KL} (which holds unchanged) implies:
+\begin{equation}\label{eq:signal_convergence}
+    \lim_{t \to \infty} \left\|p_{Y_1}(\sigma_0^*, s_1 | h_t) - p_{Y_1}(\sigma_0^*, \tilde{s}_1 | h_t, \Omega \setminus \{\omega^R\})\right\| = 0
+\end{equation}
+$Q$-a.s., exactly as in the Luo--Wolitzky proof of Lemma~9 (their Appendix~B.2). The KL chain rule argument that yields this convergence is valid for arbitrary signal processes.
+
+It remains to conclude that $\mu_\infty(\{\omega^R, \omega_{s_1^*}\} | h) = 1$. In the i.i.d.\ case, this follows immediately because the per-period signal distribution $p(\alpha_0, s_1, \alpha_2)$ is stationary by construction, and the not-behaviorally-confounded condition distinguishes types directly. In the Markov case, an intermediate step is needed. By \textbf{filter stability} (Proposition~\ref{prop:filter_stability}), the filtering distribution $\pi(\theta_t | h_t, s_1)$ under any strategy $s_1$ converges exponentially fast to a limit $\pi_\infty(s_1)$ that is determined by the observation process---the strategy $s_1$ and the transition kernel $F$---independently of the initial condition. By \textbf{ergodicity} of the underlying chain, this limiting filter $\pi_\infty(s_1)$ determines a unique stationary per-period signal distribution $p_\infty(\alpha_0, s_1, \alpha_2) = \sum_\theta \pi_\infty(\theta; s_1) \cdot g(\cdot | s_1(\theta), \alpha_2)$. The asymptotic signal convergence~\eqref{eq:signal_convergence} therefore implies convergence of the \emph{stationary} signal distributions $p_\infty(\alpha_0, s_1, \alpha_2) \to p_\infty(\alpha_0, s_1^*, \alpha_2)$. Since $s_1^*$ is not behaviorally confounded (Definition~\ref{def:NBC_extended}), any type with the same stationary signal distribution must be $s_1^*$ itself, hence $\mu_\infty(\{\omega^R, \omega_{s_1^*}\} | h) = 1$.
+% --- END NEW ---

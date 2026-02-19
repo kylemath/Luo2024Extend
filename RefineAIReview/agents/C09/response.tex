@@ -1,0 +1,16 @@
+% C09 Response: Arithmetic error and variable confusion
+
+\noindent\textbf{Comment C09.} \emph{``The cost equals $0.777-0.628=0.094$'' but $0.777-0.628=0.149$, not $0.094$. Also $23.7\%$ is $0.149/0.628$, not ``of the i.i.d.\ payoff.''}
+
+\medskip
+\noindent\textbf{Response.} The reviewer has identified two errors and a mislabeling. We have corrected all three.
+
+\textbf{Error 1: Wrong subtraction result.} The text stated $0.777 - 0.628 = 0.094$. The correct difference is $0.777 - 0.628 = 0.149$. The value $0.094$ is the analytical \emph{belief gap} $2\alpha\beta|1-\alpha-\beta|/(\alpha+\beta)^2$, which measures the expected total variation distance between filtered beliefs and the stationary distribution. The \emph{payoff gap} is $0.149$---a distinct quantity reflecting the economic amplification of the belief gap through the game's payoff structure. A macro error caused the belief gap value to appear where the payoff gap was intended. We have added a separate macro (\verb|\PayoffGapPayoff|) and corrected the text.
+
+\textbf{Error 2: Percentage base.} The text stated the overestimation represents ``$23.7\%$ of the i.i.d.\ payoff.'' In fact:
+\[
+    \frac{0.149}{0.777} = 19.2\% \quad (\text{of i.i.d.\ payoff}), \qquad \frac{0.149}{0.628} = 23.7\% \quad (\text{of Markov payoff}).
+\]
+So $23.7\%$ is the overestimation relative to the \emph{Markov} (filtered) payoff, not the i.i.d.\ payoff. We have corrected the phrasing to: ``a $23.7\%$ overestimation relative to the Markov payoff.''
+
+\textbf{Clarification added.} We now explicitly distinguish the belief gap ($0.094$, a probability-space quantity from the analytical formula) from the payoff gap ($0.149$, an economic quantity depending on the game payoffs), noting that the payoff gap exceeds the belief gap because the payoff structure amplifies the effect of belief differences.
