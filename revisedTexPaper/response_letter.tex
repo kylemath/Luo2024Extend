@@ -65,7 +65,7 @@ In response, we carried out a systematic revision informed by 21 computational t
   \item The KL counting bound, filter stability, OT robustness, and monotonicity results all \emph{survive} the extension to Markov states.
   \item The \emph{fatal flaw} is that SR beliefs depend on the revealed state: $F(\cdot|\theta_t) \neq \pi$ in general. This makes the Nash correspondence $B(s_1^*, \mu_0)$ state-contingent rather than static.
   \item \textbf{New Theorem~1\/$'$} (belief-robust games): When the SR best-response set is invariant across filtering beliefs, the original bound $V(s_1^*)$ holds exactly.
-  \item \textbf{New Theorem~1\/$''$} (general case): For all supermodular games, a corrected bound $V_{\mathrm{Markov}}(s_1^*) \leq V(s_1^*)$ holds, with equality iff the game is belief-robust.
+  \item \textbf{New Theorem~1\/$''$} (general case): For all supermodular games, $V_{\mathrm{Markov}}(s_1^*)$ provides the corrected bound, with $V_{\mathrm{Markov}} = V(s_1^*)$ iff the game is belief-robust.
   \item All specific errors identified by Luo have been corrected (Remark~2.6 revised, Remark~3.3 removed, payoff structure restricted, monotonicity definition fixed).
 \end{itemize}
 
@@ -136,7 +136,7 @@ This is the most important critique and drives the entire revision. Luo identifi
 \begin{itemize}[nosep]
   \item New \textbf{Section~3} introduces the concept of \emph{belief-robustness}: a game is belief-robust if $B(s_1^*, F(\cdot|\theta)) = B(s_1^*, F(\cdot|\theta'))$ for all $\theta, \theta'$.
   \item \textbf{Theorem~1$'$} (belief-robust extension): under belief-robustness, the original bound $V(s_1^*)$ holds exactly.
-  \item \textbf{Theorem~1$''$} (general corrected bound): for all supermodular games, $V_{\mathrm{Markov}}(s_1^*) \leq V(s_1^*)$ holds, where $V_{\mathrm{Markov}}$ uses the state-contingent Nash correspondence $B(s_1^*, F(\cdot|\theta_t))$ averaged over the ergodic distribution.
+  \item \textbf{Theorem~1$''$} (general corrected bound): for all supermodular games, $V_{\mathrm{Markov}}(s_1^*)$ provides the bound, where $V_{\mathrm{Markov}}$ uses the state-contingent Nash correspondence $B(s_1^*, F(\cdot|\theta_{t-1}))$ averaged over the ergodic distribution. The relationship between $V_{\mathrm{Markov}}$ and $V(s_1^*)$ depends on whether state-contingent beliefs help or hurt the LR player.
   \item The proof of Lemma~3 (now Lemma~3$'$) is revised to account for filter stability (SA4, $R^2 > \FilterRSquared$) and the belief-dependent Nash correspondence.
 \end{itemize}
 
@@ -226,7 +226,7 @@ This is precisely why $V_{\mathrm{Markov}} < V(s_1^*)$. Because $\mu_0$ changes 
   \item Using the state-contingent worst-case payoff $\inf_{B(s_1^*, F(\cdot|\theta_t))} u_1(\theta_t, s_1^*(\theta_t), \alpha_2)$ in each period;
   \item Averaging over the ergodic distribution $\pi(\theta)$ to get the long-run bound $V_{\mathrm{Markov}}$.
 \end{enumerate}
-SA6 confirms empirically: $V_{\mathrm{Markov}} = \PayoffFiltered < V(s_1^*) = \PayoffStationary$, a $\PayoffOverestimation$ overestimation in the original. The gap $V(s_1^*) - V_{\mathrm{Markov}}$ is an economically meaningful object: it measures the ``cost of persistence'' in reputation games.
+SA6 confirms empirically: $V_{\mathrm{Markov}} = \PayoffFiltered$ vs.\ $V(s_1^*) = \PayoffStationary$, an overestimation of $\PayoffOverestimation\%$ relative to the Markov payoff. The difference $V(s_1^*) - V_{\mathrm{Markov}}$ is an economically meaningful object: it measures the \emph{effect of persistence} in reputation games, which can be positive or negative depending on parameters.
 
 %% --- Q6 ---
 \pointheading{Q6}{Pei (2020) and additional assumptions for persistence}

@@ -21,74 +21,63 @@ def tv_distance(p, q):
     return 0.5 * np.abs(p - q).sum()
 
 
-def simulate_deterrence(alpha=0.3, beta=0.5, x=0.3, y=0.4, T=1000, seed=42):
-    """Simulate deterrence game with Bayesian filtering.
+def simulate_deterrence(alpha=0.3, beta=0.5, x=0.3, y=0.4,
+                        mu_star=0.60, T=1000, seed=42):
+    """Simulate deterrence game with correct simultaneous-move timing.
 
-    Returns dict with payoffs and belief trajectories.
+    Per Luo & Wolitzky (2024, Section 3.1), players 1 and 2 move simultaneously.
+    SR does NOT observe LR's current action before choosing; SR's information
+    set at time t consists of h_{t-1} only. Under a state-revealing strategy,
+    SR knows theta_{t-1} and beliefs about theta_t are F(cdot|theta_{t-1}).
+
+    The threshold mu_star is the SR belief P(theta_t=G) above which SR cooperates.
+    It is determined by SR's payoffs (specified separately from LR payoffs x, y).
     """
     rng = np.random.default_rng(seed)
     Tmat = np.array([[1 - alpha, alpha], [beta, 1 - beta]])
     pi = np.array([beta / (alpha + beta), alpha / (alpha + beta)])
 
-    # Payoff: u1[state, action]  state: 0=G,1=B  action: 0=A,1=F
     u1 = np.array([[1.0, x], [y, 0.0]])
 
-    # Stackelberg strategy
     strat = np.array([[1.0, 0.0], [0.0, 1.0]])
 
-    # Simulate states
     states = np.zeros(T, dtype=int)
     states[0] = rng.choice(2, p=pi)
     for t in range(1, T):
         states[t] = rng.choice(2, p=Tmat[states[t - 1]])
 
-    # SR's best response threshold: acquiesce iff belief(G) >= y/(1-x)
-    # Actually: SR payoff from A = belief(G)*1 + belief(B)*y vs F = belief(G)*x + belief(B)*0
-    # SR prefers A iff belief(G)*(1-x) >= belief(B)*(-y) -- wait, let me re-derive:
-    # u_SR(A) = belief(G)*u_SR(G,A) + belief(B)*u_SR(B,A)
-    # For SR: u_SR is about SR's payoff. In a deterrence game, SR chooses to
-    # acquiesce or fight based on expected payoff.
-    # With Stackelberg: P1 plays A in G, F in B.
-    # SR payoff from A: p_G * 1 + p_B * 0 = p_G  (SR gets 1 if state is G)
-    # SR payoff from F: p_G * x + p_B * y = p_G*x + (1-p_G)*y
-    # SR prefers A iff p_G >= p_G*x + (1-p_G)*y => p_G(1-x) >= (1-p_G)*y
-    # => p_G >= y / (1-x+y)
-    br_threshold = y / (1 - x + y)
+    br_threshold = mu_star
 
-    # Run filter
     belief = pi.copy()
-    belief_G_series = [pi[0]]
+    predicted_G_series = [pi[0]]
     payoffs_filtered = []
     payoffs_stationary = []
     sr_action_filtered = []
     sr_action_stationary = []
 
     for t in range(1, T):
-        # P1 action under Stackelberg
         p1_action = 0 if states[t] == 0 else 1
 
-        # Bayesian update
         predicted = Tmat.T @ belief
+
+        sr_filt = 0 if predicted[0] >= br_threshold else 1
+        sr_action_filtered.append(sr_filt)
+
+        sr_stat = 0 if pi[0] >= br_threshold else 1
+        sr_action_stationary.append(sr_stat)
+
+        payoffs_filtered.append(u1[states[t], sr_filt])
+        payoffs_stationary.append(u1[states[t], sr_stat])
+
+        predicted_G_series.append(predicted[0])
+
         lik = strat[:, p1_action]
         posterior = predicted * lik
         s = posterior.sum()
         belief = posterior / s if s > 0 else pi.copy()
-        belief_G_series.append(belief[0])
-
-        # SR best response under filtered belief
-        sr_filt = 0 if belief[0] >= br_threshold else 1  # 0=A, 1=F
-        sr_action_filtered.append(sr_filt)
-
-        # SR best response under stationary belief
-        sr_stat = 0 if pi[0] >= br_threshold else 1
-        sr_action_stationary.append(sr_stat)
-
-        # P1 payoff = u1[state, sr_action]
-        payoffs_filtered.append(u1[states[t], sr_filt])
-        payoffs_stationary.append(u1[states[t], sr_stat])
 
     return {
-        'belief_G': np.array(belief_G_series),
+        'belief_G': np.array(predicted_G_series),
         'payoffs_filtered': np.array(payoffs_filtered),
         'payoffs_stationary': np.array(payoffs_stationary),
         'sr_filtered': np.array(sr_action_filtered),

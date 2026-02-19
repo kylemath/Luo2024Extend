@@ -45,9 +45,9 @@ Under belief-robustness, the SR belief gap is irrelevant: SR plays the same best
 \begin{definition}[Markov Commitment Payoff]\label{def:V_markov}
 The \textbf{Markov commitment payoff} is
 \begin{equation}\label{eq:V_markov}
-    V_{\mathrm{Markov}}(s_1^*) := \sum_{\theta \in \Theta} \pi(\theta) \cdot \inf_{(\alpha_0, \alpha_2) \in B(s_1^*, F(\cdot|\theta))} u_1(\theta, s_1^*(\theta), \alpha_2).
+    V_{\mathrm{Markov}}(s_1^*) := \sum_{\theta' \in \Theta} \pi(\theta') \cdot \inf_{(\alpha_0, \alpha_2) \in B(s_1^*, F(\cdot|\theta'))} \sum_{\theta \in \Theta} F(\theta|\theta') \cdot u_1\bigl(\theta,\, s_1^*(\theta, \theta'),\, \alpha_2\bigr).
 \end{equation}
-This averages over states using the stationary distribution $\pi$, but uses the \textbf{state-contingent} Nash correspondence $B(s_1^*, F(\cdot|\theta))$ at each state.
+Here $\theta'$ indexes the \emph{previous} state $\theta_{t-1}$, which is known to SR through the state-revealing strategy and determines the filtering belief $F(\cdot|\theta')$ about the current state $\theta_t$ (Remark~\ref{rem:timing}). The variable $\theta$ indexes the \emph{current} state $\theta_t$, which enters the payoff $u_1$. The formula averages over previous states using the stationary distribution $\pi$, applies the \textbf{state-contingent} Nash correspondence $B(s_1^*, F(\cdot|\theta'))$ determined by the previous state, and takes the conditional expectation of the payoff over the current state.
 \end{definition}
 
 \begin{theorem}[General Markov Extension]\label{thm:general}
@@ -55,15 +55,15 @@ Under conditions (i)--(iii) of Theorem~\ref{thm:belief_robust}, with ergodic Mar
 \begin{equation}\label{eq:thm_general}
     \boxed{\liminf_{\delta \to 1}\, \underline{U}_1(\delta) \;\geq\; V_{\mathrm{Markov}}(s_1^*)}
 \end{equation}
-where $V_{\mathrm{Markov}}(s_1^*) \leq V(s_1^*)$, with equality if and only if the game is belief-robust.
+with $V_{\mathrm{Markov}}(s_1^*) = V(s_1^*)$ if and only if the game is belief-robust.
 \end{theorem}
 
 \begin{remark}[Relationship Between Theorems]
-The two results are nested: Theorem~\ref{thm:belief_robust} is the special case of Theorem~\ref{thm:general} where belief-robustness forces $V_{\mathrm{Markov}} = V(s_1^*)$. The gap $V(s_1^*) - V_{\mathrm{Markov}}$ is the ``cost of persistence''---the payoff the LR player loses because state persistence causes SR to adjust behavior state-by-state.
+The two results are nested: Theorem~\ref{thm:belief_robust} is the special case of Theorem~\ref{thm:general} where belief-robustness forces $V_{\mathrm{Markov}} = V(s_1^*)$. The difference $V(s_1^*) - V_{\mathrm{Markov}}$---the \emph{effect of persistence}---can be positive or negative. When the stationary belief $\pi$ induces favorable SR behavior (e.g., $\pi(G) > \mu^*$ so SR cooperates under i.i.d.), persistence can only cause some states to trigger defection, yielding $V_{\mathrm{Markov}} \leq V(s_1^*)$. Conversely, when $\pi$ induces unfavorable SR behavior (e.g., $\pi(G) < \mu^*$ so SR always defects under i.i.d.), persistence can enable state-contingent cooperation, yielding $V_{\mathrm{Markov}} > V(s_1^*)$---a new economic phenomenon absent from the i.i.d.\ framework.
 \end{remark}
 
 \begin{remark}[Continuity in Chain Parameters]
-$V_{\mathrm{Markov}}(s_1^*)$ is a continuous function of the chain parameters $(\alpha, \beta)$. As $\alpha + \beta \to 1$ (the i.i.d.\ limit), $F(\cdot|\theta) \to \pi(\cdot)$ for all $\theta$, so $V_{\mathrm{Markov}} \to V(s_1^*)$. The gap vanishes continuously.
+$V_{\mathrm{Markov}}(s_1^*)$ is a continuous function of the chain parameters $(\alpha, \beta)$. As $\alpha + \beta \to 1$ (the i.i.d.\ limit), $F(\cdot|\theta) \to \pi(\cdot)$ for all $\theta$, so $V_{\mathrm{Markov}} \to V(s_1^*)$. The difference $V(s_1^*) - V_{\mathrm{Markov}}$ vanishes continuously and may be positive or negative away from the i.i.d.\ line.
 \end{remark}
 
 \subsection{Extension to Behaviorally Confounded Strategies (Theorem 2)}\label{subsec:theorem2}

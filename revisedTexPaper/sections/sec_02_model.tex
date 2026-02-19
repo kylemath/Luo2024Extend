@@ -93,3 +93,7 @@ A ``memoryless'' commitment type that plays $s_1 : \Theta \to \Delta(A_1)$ (igno
 \subsection{Repeated Game}
 
 The repeated game structure is identical to Luo \& Wolitzky's Section~3.2. Assumption~1 (signal $y_1$ identifies $a_1$) is maintained throughout.
+
+\begin{remark}[Within-Period Timing]\label{rem:timing}
+Following Luo \& Wolitzky (2024, Section~3.1), players~1 and~2 move \textbf{simultaneously} within each period. Signals $y_1$ and $y_2$ are generated after actions are chosen and observed publicly, becoming part of the history $h_t = (y_{1,t'}, y_{2,t'})_{t'=0}^{t-1}$ available in subsequent periods. In particular, the short-run player's information set at time~$t$ is $h_{t-1}$: SR does \emph{not} observe the long-run player's current action $a_{1,t}$ (or the current state $\theta_t$) before choosing $a_{2,t}$. Under a state-revealing commitment strategy $s_1^*$, the history $h_{t-1}$ reveals $\theta_0, \ldots, \theta_{t-1}$, so SR's belief about the current payoff-relevant state $\theta_t$ is the one-step-ahead predictive distribution $F(\cdot|\theta_{t-1})$.
+\end{remark}

@@ -20,6 +20,8 @@ The equivalence $(1) \Leftrightarrow (3)$ follows from Lemma~6 of Luo \& Wolitzk
 
 If $u_1(\tilde\theta, a_1, \alpha_2) = u_1(\theta_t, a_1, \alpha_2)$, then $u_1$ is supermodular in $(\tilde\theta, a_1)$ if and only if it is supermodular in $(\theta_t, a_1)$, using any order on $\tilde\Theta$ that is consistent with the order on the first coordinate (e.g., the lexicographic order). The relevant order on $\tilde\Theta$ is the \emph{first-coordinate order}: $(\theta_t, \theta_{t-1}) \succeq (\theta_t', \theta_{t-1}')$ if and only if $\theta_t \succeq \theta_t'$. Under this order, the supermodularity condition is \textbf{unchanged} from the i.i.d.\ case: it depends only on the payoff structure in $(\theta_t, a_1)$, not on the Markov dynamics.
 
+Note that under the first-coordinate order, states differing only in $\theta_{t-1}$ are incomparable (not strictly ordered), so the strict increasing-differences condition imposes no constraint between such states. Strict supermodularity in $(\tilde\theta, a_1)$ therefore reduces to strict supermodularity in $(\theta_t, a_1)$ for payoffs depending only on $\theta_t$.
+
 Computational evidence confirms this: for $\theta_t$-dependent payoffs, \SupermodFraction{} out of \SupermodTotal{} orderings of the lifted space $\tilde\Theta$ preserve supermodularity---exactly those consistent with the first-coordinate ranking (Figure~\ref{fig:monotonicity}).
 
 \begin{figure}[ht]

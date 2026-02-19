@@ -33,13 +33,15 @@ Let $(\theta_t)$ be an ergodic Markov chain on finite $\Theta$ with transition k
 for some $C > 0$ and $\lambda \in (0,1)$, where $\pi_t$ and $\pi_t'$ are filters starting from priors $\pi_0$ and $\pi_0'$ respectively.
 \end{proposition}
 
-This ensures that the initial condition of the Markov chain is ``forgotten'' exponentially fast, so the per-period signal distribution converges to a limit determined by the observation process alone---the key property used in Step~3 of the proof.
+This ensures that the filter's dependence on the \emph{initial prior} $\pi_0$ is ``forgotten'' exponentially fast (distinct from mixing of the underlying chain, which concerns forgetting of $\theta_0$), so the per-period signal distribution converges to a limit determined by the observation process alone---the key property used in Step~3 of the proof.
 
 \subsection{Monte Carlo Verification}
+
+We verify the KL counting bound (Lemma~\ref{lem:KL}) via Monte Carlo simulation. For each of $N = \KLMonteCarloN$ independent runs with horizon $T = \KLMonteCarloPeriods$ periods, we simulate two parallel processes: (i)~a Markov chain with parameters $(\alpha, \beta) = (\BaseAlpha, \BaseBeta)$ and the Stackelberg strategy $s_1^*(G) = A$, $s_1^*(B) = F$; (ii)~an i.i.d.\ process with $\Prob(G) = \pi(G) = \BasePiG$ and the same strategy. In each run, we track the Bayesian posterior $\mu_t(\omega_{s_1^*})$ and count ``distinguishing periods'' where the per-period signal distributions under the commitment type and a generic alternative differ by more than $\eta = 0.1$ in total variation. The analytical bound predicts at most $\bar{T}(0.1, \mu_0) = -2\log\mu_0(\omega_{s_1^*})/\eta^2 = 921$ such periods. The simulation confirms that both processes produce far fewer distinguishing periods (Markov mean: \statMarkovMeanCount; i.i.d.\ mean: \statIidMeanCount), both well below the analytical bound, validating that the KL counting argument requires no mixing-time correction for Markov states. Note that the Markov process produces somewhat more distinguishing periods than the i.i.d.\ process (means of \statMarkovMeanCount{} vs.\ \statIidMeanCount), reflecting the additional temporal structure, but both counts are of the same order of magnitude.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/fig_kl_bound.png}
-\caption{KL counting bound comparison: Markov vs.\ i.i.d.\ settings. Monte Carlo simulation with $N=\KLMonteCarloN$ runs and $T=\KLMonteCarloPeriods$ periods confirms the bound $\bar{T}(\eta, \mu_0) = -2\log\mu_0(\omega_{s_1^*})/\eta^2$ is valid and nearly identical in both settings.}
+\caption{KL counting bound comparison: Markov vs.\ i.i.d.\ settings. Monte Carlo simulation with $N=\KLMonteCarloN$ runs and $T=\KLMonteCarloPeriods$ periods confirms the bound $\bar{T}(\eta, \mu_0) = -2\log\mu_0(\omega_{s_1^*})/\eta^2$ is valid in both settings, with empirical counts well below the analytical bound (Markov mean: \statMarkovMeanCount; i.i.d.\ mean: \statIidMeanCount; bound: 921).}
 \label{fig:kl_bound}
 \end{figure}

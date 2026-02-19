@@ -1,6 +1,7 @@
 #!/bin/bash
-# generate_paper.sh — Full pipeline: extract stats + compile paper
-# Usage: bash scripts/generate_paper.sh
+# generate_paper.sh — Full pipeline: run analysis + extract stats + compile paper
+# Updated 2026-02-19: runs analysis scripts directly instead of legacy workspace extraction.
+# Usage: bash scripts/generate_paper.sh [--skip-analysis]
 
 set -e
 
@@ -10,13 +11,21 @@ PAPER_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 echo "=== Generate Paper Pipeline ==="
 echo "Paper directory: $PAPER_DIR"
 
-# Step 1: Extract statistics from SA reports
-echo ""
-echo "--- Step 1: Extracting statistics ---"
-cd "$PAPER_DIR"
-python3 scripts/extract_stats.py \
-    --workspace "$PAPER_DIR/../Agent1206_workspace" \
-    --output "$PAPER_DIR/stats.tex"
+# Step 1: Run analysis scripts and extract stats
+if [ "$1" = "--skip-analysis" ]; then
+    echo ""
+    echo "--- Step 1: SKIPPED (--skip-analysis) ---"
+    echo "Using existing stats.tex"
+else
+    echo ""
+    echo "--- Step 1: Running analysis scripts ---"
+    bash "$SCRIPT_DIR/run_analysis.sh"
+
+    echo ""
+    echo "--- Step 1b: Merging stats into stats.tex ---"
+    cd "$PAPER_DIR"
+    python3 scripts/extract_stats.py scripts/stats_raw.txt --output "$PAPER_DIR/stats.tex"
+fi
 
 # Step 2: Compile LaTeX (3 passes for cross-references)
 echo ""
@@ -30,7 +39,6 @@ for pass in 1 2 3; do
     else
         echo "  Pass $pass: FAILED"
         echo "  See main.log for details."
-        # Show last 30 lines of log for debugging
         tail -30 main.log
         exit 1
     fi

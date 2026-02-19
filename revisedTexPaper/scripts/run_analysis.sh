@@ -1,20 +1,18 @@
 #!/usr/bin/env bash
 # run_analysis.sh — Run all 7 analysis scripts and extract stats.
-# Uses the project venv Python interpreter.
+# Updated 2026-02-19: uses system python3, corrected for simultaneous-move timing.
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-PYTHON="/Users/kylemathewson/mathTest/Agent1206_workspace/venv/bin/python"
+PYTHON="python3"
 
 echo "=== Running analysis scripts ==="
 echo "Script dir: $SCRIPT_DIR"
-echo "Python: $PYTHON"
+echo "Python: $($PYTHON --version 2>&1)"
 echo ""
 
-# Ensure figures directory exists
 mkdir -p "$SCRIPT_DIR/../figures"
 
-# Collect all STAT output
 STATS_FILE="$SCRIPT_DIR/stats_raw.txt"
 > "$STATS_FILE"
 

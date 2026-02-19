@@ -5,7 +5,7 @@ Luo \& Wolitzky (2024) establish a striking connection between reputation theory
 
 \subsection{The Challenge of Markov States}
 
-The extension from i.i.d.\ to Markov states introduces a fundamental new phenomenon. We employ a \emph{lifted state} construction $\tilde\theta_t = (\theta_t, \theta_{t-1})$, which provides a stationary distribution $\tilde\rho$ on the expanded space and allows the optimal transport framework to apply directly. However, the extension is not a straightforward substitution: when the Stackelberg strategy reveals the state (e.g., $s_1^*(G)=A$, $s_1^*(B)=F$), the short-run player learns $\theta_t$ exactly, and their belief about $\theta_{t+1}$ becomes the \emph{filtering distribution} $F(\cdot|\theta_t)$ rather than the stationary distribution $\pi$. This creates a permanent structural gap: short-run behavior becomes state-contingent, and the Nash correspondence $B(s_1^*)$ must be replaced by a state-dependent object $B(s_1^*, F(\cdot|\theta))$. Recognizing this---through a combination of expert feedback (Luo, 2026) and systematic computational verification---is the key insight of this paper.
+The extension from i.i.d.\ to Markov states introduces a fundamental new phenomenon. We employ a \emph{lifted state} construction $\tilde\theta_t = (\theta_t, \theta_{t-1})$. Since the original chain already possesses a stationary distribution $\pi$, the purpose of lifting is not to create stationarity but to encode Markov private information into a type space $\tilde\Theta = \Theta \times \Theta$ with joint stationary distribution $\tilde\rho$, playing the role of the exogenous signal distribution in Luo--Wolitzky's optimal transport formulation. However, the extension is not a straightforward substitution: when the Stackelberg strategy reveals the state (e.g., $s_1^*(G)=A$, $s_1^*(B)=F$), the short-run player learns $\theta_t$ exactly, and their belief about $\theta_{t+1}$ becomes the \emph{filtering distribution} $F(\cdot|\theta_t)$ rather than the stationary distribution $\pi$. This creates a permanent structural gap: short-run behavior becomes state-contingent, and the Nash correspondence $B(s_1^*)$ must be replaced by a state-dependent object $B(s_1^*, F(\cdot|\theta))$. Recognizing this---through a combination of expert feedback (Luo, 2026) and systematic computational verification---is the key insight of this paper.
 
 \subsection{Computational Verification}
 
@@ -23,7 +23,7 @@ Theorem~1$''$ handles the general case. For all supermodular games with Markov s
 \[
     V_{\mathrm{Markov}}(s_1^*) := \sum_{\theta \in \Theta} \pi(\theta) \cdot \inf_{(\alpha_0, \alpha_2) \in B(s_1^*, F(\cdot|\theta))} u_1(\theta, s_1^*(\theta), \alpha_2) \;\leq\; V(s_1^*),
 \]
-with equality if and only if the game is belief-robust. The gap $V(s_1^*) - V_{\mathrm{Markov}}$ quantifies the ``cost of persistence'' in reputation games---a new economic object that the i.i.d.\ framework cannot capture.
+with $V_{\mathrm{Markov}} = V(s_1^*)$ if and only if the game is belief-robust. The difference $V(s_1^*) - V_{\mathrm{Markov}}$---the \emph{effect of persistence}---can be positive or negative, quantifying how state persistence affects reputation value. This is a new economic object that the i.i.d.\ framework cannot capture.
 
 \subsection{A Note on Process}
 

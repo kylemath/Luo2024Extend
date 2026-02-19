@@ -21,6 +21,21 @@ The long-run player chooses $a_1 \in \{A(\text{cquiesce}), F(\text{ight})\}$. Th
 \end{equation}
 with $x, y \in (0,1)$. (See Luo \& Wolitzky, Section~2.1, for the full payoff matrix with $(g, l)$ parameters.)
 
+These are the payoffs conditional on SR defection ($a_2 = D$). The full payoff matrix, including SR cooperation ($a_2 = C$), is:
+\begin{center}
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+& \multicolumn{2}{c}{$a_2 = C$} & \multicolumn{2}{c}{$a_2 = D$} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+& $a_1 = A$ & $a_1 = F$ & $a_1 = A$ & $a_1 = F$ \\
+\midrule
+$\theta = G$ & 1 & $x$ & 1 & $x$ \\
+$\theta = B$ & $y$ & $y$ & $y$ & 0 \\
+\bottomrule
+\end{tabular}
+\end{center}
+Under cooperation, $u_1(B, F, C) = y > 0 = u_1(B, F, D)$: fighting in bad states is costly against defection but acceptable against cooperation. The Stackelberg strategy $s_1^*(G) = A$, $s_1^*(B) = F$ is optimal because it is confound-defeating (monotone under supermodularity) and induces SR cooperation via reputation, not because it maximizes per-period payoffs against defection.
+
 The Stackelberg strategy is $s_1^*(G) = A$, $s_1^*(B) = F$ (ignoring $\theta_{t-1}$): the long-run player acquiesces in good states and fights in bad states.
 
 \subsection{Lifted State Distribution}
@@ -45,7 +60,7 @@ $(B,B)$ & $\alpha(1-\beta)/(\alpha+\beta)$ \\
 \begin{proposition}[Markov Deterrence]\label{prop:deterrence}
 Consider the deterrence game with Markov attacks.
 \begin{enumerate}[label=(\arabic*)]
-    \item \textbf{If $x + y < 1$ (supermodular):} Under the belief-robust condition (Proposition~\ref{prop:br_condition}), a patient long-run player secures at least $V(s_1^*) = \beta/(\alpha + \beta)$ in any Nash equilibrium, for any $\mu_0 > 0$. In the general (non-belief-robust) case, the bound is $V_{\mathrm{Markov}}(s_1^*) \leq V(s_1^*)$.
+    \item \textbf{If $x + y < 1$ (supermodular):} Under the belief-robust condition (Proposition~\ref{prop:br_condition}), a patient long-run player secures at least $V(s_1^*) = \beta/(\alpha + \beta)$ in any Nash equilibrium, for any $\mu_0 > 0$. In the general (non-belief-robust) case, the bound is $V_{\mathrm{Markov}}(s_1^*)$, which equals $V(s_1^*)$ if and only if the game is belief-robust.
     \item \textbf{If $x + y > 1$ (submodular):} As $\mu_0 \to 0$, the long-run player's payoff approaches the minmax payoff.
 \end{enumerate}
 \end{proposition}
@@ -114,10 +129,11 @@ Let $\alpha = 0.3$ (probability of transitioning $G \to B$), $\beta = 0.5$ (prob
 \end{aligned}
 \]
 
-\noindent\textbf{Commitment payoff (i.i.d.\ benchmark):} Under $s_1^*(G) = A$, $s_1^*(B) = F$:
+\noindent\textbf{Worst-case commitment payoff (against defection):} Under $s_1^*(G) = A$, $s_1^*(B) = F$, if SR always defects:
 \[
-    V(s_1^*) = \pi(G) \cdot u_1(G, A) + \pi(B) \cdot u_1(B, F) = 0.625 \times 1 + 0.375 \times 0 = 0.625.
+    V_{\min}(s_1^*) = \pi(G) \cdot u_1(G, A, D) + \pi(B) \cdot u_1(B, F, D) = 0.625 \times 1 + 0.375 \times 0 = 0.625.
 \]
+This is a lower bound on the long-run player's payoff regardless of SR behavior. When SR cooperates (as under i.i.d.\ beliefs with $\pi(G) = \BasePiG > \mu^* = \SRThreshold$), the i.i.d.\ equilibrium payoff is higher: $V(s_1^*) = \pi(G) \cdot u_1(G, A, C) + \pi(B) \cdot u_1(B, F, C) = \PayoffStationary$.
 
 \noindent\textbf{Comparison with i.i.d.:} If the state were i.i.d.\ with $\Prob(G) = 0.625$, the Stackelberg payoff would be identical ($p = 0.625$). The difference is in the \emph{dynamics}: with persistence ($\alpha = 0.3$), attacks come in clusters. The signal process $\{y_{1,t}\}$ exhibits autocorrelation (runs of ``Fight'' and ``Acquiesce'' actions), which provides an \textbf{additional identification channel} beyond marginal frequencies. This makes the confound-defeating condition \emph{easier} to verify in the supermodular case, although (as Section~\ref{sec:belief_robust} shows) the resulting payoff bound may differ from the i.i.d.\ case when belief-robustness fails.
 
@@ -143,7 +159,7 @@ Filtered beliefs (reality) & \PayoffFiltered & $\mu = F(G|\theta_t)$ \\
 \end{tabular}
 \end{center}
 
-The overestimation arises because the i.i.d.\ analysis assumes SR always faces belief $\pi(G) = \BasePiG > \SRThreshold$, so SR always cooperates. In reality, SR defects in bad states (where $F(G|B) = \SRBeliefAfterB < \SRThreshold$), reducing the LR payoff by \PayoffOverestimation\%.
+The overestimation arises because the i.i.d.\ analysis assumes SR always faces belief $\pi(G) = \BasePiG > \SRThreshold$, so SR always cooperates. Under the corrected timing (Remark~\ref{rem:timing}), SR's belief at time~$t$ is $F(\cdot|\theta_{t-1})$, not the degenerate belief at $\theta_t$. When $\theta_{t-1} = B$, SR defects because $F(G|B) = \SRBeliefAfterB < \SRThreshold$, while payoffs depend on $\theta_t$ (which may be $G$ or $B$). This reduces the LR payoff by \PayoffOverestimation\% relative to the Markov payoff.
 
 \subsection{Limiting Cases}
 
@@ -173,7 +189,7 @@ In the fast-mixing regime, the filtering beliefs $F(\cdot|\theta)$ are close to 
 \midrule
 SR belief about $\theta_{t+1}$ & $\pi$ & $\pi$ & $F(\cdot|\theta_t)$ \\
 SR behavior & Static & Static & State-contingent \\
-Commitment payoff & $V(s_1^*)$ & $V(s_1^*)$ & $V_{\mathrm{Markov}} \leq V(s_1^*)$ \\
+Commitment payoff & $V(s_1^*)$ & $V(s_1^*)$ & $V_{\mathrm{Markov}}$ (equals $V(s_1^*)$ iff belief-robust) \\
 Gap from i.i.d. & 0 & 0 & $\BeliefGapFormula$ \\
 \bottomrule
 \end{tabular}
