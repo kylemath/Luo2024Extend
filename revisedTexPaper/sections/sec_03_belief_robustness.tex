@@ -1,16 +1,16 @@
 % ================================================================
 \section{Belief-Robustness: The Key New Concept}\label{sec:belief_robust}
 
-The central obstacle to extending Theorem~1 from i.i.d.\ to Markov states is the behavior of short-run player beliefs. When the Stackelberg strategy reveals the state, short-run players learn $\theta_t$ and form beliefs about $\theta_{t+1}$ using the filtering distribution $F(\cdot|\theta_t)$, which generically differs from the stationary distribution $\pi$. This section formalizes the issue and introduces the condition under which it can be resolved.
+The central obstacle to extending Theorem~1 from i.i.d.\ to Markov states is the behavior of short-run player beliefs. Under the simultaneous-move timing (Remark~\ref{rem:timing}), the short-run player at time~$t$ observes only the public history $h_{t-1}$. When the Stackelberg strategy is state-revealing, $h_{t-1}$ reveals $\theta_0, \ldots, \theta_{t-1}$, so the short-run player's belief about the current payoff-relevant state $\theta_t$ is determined by $\theta_{t-1}$ via the transition kernel. This belief generically differs from the stationary distribution $\pi$. This section formalizes the issue and introduces the condition under which it can be resolved.
 
 \subsection{Filtering Beliefs}
 
 \begin{definition}[Filtering Belief]\label{def:filtering}
-Given a state-revealing Stackelberg strategy $s_1^*$ (i.e., $s_1^*(\theta) \neq s_1^*(\theta')$ for $\theta \neq \theta'$), the \textbf{filtering belief} in state $\theta$ is
+Given a state-revealing Stackelberg strategy $s_1^*$ (i.e., $s_1^*(\theta) \neq s_1^*(\theta')$ for $\theta \neq \theta'$), the \textbf{filtering belief} after observed state $\theta$ is
 \begin{equation}
-    F(\cdot|\theta_t) = \Prob(\theta_{t+1} = \cdot \mid \theta_t),
+    F(\cdot|\theta) = \Prob(\theta_{t} = \cdot \mid \theta_{t-1} = \theta),
 \end{equation}
-the one-step-ahead predictive distribution conditional on the current state.
+the one-step-ahead transition distribution. Under the simultaneous-move timing of Remark~\ref{rem:timing}, when the most recently observed state is $\theta_{t-1} = \theta$, the filtering belief $F(\cdot|\theta)$ is the short-run player's belief about the current payoff-relevant state~$\theta_t$.
 \end{definition}
 
 For the two-state chain $\Theta = \{G, B\}$ with parameters $(\alpha, \beta)$, the filtering beliefs are $F(G|G) = 1-\alpha$ and $F(G|B) = \beta$, while the stationary distribution gives $\pi(G) = \beta/(\alpha+\beta)$. The expected gap between the filtering belief and the stationary distribution can be computed in closed form:
@@ -28,7 +28,7 @@ A game $(u_1, u_2)$ with Stackelberg strategy $s_1^*$ and Markov chain $(\Theta,
 \end{equation}
 \end{definition}
 
-The condition requires that the short-run player's best-response set is invariant to the revealed state. Under belief-robustness, the filtering belief gap documented in~\eqref{eq:belief_gap} becomes irrelevant for equilibrium behavior: SR plays the same action regardless of whether their belief about the next state is $F(\cdot|G)$ or $F(\cdot|B)$.
+The condition requires that the short-run player's best-response set is invariant to the most recently observed state. Under belief-robustness, the filtering belief gap documented in~\eqref{eq:belief_gap} becomes irrelevant for equilibrium behavior: SR plays the same action regardless of whether their belief about the current state is $F(\cdot|G)$ or $F(\cdot|B)$.
 
 \subsection{When Does Belief-Robustness Hold?}
 

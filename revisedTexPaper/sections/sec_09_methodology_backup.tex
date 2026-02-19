@@ -1,0 +1,117 @@
+% ================================================================
+\section{Methodology: Two Phases of Human--AI Collaboration}\label{sec:methodology}
+
+This paper is the product of two distinct phases of human--AI collaboration: an initial conjecture phase and a revision phase driven by expert feedback and computational verification. We document both in full, as the methodology itself---particularly the systematic computational testing framework used to adjudicate between valid and invalid claims---constitutes a contribution to the growing literature on AI-assisted mathematical research.
+
+% ────────────────────────────────────────────────
+\subsection{Phase 1: Initial Conjecture (Feb 16, 5:00--9:30 PM)}
+
+The initial extension was developed under a five-hour time constraint in response to a public challenge posted by Daniel Luo on social media. Five AI agents---four instances of Claude Opus 4.6 and one instance of Claude Sonnet 4.5---worked under human coordination, with each agent assigned a specialized role. A Sonnet 4.5 instance served as the reader and parser, producing multi-level summaries and extracting all 127 equations from the Luo \& Wolitzky (2024) paper (66 pages). Agent~840 (Opus) performed the first strategic analysis, identifying the lifted-state construction as the primary approach and generating five alternative interpretations. Agent~841 (Opus) coordinated the proof verification, directing four parallel subagents to independently verify the KL bound, the martingale convergence argument, a worked example, and the formal theorem statement. Agent~852 (Opus) compiled the final \LaTeX\ document. Agent~860 (Opus) served as a peer reviewer, identifying the continuation value subtlety that would later prove central to the critique.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}llp{8cm}@{}}
+\toprule
+\textbf{Agent} & \textbf{Role} & \textbf{Key Contribution} \\
+\midrule
+Sonnet 4.5 Reader & Paper parsing & Multi-level summaries, equation extraction \\
+Agent 840 (Opus) & First parse & Identified lifted-state approach, 5 interpretations \\
+Agent 841 (Opus) & Proof coordinator & Directed 4 parallel subagents \\
+Agent 852 (Opus) & Paper author & 26-page \LaTeX\ document \\
+Agent 860 (Opus) & Peer reviewer & Identified continuation value subtlety \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Within the time window, this architecture produced a 26-page paper, an interactive web demonstration, and a social media summary. The paper proposed that Theorem~1 extends to Markov states via the lifted state $\tilde\theta_t = (\theta_t, \theta_{t-1})$, correctly identifying several key mathematical tools---the process-independence of the KL chain rule, the well-defined stationary distribution on the lifted space, and the filter stability argument. However, the initial draft did not account for the effect of state revelation on short-run player beliefs, an issue that expert feedback and computational testing subsequently resolved.
+
+% ────────────────────────────────────────────────
+\subsection{Phase 2: Expert Critique (Feb 16, 10:00--11:00 PM)}
+
+Within one hour of submission, Daniel Luo---co-author of Luo \& Wolitzky (2024) and the world's foremost expert on its proof structure---posted two threads of detailed technical feedback comprising 15 distinct points.
+
+The most consequential observations, appearing in five separate comments across both threads, identified a single core issue from complementary angles: the i.i.d.\ assumption disciplines short-run player information sets about the state. Under Markov dynamics with a state-revealing strategy, short-run player beliefs are given by $F(\cdot|\theta_t)$ rather than $\pi$, and the Nash correspondence becomes state-contingent, $B(s_1^*, F(\cdot|\theta_t))$, because the filtering belief about the next state varies with the revealed state. This is the genuinely new phenomenon: not the mere evolution of the type-posterior $\mu_t$ (which already occurs in the i.i.d.\ case), but the state-dependence of SR's best response through $F(\cdot|\theta_t)$.
+
+Seven additional comments identified issues of imprecise framing: the lifting construction was presented as creating stationarity when the original chain already possesses a stationary distribution; payoffs were unnecessarily generalized to depend on the full lifted state; a remark about the not-behaviorally-confounded condition being ``easier'' in the Markov case was meaningless given that the condition is generically satisfied; and the monotonicity characterization was stated for the lifted two-dimensional state space despite being defined only for one-dimensional states and actions. Three further comments provided broader assessment: the overall verdict of ``nicely written nonsense,'' a note about Stackelberg strategy well-definedness for persuasion games where different concavifications may be optimal under different priors, and the observation that Pei (2020) requires additional assumptions beyond perfect persistence for reasons directly related to the SR information structure.
+
+The single most clarifying observation was this:
+
+\begin{quote}
+\emph{``To make it clear: suppose $s_1$ just takes an action that reveals the state. In the iid case, this won't affect SR beliefs. But in the Markov case, this can cause beliefs to never settle into the stationary distribution.''} --- Daniel Luo
+\end{quote}
+
+\noindent This pinpoints the failure precisely: the paper's own Stackelberg strategy $s_1^*(G)=A$, $s_1^*(B)=F$ is state-revealing, so the counterexample applies directly to the paper's worked example.
+
+% ────────────────────────────────────────────────
+\subsection{Phase 3: Review Planning and Agent Architecture (Feb 17, 12:00--1:00 AM)}\label{subsec:planning}
+
+To determine precisely which elements of the proof extend and which require modification, we designed a systematic computational investigation. The investigation plan---itself produced through human--AI collaboration and documented in a 412-line planning document---began by consolidating all 15 points into a single review, mapping each critique to specific sections of the submitted paper and the tweet screenshot, and triaging by severity.
+
+The computational framework employed a hierarchical agent architecture. A reusable Python class (\texttt{Agent}) was implemented to support task assignment via Markdown files, report generation via Markdown files, hierarchical delegation from an orchestrator through subagents to sub-subagents, and automated script discovery, execution, and figure collection. Seven analysis areas (SA1 through SA7) were identified, each assigned to a subagent responsible for producing a synthesized report from three sub-subagent scripts. The sub-subagents received detailed task specifications and returned findings as structured reports with linked figures.
+
+The planning phase adopted an explicitly skeptical posture. Each analysis script was designed around a \emph{hypothesis} (what the paper claims), a \emph{counter-hypothesis} (what Luo's critique implies), and a \emph{test} (what the simulation checks). Where genuine uncertainty existed about the expected outcome, this ambiguity was documented rather than resolved prematurely. The goal was to determine, with quantitative precision, the boundary between the claims that extend directly and those requiring new ideas.
+
+% ────────────────────────────────────────────────
+\subsection{Phase 4: Computational Testing (Feb 17, 1:00--2:00 AM)}
+
+Four parallel subagents created and executed all 21 scripts simultaneously, organized into four batches for efficient parallelization.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Batch} & \textbf{Modules} & \textbf{Scripts} & \textbf{Runtime} \\
+\midrule
+Batch 1 & SA1 (Beliefs) + SA2 (State-revealing) & 6 & 202s \\
+Batch 2 & SA3 (KL bound) + SA4 (Filter stability) & 6 & 143s \\
+Batch 3 & SA5 (OT sensitivity) + SA6 (Nash dynamics) & 6 & 19s \\
+Batch 4 & SA7 (Monotonicity) + orchestrator & 3+2 & 47s \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent All 21 scripts completed successfully. The orchestrator compiled SA-level reports from SSA-level reports, producing a 446-line final report with a claim-by-claim scorecard.
+
+The findings divided sharply. SA1 established that the mean total variation distance between the short-run player's filtered belief and the stationary distribution is $\TVMean$, confirming that beliefs do not converge to $\pi$ under a state-revealing strategy. SA2 derived the closed-form expression $\BeliefGapFormula$ for the expected belief gap, verifying it analytically and numerically, and confirming that it vanishes if and only if $\alpha+\beta=1$. SA3 verified the KL counting bound via $N=\KLMonteCarloN$ Monte Carlo simulations, finding that both Markov and i.i.d.\ processes produce distinguishing-period counts well below the analytical bound. SA4 confirmed filter stability with exponential forgetting: the fitted decay rate correlated with $|1-\alpha-\beta|$ at $r > \FilterCorrelation$, with $R^2 > 0.99$ across the parameter grid. SA5 demonstrated that the OT support is stable in \OTStabilityPct\% of the $(\alpha,\beta)$ parameter space with stability margin at least $\OTStabilityMargin$. SA6 produced the central quantitative result: short-run player actions disagree between the stationary and filtered scenarios in \SRDisagreement\% of periods, yielding a payoff overestimation of \PayoffOverestimation\%. SA7 confirmed that $\SupermodFraction$ out of $\SupermodTotal$ orderings of the lifted space preserve supermodularity for $\theta_t$-dependent payoffs, exactly those consistent with the first-coordinate ranking.
+
+% ────────────────────────────────────────────────
+\subsection{Phase 5: Manuscript Revision (Feb 17, 2:00--3:00 AM)}
+
+The computational evidence guided a structured revision of the manuscript. The paper was decomposed into 12 modular section files assembled by a master document, with all quantitative claims drawn from an auto-generated statistics file (\texttt{stats.tex}) of \verb|\newcommand| macros. An automated pipeline (\texttt{generate\_paper.sh}) executes the full sequence: running all seven consolidated analysis scripts, extracting statistics into the macro file, and compiling the paper with three passes of \texttt{pdflatex}. This architecture ensures that any change to the underlying parameters---for instance, modifying $\alpha$ or $\beta$ in the analysis scripts---automatically propagates new statistics and regenerated figures into the compiled PDF.
+
+A 10-page point-by-point response letter addresses each of Luo's 15 critiques individually, quoting the original comment, stating the disposition (14 fully accepted, 1 partially accepted), and citing the specific section, theorem, or computational result that provides the response. The partially accepted point concerns Stackelberg well-definedness for persuasion games, which is acknowledged as an open question in Section~\ref{sec:discussion}. Two new interactive HTML tabs were also added to the project website: an ``Author Review'' tab presenting the 15 critique points with severity classifications, and a ``Revision'' tab with interactive Plotly.js visualizations allowing readers to explore the belief gap and payoff comparison as functions of the chain parameters $(\alpha, \beta)$ and the SR threshold $\mu^*$.
+
+% ────────────────────────────────────────────────
+\subsection{Timeline}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Time} & \textbf{Phase} & \textbf{Key Event} \\
+\midrule
+Feb 16, 5:00 PM & Challenge posted & Luo: ``\$500 if you can extend to Markov states'' \\
+Feb 16, 5:00--9:30 PM & Phase 1: Conjecture & 5 AI agents produce 26-page paper \\
+Feb 16, 9:30 PM & Submission & Paper, demo, tweet posted \\
+Feb 16, 10:00--11:00 PM & Phase 2: Critique & Luo posts 15-point technical feedback \\
+Feb 17, 12:00--1:00 AM & Phase 3: Planning & Combined review, agent hierarchy designed \\
+Feb 17, 1:00--2:00 AM & Phase 4: Testing & 21 scripts, 40 figures, 28 reports \\
+Feb 17, 2:00--3:00 AM & Phase 5: Revision & Corrected paper, response letter, web demo \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent The total elapsed time from challenge to final paper was approximately ten hours: the first five produced the initial draft and the second five refined it through computational testing and revision. The revision phase was structurally more complex than the conjecture phase, involving hierarchical agent delegation, systematic computational testing across seven analysis areas, and iterative manuscript revision with automated statistics propagation.
+
+% ────────────────────────────────────────────────
+\subsection{Reflections on AI-Assisted Mathematical Research}
+
+Several observations emerge from this process that may be relevant to future work at the intersection of AI and mathematical research.
+
+The most salient is that the combination of AI conjecture and human expert critique proved more productive than either alone. The AI agents rapidly identified the lifted-state approach and correctly characterized the process-independent mathematical tools; the human expert identified the semantic gap between these tools and their game-theoretic interpretation. The corrected result---belief-robustness and the Markov commitment payoff---emerged from the dialogue between the two, rather than from either perspective in isolation.
+
+Computational testing played a distinctive role as an intermediary between conjecture and proof. Rather than attempting to determine \emph{a priori} whether the critique invalidated the entire approach or only part of it, the seven analysis modules produced quantitative evidence that cleanly separated the surviving claims from the failing ones. This enabled targeted correction: the KL bound, filter stability, OT robustness, and monotonicity were retained; the SR belief dynamics, Nash correspondence, and payoff bound were revised. Without this computational triage, the response to the critique would likely have been either wholesale rejection (discarding the valid parts) or inadequate defense (failing to fix the invalid parts).
+
+The hierarchical agent architecture scaled effectively to the task. The three-level delegation (orchestrator, seven subagents, 21 sub-subagents) with Markdown-based communication allowed parallel execution and clean report aggregation. The reusable \texttt{Agent} class can be applied to other systematic testing problems.
+
+Finally, this case study illustrates an important distinction in AI-assisted mathematical reasoning: the difference between identifying correct mathematical tools and correctly interpreting their role in a larger argument. The KL bound \emph{is} process-independent, and the initial draft was right to observe this. But the proof's \emph{use} of the KL bound depends on what it means for a period to be ``non-distinguishing,'' and this meaning changes when short-run players have state-dependent beliefs. Recognizing this kind of semantic subtlety required domain expertise from one of the original paper's authors (Luo); resolving it quantitatively required systematic computational testing; and turning the resolution into new theorems required the combination of both. The interplay between these modes of investigation---AI-assisted rapid exploration, expert adversarial review, and computational verification---proved more productive than any single approach.

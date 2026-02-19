@@ -1,7 +1,7 @@
 % ================================================================
-\section{Corrected Theorems}\label{sec:theorems}
+\section{Main Theorems}\label{sec:theorems}
 
-We state two results. Theorem~1$'$ recovers the exact i.i.d.\ bound under belief-robustness. Theorem~1$''$ provides a corrected bound for the general case.
+We state two results. Theorem~1$'$ recovers the exact i.i.d.\ bound under belief-robustness. Theorem~1$''$ provides the general Markov bound.
 
 \subsection{Definitions on the Expanded State Space}
 
@@ -57,6 +57,10 @@ Under conditions (i)--(iii) of Theorem~\ref{thm:belief_robust}, with ergodic Mar
 \end{equation}
 with $V_{\mathrm{Markov}}(s_1^*) = V(s_1^*)$ if and only if the game is belief-robust.
 \end{theorem}
+
+\begin{remark}[Necessity of Belief-Robustness]\label{rem:necessity}
+The ``if and only if'' in Theorem~\ref{thm:general} requires comment. \emph{Sufficiency} is straightforward: belief-robustness forces the same Nash correspondence in every state, so the state-contingent infima coincide with the unconditional infimum. \emph{Necessity} holds under a genericity condition: when $u_1$ has strictly increasing differences in $(\theta, a_1)$ (as assumed in the supermodular case, Proposition~\ref{prop:supermodular}) and the SR threshold $\mu^*$ lies in the interior of the interval $[\min_\theta F(G|\theta), \max_\theta F(G|\theta)]$, the state-contingent best-response sets differ strictly across states, producing different infima. For non-generic parameters---where distinct best-response sets happen to yield the same infimum value---$V_{\mathrm{Markov}} = V(s_1^*)$ could hold without belief-robustness.
+\end{remark}
 
 \begin{remark}[Relationship Between Theorems]
 The two results are nested: Theorem~\ref{thm:belief_robust} is the special case of Theorem~\ref{thm:general} where belief-robustness forces $V_{\mathrm{Markov}} = V(s_1^*)$. The difference $V(s_1^*) - V_{\mathrm{Markov}}$---the \emph{effect of persistence}---can be positive or negative. When the stationary belief $\pi$ induces favorable SR behavior (e.g., $\pi(G) > \mu^*$ so SR cooperates under i.i.d.), persistence can only cause some states to trigger defection, yielding $V_{\mathrm{Markov}} \leq V(s_1^*)$. Conversely, when $\pi$ induces unfavorable SR behavior (e.g., $\pi(G) < \mu^*$ so SR always defects under i.i.d.), persistence can enable state-contingent cooperation, yielding $V_{\mathrm{Markov}} > V(s_1^*)$---a new economic phenomenon absent from the i.i.d.\ framework.

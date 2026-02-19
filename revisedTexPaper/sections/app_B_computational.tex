@@ -1,7 +1,7 @@
 % ================================================================
 \section{Computational Framework}\label{app:computational}
 
-This appendix documents the computational analysis that informed the revision. All scripts and figures are available in the project repository.
+This appendix documents the computational analysis. All scripts and figures are available in the project repository.
 
 \subsection{Analysis Modules}
 
@@ -37,40 +37,17 @@ The analysis pipeline is fully reproducible:
 
 \subsection{Repository Structure}
 
-The full project repository contains all artifacts from both phases of the research:
-
 \begin{small}
 \begin{verbatim}
-mathTest/
-+-- revisedTexPaper/          # This paper
-|   +-- main.tex              # Master file (inputs sections)
-|   +-- stats.tex             # Auto-generated statistics macros
-|   +-- sections/             # 12 modular .tex files
-|   +-- figures/              # 8 essential figures
-|   +-- scripts/              # 7 analysis + 3 automation scripts
-|   +-- response_letter.tex   # Point-by-point response
-|   +-- build.sh              # Compile paper
-+-- Agent1206_workspace/      # Computational testing framework
-|   +-- agent_framework.py    # Reusable Agent class
-|   +-- orchestrator.py       # Runs all 21 scripts
-|   +-- shared/markov_utils.py
-|   +-- SA{1-7}_*/            # 7 subagent directories
-|   |   +-- task.md / report.md
-|   |   +-- SSA*_*/           # 3 sub-subagent dirs each
-|   +-- reports/final_report.md
-+-- OPReview/                 # Daniel Luo's original feedback
-+-- AgentReports/             # Phase 1 agent reports
-|   +-- Agent1206plan.md      # Review + testing plan
-+-- promptHistory/            # All 15 agent transcripts
-+-- texPaper/                 # Original (uncorrected) paper
-+-- index.html                # Interactive web demo (9 tabs)
-+-- author-review.html        # Critique visualization
-+-- revision.html             # Revision explorer
-+-- revision_summary.md       # One-page summary
+revisedTexPaper/
++-- main.tex                  # Master file (inputs sections)
++-- stats.tex                 # Auto-generated statistics macros
++-- sections/                 # Modular .tex files
++-- figures/                  # Diagnostic figures
++-- scripts/                  # 7 analysis + automation scripts
++-- supplemental_methodology.tex  # Research process documentation
 \end{verbatim}
 \end{small}
-
-\noindent Total artifacts: 15 agent transcripts, 28 task/report files, 21 analysis scripts (full) + 7 consolidated scripts, 40+ figures, 2 compiled PDFs, 9 interactive HTML pages.
 
 \subsection{Additional Figures}
 

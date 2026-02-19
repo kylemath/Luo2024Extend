@@ -1,0 +1,10 @@
+\contentsline {section}{\numberline {1}Overview}{2}{section.1}%
+\contentsline {section}{\numberline {2}Phase 1: Initial Conjecture (Feb 16, 5:00--9:30 PM)}{2}{section.2}%
+\contentsline {section}{\numberline {3}Phase 2: Expert Critique (Feb 16, 10:00--11:00 PM)}{2}{section.3}%
+\contentsline {section}{\numberline {4}Phase 3: Computational Testing Framework}{3}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Agent Architecture}{3}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Execution}{3}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Results Summary}{3}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Phase 4: Manuscript Revision}{4}{section.5}%
+\contentsline {section}{\numberline {6}Timeline}{4}{section.6}%
+\contentsline {section}{\numberline {7}Reflections on AI-Assisted Mathematical Research}{4}{section.7}%

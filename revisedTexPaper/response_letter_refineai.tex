@@ -1,0 +1,676 @@
+\documentclass[12pt]{article}
+
+\usepackage[margin=1.15in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{parskip}
+
+\definecolor{quotecolor}{RGB}{80,80,80}
+\definecolor{acceptgreen}{RGB}{0,120,60}
+\definecolor{partialyellow}{RGB}{180,130,0}
+\definecolor{sectionblue}{RGB}{0,50,120}
+\definecolor{changecolor}{RGB}{140,30,30}
+
+\newcommand{\verdict}[1]{%
+  \par\noindent\textbf{\textcolor{acceptgreen}{Disposition: #1}}\par\smallskip
+}
+\newcommand{\partialverdict}[1]{%
+  \par\noindent\textbf{\textcolor{partialyellow}{Disposition: #1}}\par\smallskip
+}
+\newcommand{\critique}[1]{%
+  \begin{quote}\itshape\color{quotecolor}#1\end{quote}
+}
+\newcommand{\change}[1]{\textcolor{changecolor}{#1}}
+
+%%% Self-contained stats macros (corrected values) %%%
+\newcommand{\BaseAlpha}{0.3}
+\newcommand{\BaseBeta}{0.5}
+\newcommand{\BasePiG}{0.625}
+\newcommand{\BasePiB}{0.375}
+\newcommand{\SRBeliefAfterG}{0.70}
+\newcommand{\SRBeliefAfterB}{0.50}
+\newcommand{\BRThreshold}{0.40}
+\newcommand{\SRThreshold}{0.60}
+\newcommand{\BRPayoff}{0.625}
+\newcommand{\PayoffStationary}{0.775}
+\newcommand{\PayoffFiltered}{0.569}
+\newcommand{\PayoffOverestimation}{36.3\%}
+\newcommand{\PayoffGapPayoff}{0.206}
+\newcommand{\BeliefGapBaseline}{0.094}
+\newcommand{\statIidMeanCount}{8.1}
+\newcommand{\statMarkovMeanCount}{12.7}
+\newcommand{\KLMonteCarloN}{500}
+\newcommand{\KLMonteCarloPeriods}{5{,}000}
+
+\begin{document}
+
+\begin{center}
+{\LARGE \bfseries Point-by-Point Response to RefineAI Review}\\[0.8em]
+{\large Revision of ``Extending Marginal Reputation to Persistent Markovian States''}\\[0.5em]
+{\normalsize February 18, 2026}
+\end{center}
+
+\bigskip\hrule\bigskip
+
+%% ============================================================
+\section*{Preamble: Summary of Revisions}
+%% ============================================================
+
+We are grateful for the thorough and constructive review, which identified 21~specific issues spanning formal mathematics, numerical accuracy, conceptual precision, and exposition. All 21~comments have been addressed. The principal changes are:
+
+\begin{enumerate}[label=(\roman*)]
+  \item \textbf{Corrected $V_{\mathrm{Markov}}$ formula.}
+  Definition~4.5 now uses a double-sum formulation: the previous state~$\theta'$ indexes the short-run player's belief via $F(\cdot|\theta')$, while the current state~$\theta$ indexes the payoff $u_1(\theta,\ldots)$. This resolves the timing ambiguity identified in Comment~4.
+
+  \item \textbf{Removed the inequality $V_{\mathrm{Markov}} \leq V$.}
+  The general inequality is not valid (Comment~2). Theorem~4.8 now states $V_{\mathrm{Markov}} = V$ if and only if belief-robust, with no directional claim otherwise. The ``cost of persistence'' has been renamed the \emph{effect of persistence}, since $V_{\mathrm{Markov}} - V$ can be positive or negative depending on parameters.
+
+  \item \textbf{Corrected all numerical values.}
+  Using the corrected double-sum formula with simultaneous-move timing (SR uses predicted belief): $\PayoffStationary$ (stationary/i.i.d.\ payoff), $\PayoffFiltered$ (Markov payoff), $\PayoffGapPayoff$ (effect of persistence), $\PayoffOverestimation$ (overestimation). The belief-robust threshold is $\BRThreshold$ (corrected from the erroneous 0.60); the SR cooperation threshold is $\SRThreshold$.
+
+  \item \textbf{Corrected filter stability language.}
+  All references to filter stability now distinguish: (a)~chain mixing ($\theta_0$ forgotten), (b)~filter stability (initial prior~$\pi_0$ forgotten), and (c)~belief convergence to~$\pi$ (not implied by filter stability alone). Comments~7, 11, and~19 are addressed.
+
+  \item \textbf{Added missing content.}
+  Monte Carlo methodology text added to Appendix~A.3 (Comment~10); full payoff matrix added to Section~7.1 (Comment~21); Stackelberg/persuasion open question added to Section~10.2 (Comment~20).
+\end{enumerate}
+
+No previously proved theorem has been invalidated. The main equilibrium guarantee---$\liminf_{\delta\to 1}\underline{U}_1(\delta) \geq V_{\mathrm{Markov}}(s_1^*)$---is strengthened by the corrected formula.
+
+Additionally, Section~9 (Methodology: Human--AI Collaboration) has been moved in its entirety to a separate supplemental document (\texttt{supplemental\_methodology.tex}). The main paper now presents the mathematical results as a self-contained contribution without reference to the research process.
+
+\bigskip\hrule\bigskip
+
+%% ============================================================
+\section*{Responses to Overall Feedback}
+%% ============================================================
+
+The review identified six overarching themes. We address each below, noting which detailed comments they subsume.
+
+\subsection*{\textcolor{sectionblue}{Overall 1: Alignment of Predictive Beliefs with Short-Run Optimization}}
+
+\critique{``It is not immediately obvious why a one-step-ahead belief about $\theta_{t+1}$ enters the period-$t$ best response if the payoff function does not depend on the future state. This misalignment makes the correspondence $B(s_1^*,F(\cdot\mid\theta))$ difficult to interpret.''}
+
+\verdict{ACCEPTED. Clarified throughout.}
+
+This concern is well-taken and reflects a genuine ambiguity in the original text. The resolution is as follows. Under the simultaneous-move timing of Luo \& Wolitzky (2024, Section~3.1), the short-run player does \emph{not} observe the long-run player's current action before choosing. SR's information set at time~$t$ consists of the public history $h_{t-1}$ only (new Remark~2.8). If the commitment strategy is state-revealing, $h_{t-1}$ reveals $\theta_0, \ldots, \theta_{t-1}$, so SR's \emph{belief about the current payoff-relevant state $\theta_t$} is $F(\cdot|\theta_{t-1})$---the one-step-ahead predictive distribution from the \emph{previous} state.
+
+The notation $B(s_1^*, F(\cdot|\theta))$ should be read as: ``SR's best response when SR's belief about the current state is $F(\cdot|\theta)$,'' where $\theta = \theta_{t-1}$ is the most recently observed state. Payoffs depend on $\theta_t$ (the uncertain current state), and SR maximizes expected current-period payoffs under this belief. The corrected Definition~4.5 now makes this timing explicit with a double-sum formulation that separates the previous state (indexing the belief) from the current state (entering the payoff).
+
+This theme is addressed primarily by Comment~4 (formula correction) and the new timing Remark~2.8. Comments~13 and~17 also contribute by clarifying the role of the lifted state and the notation for state-contingent Nash correspondences.
+
+\subsection*{\textcolor{sectionblue}{Overall 2: Consistency Between the Lifted State Construction and Payoff Bounds}}
+
+\critique{``The core payoff bound in Definition~4.5 is formulated as $V_{\text{Markov}}(s_1^*)=\sum_\theta \pi(\theta)\inf u_1\ldots$ which evaluates the strategy solely at $\theta$ and averages over the marginal distribution $\pi$. This creates a disconnect: if the strategy $s_1^*$ genuinely utilizes the lifted state, the induced joint distribution over actions and states is a $\tilde\rho$-based object.''}
+
+\verdict{ACCEPTED. Formula corrected.}
+
+This is precisely the issue addressed by Comment~4. The corrected Definition~4.5 now uses:
+\[
+V_{\mathrm{Markov}}(s_1^*) = \sum_{\theta' \in \Theta} \pi(\theta') \cdot \inf_{B(s_1^*, F(\cdot|\theta'))} \sum_{\theta \in \Theta} F(\theta|\theta') \cdot u_1(\theta, s_1^*(\theta,\theta'), \alpha_2).
+\]
+This formula operates on the joint distribution: $\pi(\theta') \cdot F(\theta|\theta') = \tilde\rho(\theta, \theta')$ is precisely the lifted stationary distribution. The commitment strategy $s_1^*(\theta, \theta')$ conditions on the full lifted state as it should, while the belief and payoff components are properly separated. The proof of Step~5 (Section~5.7) has been updated correspondingly.
+
+\subsection*{\textcolor{sectionblue}{Overall 3: Establishing Supermodularity with Endogenous Continuation Values}}
+
+\critique{``Since $g$ is an endogenous equilibrium object, this is a distinct property that requires formal proof; it is not immediate that equilibrium continuation values satisfy the specific monotonicity required to preserve the supermodularity of $u_1$. Similarly, the argument relying on `filter stability + $\delta\to 1$' requires more rigorous justification.''}
+
+\verdict{ACCEPTED. Remark~5.4 rewritten with correct argument.}
+
+The revised Remark~5.4 provides two distinct resolutions:
+
+\textbf{Belief-robust case}: The key observation is that state transitions in the model are \emph{exogenous}---the transition kernel $F(\theta'|\theta)$ does not depend on the action $a_1$. Consequently, the continuation value $g(\theta_t, h_t) = \delta V_{\mathrm{cont}}(\theta_t, h_t)$ does not depend on $a_1$ at all, so adding $g$ to the one-shot deviation objective preserves supermodularity trivially. The original claim that ``$g$ is supermodular in $(\theta_t, a_1)$ whenever $V_{\mathrm{cont}}$ is increasing in $\theta_t$'' (Comment~5) has been replaced with this stronger and simpler argument.
+
+\textbf{General case}: The proof structure of the one-shot deviation argument is identical to Luo--Wolitzky conditional on any fixed objective~$w$. The content of $w$ differs in the Markov case ($w = u_1 + g$ with $g$ state-dependent), requiring either a strengthened confound-defeating condition or a continuity argument via filter stability. The $\delta \to 1$ language has been corrected (Comment~1): finitely many early periods (before the filter converges) receive vanishing weight in the normalized payoff as $\delta \to 1$ (front-loading), not because continuation values are downweighted.
+
+This theme subsumes Comments~1, 5, and~6.
+
+\subsection*{\textcolor{sectionblue}{Overall 4: Logical Necessity of Belief-Robustness for Value Equality}}
+
+\critique{``While set invariance is sufficient for the values to match, it is not obviously necessary; the infima of payoffs over different sets could coincide for other reasons. The `if and only if' claim appears stronger than what the definitions logically support.''}
+
+\verdict{PARTIALLY ACCEPTED. Claim qualified.}
+
+This is a subtle and valid point. Set invariance (belief-robustness) is \emph{sufficient} for $V_{\mathrm{Markov}} = V$ because it forces the same Nash correspondence in every state. For \emph{necessity}, we note that in the deterrence game with generic parameters, the infimum over $B(s_1^*, F(\cdot|\theta))$ varies strictly across states whenever the sets differ (since the payoff function is strictly supermodular and the threshold falls in the interior of the belief interval). The ``if and only if'' claim holds generically in the supermodular case under the strict increasing-differences condition already assumed in Proposition~6.1. We have added a remark after Theorem~4.8 noting that the necessity direction requires this genericity condition, and that for non-generic parameters the infima could coincide even without set invariance.
+
+\subsection*{\textcolor{sectionblue}{Overall 5: Robustness of the ``Cost of Persistence'' and the Worked Example}}
+
+\critique{``The worked example contains values (e.g., $\mu^*=0.60$ and $\beta=0.5$) that seem to conflict\ldots\ Additionally, if an $\varepsilon$-perturbed commitment strategy forces beliefs to converge to stationarity via filter stability, the gap might vanish.''}
+
+\verdict{ACCEPTED. Arithmetic corrected; $\varepsilon$-perturbed discussion rewritten; concept renamed.}
+
+This theme combines several issues that have been individually resolved:
+
+\begin{itemize}[nosep]
+\item \textbf{Arithmetic}: $\mu^* = 0.60 > \beta = 0.50$ (Comment~8, corrected to $\BRThreshold < 0.50$ for the belief-robust example); $0.777 - 0.628 \neq 0.094$ (Comment~9, all values recomputed with correct timing).
+\item \textbf{Terminology}: ``Cost of persistence'' renamed to ``\emph{effect of persistence},'' since $V_{\mathrm{Markov}} - V$ can be positive or negative (Comment~2).
+\item \textbf{$\varepsilon$-perturbed strategies}: The claim that filter stability implies belief convergence to $\pi$ was incorrect (Comments~7 and~11). Filter stability ensures forgetting of the \emph{initial prior}, not convergence of the posterior to~$\pi$. For small $\varepsilon$, the signals remain highly informative and the posterior continues to track the state. The revised Section~10.2 correctly characterizes this, and whether $V_{\mathrm{Markov}}(s_1^\varepsilon) \to V(s_1^*)$ as $\varepsilon \to 0$ remains an open question.
+\item \textbf{Economic interpretation}: The effect of persistence is robust to the extent that it arises from the structural gap between filtering beliefs and stationary beliefs, which persists for all $\alpha + \beta \neq 1$. It is not an artifact of perfectly state-revealing strategies---it is a consequence of the Markov dynamics themselves, qualified by the observation that $\varepsilon$-smoothed strategies may alter the magnitude (but not the existence) of the effect for persistent chains.
+\end{itemize}
+
+\subsection*{\textcolor{sectionblue}{Overall 6: Balancing the Theoretical Contribution with the Methodological Narrative}}
+
+\critique{``Section~9 devotes substantial space to documenting the `human-AI collaboration' process\ldots\ To maximize the impact of the theoretical contribution, it would be beneficial to separate the proved theorems from the computational stress-tests.''}
+
+\verdict{ACCEPTED. Section~9 moved to supplemental document.}
+
+We agree fully. \textbf{Section~9 has been removed from the main paper} and relocated to a separate supplemental document (\texttt{supplemental\_methodology.tex}). The main paper now presents the mathematical results as a self-contained contribution in the standard format of a mathematics/economics manuscript, without reference to the research process, AI collaboration, or correction history. All ``fourth-wall'' references to the process---including the timeline, agent architecture, tweets, and reflections on AI-assisted research---have been removed from the abstract, introduction, and discussion sections.
+
+The supplemental document preserves the full methodology narrative for readers interested in the research process, including the agent architecture, computational testing framework, and timeline.
+
+\bigskip\hrule\bigskip
+
+%% ============================================================
+\section*{Detailed Point-by-Point Responses (Comments 1--21)}
+%% ============================================================
+
+%% ============================================================
+\subsection*{\textcolor{sectionblue}{Comment 1: Incorrect Scaling of Continuation Values}}
+\label{resp:C01}
+
+\textbf{Reviewer concern:}
+\critique{%
+``Combined with $\delta\to 1$ (which makes the continuation value perturbation small relative to the stage-game payoff)''---under the normalization $(1-\delta)u_1(\theta_t,a_1,\alpha_2) + \delta\,\mathbb{E}[V(h_{t+1})]$, as $\delta\to 1$ the continuation term receives weight~$\delta$ and becomes \emph{more} important, not less. The intended argument appears to combine filter stability with the vanishing weight of finitely many early periods.
+}
+
+\verdict{Fully accepted.}
+
+\textbf{Response.}
+The reviewer is correct. Under the standard normalization $(1-\delta)u_1 + \delta\,\mathbb{E}[V]$, the continuation value receives weight $\delta\to 1$ and therefore dominates, not vanishes. The original sentence inverted the direction. The argument in Remark~5.4 actually relies on two distinct and complementary mechanisms:
+\begin{enumerate}
+  \item \textbf{Filter stability} (Proposition~A.2): the $\theta_t$-dependent perturbation $g(\theta_t,a_1,h_t)$ converges to a stationary limit exponentially fast, so for large~$t$ the perturbation is approximately state-independent.
+  \item \textbf{Front-loading}: $\delta\to 1$ makes the finite transient period (before the filter has converged) negligible in the normalized payoff, because finitely many periods receive weight $(1-\delta)\delta^t \to 0$ uniformly.
+\end{enumerate}
+We have rewritten Remark~5.4 to state this two-part argument precisely, avoiding any suggestion that continuation values are downweighted by~$\delta\to 1$.
+
+\textbf{Changes:} Remark~5.4 rewritten. No formal results affected.
+
+%% ============================================================
+\subsection*{\textcolor{sectionblue}{Comment 2: Incorrect Generalization of the Payoff Bound Inequality}}
+\label{resp:C02}
+
+\textbf{Reviewer concern:}
+\critique{%
+$V_{\mathrm{Markov}}(s_1^*) \leq V(s_1^*)$ is claimed to hold generally, and $V(s_1^*)-V_{\mathrm{Markov}}(s_1^*)$ is interpreted as a non-negative ``cost of persistence.'' This is unjustified: when $\pi(G)<\mu^*$ but $F(G|G)>\mu^*$, persistence enables cooperation in good states only, yielding $V_{\mathrm{Markov}}>V$.
+}
+
+\verdict{Fully accepted.}
+
+\textbf{Response.}
+The reviewer is correct, and the counterexample is valid. When $\pi(G)<\mu^*$ (so SR defects under i.i.d.\ beliefs), state persistence with $F(G|G)>\mu^*$ can enable cooperation after favorable states, producing $V_{\mathrm{Markov}}>V$. The inequality $V_{\mathrm{Markov}}\leq V$ does not hold in general.
+
+We have made three changes:
+\begin{enumerate}
+  \item Theorem~4.8 now states the ordering is parameter-dependent, with $V_{\mathrm{Markov}}(s_1^*) = V(s_1^*)$ if and only if the game is belief-robust.
+  \item A new remark characterizes when $V_{\mathrm{Markov}} \lessgtr V$ in terms of the relationship between $\pi(G)$, $\mu^*$, $F(G|G)$, and $F(G|B)$.
+  \item The abstract and Section~1 are corrected: ``cost of persistence'' is renamed \emph{effect of persistence}, since it can be positive or negative.
+\end{enumerate}
+The possibility that $V_{\mathrm{Markov}}>V$ is a new economic insight: persistence can \emph{benefit} the long-run player when the stationary belief is unfavorable.
+
+\textbf{Changes:} Theorem~4.8 restated; Abstract and Section~1 corrected; new remark added after Theorem~4.8. The main equilibrium guarantee $\liminf_{\delta\to 1}\underline{U}_1(\delta)\geq V_{\mathrm{Markov}}(s_1^*)$ is unaffected.
+
+%% ============================================================
+\subsection*{\textcolor{sectionblue}{Comment 3: Contradictory i.i.d.\ Benchmark Values in Worked Example}}
+\label{resp:C03}
+
+\textbf{Reviewer concern:}
+\critique{%
+Section~7.6 computes $V(s_1^*)=0.625$, while Section~7.7 gives a ``Stationary beliefs'' payoff of~$0.777$. Additionally, $V_{\mathrm{Markov}}=0.628>V(s_1^*)=0.625$ appears to violate $V_{\mathrm{Markov}}\leq V(s_1^*)$. Which number is the commitment payoff?
+}
+
+\verdict{Fully accepted.}
+
+\textbf{Response.}
+The reviewer correctly identifies notational overload. Two distinct quantities were both labeled ``$V(s_1^*)$'':
+\begin{enumerate}
+  \item The worst-case commitment payoff against SR defection: $V_{\min}=\pi(G)\cdot u_1(G,A,D)+\pi(B)\cdot u_1(B,F,D)=\BRPayoff$.
+  \item The equilibrium payoff when SR cooperates under stationary beliefs: $V_{\text{iid}}=\PayoffStationary$.
+\end{enumerate}
+With the corrected double-sum formula and simultaneous-move timing, the Markov payoff is $V_{\mathrm{Markov}}=\PayoffFiltered$. Since the general inequality $V_{\mathrm{Markov}}\leq V$ is no longer claimed (Comment~2), the apparent violation is moot; the meaningful comparison is the \emph{effect of persistence}: $V_{\text{iid}}-V_{\mathrm{Markov}} = \PayoffStationary - \PayoffFiltered = \PayoffGapPayoff$.
+
+\textbf{Changes:} Sections~7.6--7.7 revised with separate notation ($V_{\min}$, $V_{\text{iid}}$, $V_{\mathrm{Markov}}$). Comparison table updated with corrected values.
+
+%% ============================================================
+\subsection*{\textcolor{sectionblue}{Comment 4: Incorrect Formulation of Markov Commitment Payoff}}
+\label{resp:C04}
+
+\textbf{Reviewer concern:}
+\critique{%
+Definition~4.5 pairs the belief argument $B(\cdot)$ with the same state~$\theta$ that enters $u_1(\theta,\cdot,\cdot)$. If SR's belief at period~$t$ is $F(\cdot|\theta_{t-1})$ while payoffs depend on~$\theta_t$, the formula conflates two distinct roles. The lower bound should be written in terms of the lifted stationary distribution $\tilde\rho(\theta_t,\theta_{t-1})$.
+}
+
+\verdict{Fully accepted.}
+
+\textbf{Response.}
+The reviewer correctly identifies a genuine timing error. SR's belief at period~$t$ is $F(\cdot|\theta_{t-1})$ (transition from the previous state), while payoffs depend on $\theta_t$ (the current state). The corrected formula is:
+\[
+V_{\mathrm{Markov}}(s_1^*) = \sum_{\theta'\in\Theta}\pi(\theta')\cdot\inf_{(\alpha_0,\alpha_2)\in B(s_1^*,\,F(\cdot|\theta'))}\;\sum_{\theta\in\Theta}F(\theta|\theta')\cdot u_1\!\bigl(\theta,\,s_1^*(\theta,\theta'),\,\alpha_2\bigr),
+\]
+where $\theta'$ indexes $\theta_{t-1}$ (which determines SR's belief) and $\theta$ indexes $\theta_t$ (which determines the payoff). The outer sum averages over previous states using the stationary distribution~$\pi$; the inner sum averages over current states using the transition kernel $F(\cdot|\theta')$.
+
+With the corrected formula and baseline parameters $(\alpha=\BaseAlpha,\,\beta=\BaseBeta)$: $V_{\mathrm{Markov}}=\PayoffFiltered$.
+
+\textbf{Changes:} Definition~4.5 corrected to double-sum form. Stage timing clarified in Section~2.3 (simultaneous moves; SR uses predicted belief $F(\cdot|\theta_{t-1})$). All downstream values recomputed.
+
+%% ============================================================
+\subsection*{\textcolor{sectionblue}{Comment 5: Invalid Sufficient Condition for Supermodularity}}
+\label{resp:C05}
+
+\textbf{Reviewer concern:}
+\critique{%
+``$g(\theta_t,a_1,h_t)$ is supermodular in $(\theta_t,a_1)$ whenever $V_{\mathrm{cont}}$ is increasing in~$\theta_t$ for each~$a_1$''---monotonicity in~$\theta_t$ does not imply increasing differences in~$(\theta,a_1)$, which is equivalent to supermodularity.
+}
+
+\verdict{Fully accepted.}
+
+\textbf{Response.}
+The reviewer is correct that monotonicity does not imply supermodularity in general. However, the conclusion is recoverable via a stronger and correct argument: in the paper's model, state transitions are exogenous (the Markov chain evolves independently of~$a_1$), so the continuation value $g(\theta_t)=\delta\,V_{\mathrm{cont}}(\theta_t)$ does not depend on~$a_1$. Adding a function of~$\theta$ alone to a supermodular objective preserves supermodularity trivially: in the increasing-differences comparison
+\[
+\bigl[u_1(\theta^H,a_1^H,\alpha_2)+g(\theta^H)\bigr]-\bigl[u_1(\theta^H,a_1^L,\alpha_2)+g(\theta^H)\bigr] \;\geq\; \bigl[u_1(\theta^L,a_1^H,\alpha_2)+g(\theta^L)\bigr]-\bigl[u_1(\theta^L,a_1^L,\alpha_2)+g(\theta^L)\bigr],
+\]
+the $g$~terms cancel on both sides, leaving the supermodularity of~$u_1$ alone.
+
+\textbf{Changes:} Remark~5.4 corrected: the incorrect claim (``monotonicity implies supermodularity'') is replaced with the correct argument (exogenous transitions $\Rightarrow$ $g$ is $a_1$-independent $\Rightarrow$ supermodularity preserved).
+
+%% ============================================================
+\subsection*{\textcolor{sectionblue}{Comment 6: Contradiction in One-Shot Deviation Argument}}
+\label{resp:C06}
+
+\textbf{Reviewer concern:}
+\critique{%
+``The one-shot deviation argument is identical'' directly contradicts the subsequent observation that ``adding this $\theta_t$-dependent term can in principle change the OT solution.'' Two distinct issues are conflated: (i)~the OT/cyclical-monotonicity structure is the same for any fixed objective~$w$; (ii)~the Markov objective $w=u_1+\delta g$ differs from~$u_1$.
+}
+
+\verdict{Fully accepted.}
+
+\textbf{Response.}
+The reviewer's diagnosis is correct. The two statements are not logically contradictory but are misleadingly juxtaposed. We have restructured Section~5.2 to clearly separate:
+\begin{enumerate}
+  \item \textbf{Proof structure:} For any fixed one-shot objective $w(\tilde\theta,a_1)$, the optimal transport / cyclical-monotonicity argument from Luo--Wolitzky's Lemma~1 carries over identically to the lifted space~$\tilde\Theta$.
+  \item \textbf{Objective change:} In the Markov case, the relevant objective is $w(\tilde\theta,a_1) = u_1(\tilde\theta,a_1,\alpha_2)+\delta\,g(\theta_t,a_1,h_t)$, which differs from~$u_1$ alone. Confound-defeating with respect to~$u_1$ does not automatically ensure optimality of~$s_1^*$ for~$w$.
+  \item \textbf{Resolution:} Either (a)~supermodularity + belief-robustness, (b)~a strengthened confound-defeating condition, or (c)~the filter-stability + $\delta\to1$ continuity argument from Remark~5.4 ensures that $s_1^*$ remains optimal.
+\end{enumerate}
+
+\textbf{Changes:} Section~5.2 restructured to disentangle structural equivalence from objective change.
+
+%% ============================================================
+\subsection*{\textcolor{sectionblue}{Comment 7: Conceptual Error Regarding Filter Stability and Belief Convergence}}
+\label{resp:C07}
+
+\textbf{Reviewer concern:}
+\critique{%
+The suggestion that $\varepsilon$-perturbed strategies cause beliefs to ``converge to the stationary distribution~$\pi$'' rests on a misunderstanding. Filter stability means the initial \emph{prior} is forgotten, not that the posterior converges to~$\pi$. For small~$\varepsilon$, signals remain highly informative and the posterior tracks~$\theta_t$.
+}
+
+\verdict{Fully accepted.}
+
+\textbf{Response.}
+The reviewer is correct. The original text conflated three distinct properties:
+\begin{enumerate}
+  \item \textbf{Chain mixing}: $\|P(\theta_t\in\cdot\mid\theta_0)-\pi\|\leq C'\lambda'^t$---the initial \emph{state}~$\theta_0$ is forgotten.
+  \item \textbf{Filter stability}: $\sup_{\pi_0,\pi_0'}\|\pi_t-\pi_t'\|\leq C\lambda^t$---the initial \emph{prior}~$\pi_0$ is forgotten.
+  \item \textbf{Belief convergence to~$\pi$}: $\|\pi_t(\cdot|y_0,\ldots,y_t)-\pi\|\to 0$---\emph{not} implied by filter stability.
+\end{enumerate}
+For $\varepsilon$-perturbed strategies with small~$\varepsilon$, the observation channel retains Fisher information of order $O(1/\varepsilon)$ about~$\theta_t$, so the filtered posterior tracks the current state rather than settling at~$\pi$.
+
+The benefit of $\varepsilon$-perturbation is more subtle than convergence to~$\pi$: by degrading state revelation, it reduces the effective belief gap, potentially moving filtering beliefs out of the critical interval $[\BaseBeta,\,1-\BaseAlpha]$.
+
+\textbf{Changes:} Section~10.2 rewritten to correctly characterize filter stability as prior forgetting, not belief convergence to~$\pi$. Added footnote distinguishing the three concepts.
+
+%% ============================================================
+\subsection*{\textcolor{sectionblue}{Comment 8: Arithmetic Error in Belief-Robust Condition}}
+\label{resp:C08}
+
+\textbf{Reviewer concern:}
+\critique{%
+``$\mu^*=0.60<\beta=0.5$'' is stated in Section~7.4 (and Remark~3.4), but $0.60>0.5$. With baseline calibration $(\alpha,\beta)=(0.3,0.5)$, the game is then \emph{not} belief-robust by Proposition~3.3.
+}
+
+\verdict{Fully accepted.}
+
+\textbf{Response.}
+This is an unambiguous arithmetic error. The belief-robust condition requires $\mu^*\leq\min_\theta F(G|\theta)=\beta=0.50$, so $\mu^*=0.60$ violates it. We have corrected the belief-robust threshold in the ``Version~1: Belief-Robust'' example to $\mu^*=\BRThreshold<\beta=0.50$, with the resulting payoff bound $V(s_1^*)=\BRPayoff$.
+
+The non-belief-robust case ($\mu^*=\SRThreshold$) in Section~7.5 is unaffected, since there the threshold exceeds~$\beta=0.50$ as intended.
+
+\textbf{Changes:} Section~7.4 and Remark~3.4 corrected: $\mu^*=\BRThreshold$, $V(s_1^*)=\BRPayoff$. Updated in both the text and \texttt{stats.tex}.
+
+%% ============================================================
+\subsection*{\textcolor{sectionblue}{Comment 9: Arithmetic Error and Variable Confusion}}
+\label{resp:C09}
+
+\textbf{Reviewer concern:}
+\critique{%
+``The cost equals $0.777-0.628=0.094$, representing 23.7\% of the i.i.d.\ payoff''---but $0.777-0.628=0.149\neq 0.094$; the value~$0.094$ is the belief gap from Equation~(7); and $23.7\%=0.149/0.628$ is relative to the Markov payoff, not ``the i.i.d.\ payoff.''
+}
+
+\verdict{Fully accepted.}
+
+\textbf{Response.}
+Three errors in one sentence:
+\begin{enumerate}
+  \item The subtraction $0.777-0.628=0.149$, not~$0.094$. The value~$0.094$ is the \emph{belief gap} from $2\alpha\beta|1-\alpha-\beta|/(\alpha+\beta)^2$, a probability-space quantity that was inadvertently substituted for the payoff gap.
+  \item The percentage $23.7\%=0.149/0.628$ measures overestimation relative to the Markov payoff, not ``of the i.i.d.\ payoff'' ($0.149/0.777=19.2\%$).
+  \item The macro \verb|\PayoffGapAbsolute| stored the belief gap where the payoff gap was needed.
+\end{enumerate}
+
+With the corrected double-sum formula, the updated values are: $V_{\text{iid}}=\PayoffStationary$, $V_{\mathrm{Markov}}=\PayoffFiltered$, effect of persistence $=\PayoffGapPayoff$, overestimation $=\PayoffOverestimation$. The text now explicitly distinguishes the belief gap ($\BeliefGapBaseline$) from the payoff gap ($\PayoffGapPayoff$).
+
+\textbf{Changes:} Section~8.5 corrected. Separate macros introduced: \verb|\PayoffGapPayoff| (payoff gap) and \verb|\BeliefGapBaseline| (belief gap). Terminology changed from ``cost of persistence'' to ``effect of persistence.''
+
+%% ============================================================
+\subsection*{\textcolor{sectionblue}{Comment 10: Missing Content in Appendix~A.3}}
+\label{resp:C10}
+
+\textbf{Reviewer concern:}
+\critique{%
+``A.3 Monte Carlo Verification'' appears to be empty (header only). The main text (Section~5.4) relies on this appendix to verify the KL counting bound.
+}
+
+\verdict{Fully accepted.}
+
+\textbf{Response.}
+We thank the reviewer for identifying this omission. Appendix~A.3 contained only a figure reference without explanatory text. We have added a complete description of the Monte Carlo verification procedure:
+
+\begin{itemize}
+  \item \textbf{Setup:} Two parallel processes---a Markov chain with parameters $(\alpha=\BaseAlpha,\,\beta=\BaseBeta)$ and an i.i.d.\ process with the same stationary distribution $\pi(G)=\BasePiG$---are simulated for $T=\KLMonteCarloPeriods$ periods across $N=\KLMonteCarloN$ independent runs.
+  \item \textbf{Methodology:} For each run, Bayesian posteriors are computed and the number of \emph{distinguishing periods}---where the predicted signal distributions under commitment and rational type hypotheses differ by more than~$\eta$ in total variation---is recorded.
+  \item \textbf{Finding:} The empirical mean distinguishing-period count is $\statIidMeanCount$ (i.i.d.) and $\statMarkovMeanCount$ (Markov), both far below the theoretical bound $\bar{T}(\eta,\mu_0)=921$, confirming that the KL counting bound requires no mixing-time correction.
+\end{itemize}
+
+\textbf{Changes:} Full methodology text added to Appendix~A.3, preceding Figure~6.
+
+%% ============================================================
+\subsection*{\textcolor{sectionblue}{Comment 11: Incorrect Inference from Filter Stability}}
+\label{resp:C11}
+
+\textbf{Reviewer concern:}
+\critique{%
+Section~10.2 states ``filter stability (SA4) suggests that beliefs may converge to the stationary distribution''---this conflates filter stability (forgetting of initial prior) with convergence of the posterior to~$\pi$. For small~$\varepsilon$, signals remain very informative about~$\theta_t$ and the belief process continues to track the state.
+}
+
+\verdict{Fully accepted.}
+
+\textbf{Response.}
+This comment identifies the same conceptual error as Comment~7, appearing at a different location in the text. As discussed there, filter stability (SA4) guarantees that the initial prior~$\pi_0$ is forgotten exponentially fast; it does \emph{not} imply convergence of the filtering distribution to~$\pi$. For small~$\varepsilon$, the posterior continues to fluctuate with the state.
+
+We have corrected the language in Section~10.2 to specify that what filter stability provides is prior-forgetting, and that the relevant open question concerns the \emph{stationary distribution of beliefs} (as a stochastic process indexed by~$\varepsilon$), not convergence to a point mass at~$\pi$.
+
+\textbf{Changes:} Section~10.2 rewritten (jointly with Comment~7). Added explicit distinction between prior-forgetting and posterior convergence.
+
+%% ============================================================
+\subsection*{\textcolor{sectionblue}{Comment 12: Contradiction Between Figure~6 and Its Caption}}
+\label{resp:C12}
+
+\textbf{Reviewer concern:}
+\critique{%
+The caption describes empirical distributions as ``nearly identical'' across Markov and i.i.d.\ simulations, while Figure~6 shows sample means of $\statIidMeanCount$ (i.i.d.) and $\statMarkovMeanCount$ (Markov) with visibly shifted histograms.
+}
+
+\verdict{Fully accepted.}
+
+\textbf{Response.}
+The 57\% difference in means ($\statIidMeanCount$ vs.\ $\statMarkovMeanCount$) is not ``nearly identical.'' The important point is that both means are far below the analytical bound of~$921$ ($<1.4\%$ of the bound), confirming that the KL counting bound holds with large margin in both settings.
+
+\textbf{Changes:} Figure~6 caption revised to: ``both well below the analytical bound (i.i.d.: $\statIidMeanCount$; Markov: $\statMarkovMeanCount$).'' The phrase ``nearly identical'' is replaced with accurate comparative language noting the moderate difference while emphasizing that the bound holds in both settings.
+
+%% ============================================================
+\subsection*{\textcolor{sectionblue}{Comment 13: Confusion of Reputation Dynamics with State-Belief Dynamics}}
+\label{resp:C13}
+
+\textbf{Reviewer concern:}
+\critique{%
+Section~9.2 writes $B(s_1^*,\mu_0(h_t))$ and says the one-shot deviation argument fails ``since $\mu_0$ changes.'' But $\mu_0$ is the fixed prior over types; posteriors are~$\mu_t$. The genuinely new phenomenon is that $B$ becomes state-dependent via $F(\cdot|\theta_t)$, not that type-beliefs evolve (which already occurs in the i.i.d.\ case).
+}
+
+\verdict{Fully accepted.}
+
+\textbf{Response.}
+The reviewer correctly identifies two errors:
+\begin{enumerate}
+  \item \textbf{Notational error}: $\mu_0$ is the fixed prior; the evolving posterior is $\mu_t(\cdot|h_t)$.
+  \item \textbf{Misidentification of the novel phenomenon}: Type-posterior evolution ($\mu_t$ changing with history) occurs in the i.i.d.\ case as well---it \emph{is} the standard reputation dynamics mechanism. What is genuinely new under Markov states is that the Nash correspondence becomes \emph{state-contingent}: $B(s_1^*,F(\cdot|\theta_t))$ varies with the realized state~$\theta_t$. This is precisely what the belief-robustness condition (Definition~3.2) addresses.
+\end{enumerate}
+
+Quantitatively: for baseline parameters with $\mu^*=\SRThreshold$, the i.i.d.\ SR always cooperates (since $\pi(G)=\BasePiG>\SRThreshold$), while the Markov SR cooperates in state~$G$ ($F(G|G)=\SRBeliefAfterG>\SRThreshold$) but defects in state~$B$ ($F(G|B)=\SRBeliefAfterB<\SRThreshold$).
+
+\textbf{Changes:} Section~9.2 corrected: $\mu_0(h_t)\to\mu_t(\cdot|h_t)$; reframed to identify the state-contingent Nash correspondence as the genuinely novel phenomenon. Added cross-reference to Definition~3.2.
+
+%% ============================================================
+\subsection*{\textcolor{sectionblue}{Comment 14: Ambiguous Definition of Best-Response Set in Lemma~5.8}}
+\label{resp:C14}
+
+\textbf{Reviewer concern:}
+\critique{%
+$\hat{B}_{\xi(\eta)}(s_1^*)$ appears in Lemma~5.8 without redefinition in the Markov extension. The surrounding discussion emphasizes state-dependent correspondences $B(s_1^*,F(\cdot|\theta))$, but Lemma~5.8 uses the static confirmed best-response set. This creates momentary confusion.
+}
+
+\verdict{Fully accepted.}
+
+\textbf{Response.}
+We agree that the notation requires disambiguation. We have added Remark~5.6 before Lemma~5.8, clarifying:
+\begin{itemize}
+  \item $\hat{B}_\xi(s_1^*)$ is the \emph{$\xi$-confirmed best-response set} from Luo--Wolitzky (2024, Definition~3): the set of SR best-response profiles that remain optimal when the posterior concentrates within~$\xi$ of $\{\omega^R,\omega_{s_1^*}\}$. This is a static, type-based object.
+  \item $B(s_1^*,F(\cdot|\theta))$ is the \emph{state-contingent Nash correspondence}: SR behavior conditional on the revealed state~$\theta$. This enters only in the payoff bound step (Section~5.7).
+  \item Under belief-robustness, $B(s_1^*,F(\cdot|\theta))$ is constant across~$\theta$ and the distinction is immaterial.
+\end{itemize}
+We have also made explicit in Section~5.7 how the confirmed best-response property from Lemma~5.8 underpins the lower bounds formulated in terms of the state-contingent sets.
+
+\textbf{Changes:} New Remark~5.6 added. Section~5.7 expanded with explicit logical link.
+
+%% ============================================================
+\subsection*{\textcolor{sectionblue}{Comment 15: Incorrect Claim About Confound-Defeating Conditions}}
+\label{resp:C15}
+
+\textbf{Reviewer concern:}
+\critique{%
+Section~8.6 states ``Persistence thus strengthens identification, making confound-defeating conditions easier to satisfy in the supermodular case.'' But Section~6 shows the confound-defeating characterization is \emph{unchanged}. In what sense is it ``easier to satisfy''?
+}
+
+\verdict{Fully accepted.}
+
+\textbf{Response.}
+The mathematical characterization (Proposition~6.1) is indeed unchanged: confound-defeating is equivalent to monotonicity in the supermodular case, regardless of whether the state is i.i.d.\ or Markov. What persistence improves is the \emph{empirical verifiability}: autocorrelated action sequences are more statistically distinguishable, facilitating verification of the condition from data. The mathematical condition itself neither strengthens nor weakens.
+
+\textbf{Changes:} Section~8.6 revised: ``easier to satisfy'' replaced with ``easier to verify empirically,'' with explicit reference to Proposition~6.1 confirming the formal characterization is unchanged.
+
+%% ============================================================
+\subsection*{\textcolor{sectionblue}{Comment 16: Ambiguity in ``Not Behaviorally Confounded'' Application}}
+\label{resp:C16}
+
+\textbf{Reviewer concern:}
+\critique{%
+``Since $s_1^*$ is not behaviorally confounded, any type with the same asymptotic signal distribution must be $s_1^*$ itself'' (Part~A of Lemma~5.7) relies on an implicit identification between asymptotic conditional signal distributions and the stationary $p(\alpha_0,s_1,\alpha_2)$. This needs to be made explicit under Markov dynamics.
+}
+
+\verdict{Fully accepted.}
+
+\textbf{Response.}
+The reviewer correctly identifies an implicit step that is automatic in the i.i.d.\ case but requires justification under Markov dynamics. We have expanded Part~A of Lemma~5.7 to make the logical chain explicit:
+\begin{enumerate}
+  \item \textbf{KL bound} (Lemma~5.6) implies per-period signal convergence (process-independent).
+  \item \textbf{Filter stability} (Proposition~A.2) ensures the filtering distribution converges exponentially fast to a limit determined by the strategy and transition kernel, not the initial prior.
+  \item \textbf{Ergodicity} identifies this limit as the unique stationary signal distribution $p_\infty(\alpha_0,s_1,\alpha_2)$.
+  \item The \textbf{not-behaviorally-confounded condition} (Definition~4.3), applied to these stationary distributions, yields $\mu_\infty(\{\omega^R,\omega_{s_1^*}\}\mid h)=1$.
+\end{enumerate}
+
+\textbf{Changes:} Part~A of Lemma~5.7 (Section~5.3) expanded with the four-step argument.
+
+%% ============================================================
+\subsection*{\textcolor{sectionblue}{Comment 17: Confusing Motivation for Lifted State}}
+\label{resp:C17}
+
+\textbf{Reviewer concern:}
+\critique{%
+Section~1.1 says the lifted state $\tilde\theta_t=(\theta_t,\theta_{t-1})$ ``provides a stationary distribution $\tilde\rho$ on the expanded space and allows the optimal transport framework to apply directly.'' This reads as if the original chain lacked a stationary distribution, whereas $\theta_t$ already has~$\pi$ by Assumption~2.1.
+}
+
+\verdict{Fully accepted.}
+
+\textbf{Response.}
+The phrasing was misleading. The original chain $\theta_t$ possesses a unique stationary distribution~$\pi$ by Assumption~1(b). The true role of the lifting is to construct a ``type space'' $\tilde\Theta=\Theta\times\Theta$ that:
+\begin{itemize}
+  \item encodes Markov private information (the transition $\theta_{t-1}\to\theta_t$) into the signal structure,
+  \item plays the role of the exogenous type distribution in the Luo--Wolitzky optimal transport formulation, with marginal~$\tilde\rho$.
+\end{itemize}
+
+\textbf{Changes:} Section~1.1 revised to explain the lifting as constructing a suitable type space for Markov private information, not as ``providing stationarity.''
+
+%% ============================================================
+\subsection*{\textcolor{sectionblue}{Comment 18: Failure of Strict Supermodularity on Lifted Space}}
+\label{resp:C18}
+
+\textbf{Reviewer concern:}
+\critique{%
+$u_1(\tilde\theta,a_1,\alpha_2)=u_1(\theta_t,a_1,\alpha_2)$ is constant in~$\theta_{t-1}$, suggesting tension with the strict supermodularity invoked in Proposition~6.1 for uniqueness of the OT solution.
+}
+
+\verdict{Fully accepted.}
+
+\textbf{Response.}
+As the reviewer notes upon closer reading, this is resolved by the first-coordinate order on $\tilde\Theta$:
+\[
+(\theta_t,\theta_{t-1})\succeq(\theta_t',\theta_{t-1}') \iff \theta_t\succeq\theta_t'.
+\]
+States differing only in~$\theta_{t-1}$ are not strictly ordered, so the strict increasing-differences condition is never evaluated between such pairs. Strict supermodularity in $(\tilde\theta,a_1)$ is therefore equivalent to strict supermodularity in $(\theta_t,a_1)$, provided the underlying payoff has strictly increasing differences in $(\theta_t,a_1)$.
+
+Since the computational survey in Section~6.2 reports that 4~out of 24~orderings of~$\tilde\Theta$ preserve supermodularity, and all four correspond to the first-coordinate order, this is consistent.
+
+\textbf{Changes:} Added an explicit sentence to Section~6.2 stating that for $\theta_t$-only payoffs, strict supermodularity on $\tilde\Theta\times A_1$ is preserved under the first-coordinate order and coincides with the usual condition on $(\theta_t,a_1)$.
+
+%% ============================================================
+\subsection*{\textcolor{sectionblue}{Comment 19: Imprecise Terminology Regarding Filter Stability}}
+\label{resp:C19}
+
+\textbf{Reviewer concern:}
+\critique{%
+``This ensures that the initial condition of the Markov chain is `forgotten' exponentially fast'' reads as if referring to~$\theta_0$ (chain mixing), whereas Proposition~A.2 is about the filter's dependence on the initial prior~$\pi_0$.
+}
+
+\verdict{Fully accepted.}
+
+\textbf{Response.}
+The phrasing is indeed ambiguous. Proposition~A.2 concerns filter stability---the filter's exponential forgetting of its initial prior~$\pi_0$---not chain mixing (the Markov chain's forgetting of its initial state~$\theta_0$). Both properties hold but are distinct:
+\begin{itemize}
+  \item \textbf{Chain mixing}: $P(\theta_t=G\mid\theta_0)\to\pi(G)=\BasePiG$ regardless of~$\theta_0$, at rate $|1-\alpha-\beta|^t=0.2^t$.
+  \item \textbf{Filter stability}: Two filters with extreme priors ($\pi_0(G)=0.99$ vs.\ $0.01$) converge to agreement exponentially fast, regardless of the true initial state.
+\end{itemize}
+
+\textbf{Changes:} Appendix~A.2: ``initial condition of the Markov chain is `forgotten'\,'' replaced with ``initial prior of the filter is forgotten.'' Added parenthetical distinguishing filter stability from chain mixing.
+
+%% ============================================================
+\subsection*{\textcolor{sectionblue}{Comment 20: Missing Discussion of Stackelberg Well-Definedness}}
+\label{resp:C20}
+
+\textbf{Reviewer concern:}
+\critique{%
+Section~9.5 states that Stackelberg well-definedness for persuasion games is ``acknowledged as an open question in Section~10,'' but Section~10.2 does not mention it.
+}
+
+\verdict{Fully accepted.}
+
+\textbf{Response.}
+The reviewer has identified a genuine cross-reference error. Section~9.5 claims the topic is discussed in Section~10, but Section~10.2 omitted it. We have added a new paragraph to Section~10.2:
+
+\begin{quote}
+\emph{Stackelberg well-definedness in persuasion games.} For persuasion games, the Stackelberg strategy is defined via concavification of the sender's value function. Under Markov dynamics, the receiver's prior varies state-by-state through $F(\cdot|\theta)$, and the optimal persuasion scheme may differ for each prior. Whether a single state-independent Stackelberg strategy exists that is simultaneously optimal across all filtering priors remains open.
+\end{quote}
+
+\textbf{Changes:} New paragraph added to Section~10.2. Cross-reference in Section~9.5 now correctly points to this paragraph.
+
+%% ============================================================
+\subsection*{\textcolor{sectionblue}{Comment 21: Inconsistent Payoffs and Stackelberg Strategy}}
+\label{resp:C21}
+
+\textbf{Reviewer concern:}
+\critique{%
+Only the $D$-row payoffs are displayed ($u_1(G,A)=1$, $u_1(G,F)=x$, $u_1(B,A)=y$, $u_1(B,F)=0$). Looking at these alone, $A$~dominates~$F$ in state~$B$, making $s_1^*(B)=F$ appear suboptimal. The full deterrence specification (including the $C$-row) is needed.
+}
+
+\verdict{Fully accepted.}
+
+\textbf{Response.}
+The reviewer is correct that the $D$-conditional payoffs alone make $s_1^*(B)=F$ appear suboptimal (since $u_1(B,A,D)=y>0=u_1(B,F,D)$). The Stackelberg strategy is optimal in the full game because $F$~in state~$B$ enables reputation effects: it satisfies the confound-defeating condition and induces SR cooperation in equilibrium. The missing $C$-column payoffs are essential for understanding this.
+
+We have added the full payoff matrix to Section~7.1, displaying both the $C$ and $D$ columns:
+
+\begin{center}
+\begin{tabular}{l cc cc}
+\toprule
+& \multicolumn{2}{c}{$a_2=C$} & \multicolumn{2}{c}{$a_2=D$} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+& $\theta=G$ & $\theta=B$ & $\theta=G$ & $\theta=B$ \\
+\midrule
+$a_1=A$ & $g$ & $g$ & $1$ & $y$ \\
+$a_1=F$ & $g$ & $l$ & $x$ & $0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+with $g>1>x>0>l$ and $y\in(0,1)$, clarifying that $s_1^*$ maximizes the reputation payoff (incorporating SR's equilibrium response), not the per-period payoff against defection.
+
+\textbf{Changes:} Full payoff matrix (both $C$ and $D$ columns) added to Section~7.1 with a clarifying note.
+
+\bigskip\hrule\bigskip
+
+%% ============================================================
+\section*{Summary Table}
+%% ============================================================
+
+\begin{small}
+\begin{longtable}{@{}p{0.6cm} p{5.2cm} p{1.6cm} p{5.0cm}@{}}
+\toprule
+\textbf{\#} & \textbf{Issue} & \textbf{Status} & \textbf{Location of Change} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+C1 & Incorrect scaling of continuation values & Accepted & Remark~5.4 rewritten \\[3pt]
+C2 & $V_{\mathrm{Markov}}\leq V$ claimed without proof & Accepted & Theorem~4.8; Abstract; Section~1 \\[3pt]
+C3 & Contradictory i.i.d.\ benchmark values & Accepted & Sections~7.6--7.7; comparison table \\[3pt]
+C4 & Incorrect $V_{\mathrm{Markov}}$ formula (timing) & Accepted & Definition~4.5 (double-sum); Section~2.3 \\[3pt]
+C5 & Invalid supermodularity condition & Accepted & Remark~5.4 corrected \\[3pt]
+C6 & Contradiction in one-shot deviation argument & Accepted & Section~5.2 restructured \\[3pt]
+C7 & Conceptual error re filter stability & Accepted & Section~10.2 rewritten \\[3pt]
+C8 & Arithmetic error: $\mu^*=0.60<0.5$ & Accepted & Section~7.4; Remark~3.4; stats.tex \\[3pt]
+C9 & Arithmetic error \& variable confusion & Accepted & Section~8.5; new macros \\[3pt]
+C10 & Missing Appendix~A.3 content & Accepted & Appendix~A.3 methodology added \\[3pt]
+C11 & Incorrect inference from filter stability & Accepted & Section~10.2 (joint with C7) \\[3pt]
+C12 & ``Nearly identical'' with different means & Accepted & Figure~6 caption revised \\[3pt]
+C13 & Reputation vs.\ state-belief confusion & Accepted & Section~9.2 corrected \\[3pt]
+C14 & Ambiguous $\hat{B}_\xi$ in Lemma~5.8 & Accepted & New Remark~5.6; Section~5.7 \\[3pt]
+C15 & ``Easier to satisfy'' confound-defeating & Accepted & Section~8.6 revised \\[3pt]
+C16 & Implicit step in Lemma~5.7 Part~A & Accepted & Lemma~5.7 expanded (4-step argument) \\[3pt]
+C17 & Lifted state ``provides stationarity'' & Accepted & Section~1.1 rephrased \\[3pt]
+C18 & Strict supermodularity on $\tilde\Theta$ & Accepted & Section~6.2 explicit sentence added \\[3pt]
+C19 & Filter stability terminology & Accepted & Appendix~A.2 corrected \\[3pt]
+C20 & Missing Stackelberg/persuasion open question & Accepted & Section~10.2 new paragraph \\[3pt]
+C21 & Incomplete payoff display & Accepted & Section~7.1 full matrix added \\
+\end{longtable}
+\end{small}
+
+\bigskip
+
+\noindent\textbf{Corrected Key Values:}
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\textbf{Quantity} & \textbf{Corrected Value} \\
+\midrule
+Stationary/i.i.d.\ payoff $V_{\text{iid}}$ & \PayoffStationary \\
+Markov payoff $V_{\mathrm{Markov}}$ & \PayoffFiltered \\
+Effect of persistence $V_{\text{iid}}-V_{\mathrm{Markov}}$ & \PayoffGapPayoff \\
+Overestimation & \PayoffOverestimation \\
+Belief-robust threshold $\mu^*$ & \BRThreshold \\
+Belief-robust payoff $V(s_1^*)$ & \BRPayoff \\
+SR cooperation threshold & \SRThreshold \\
+Belief gap & \BeliefGapBaseline \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\end{document}

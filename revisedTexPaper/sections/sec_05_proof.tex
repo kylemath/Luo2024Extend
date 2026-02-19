@@ -1,7 +1,7 @@
 % ================================================================
 \section{Proof Sketch}\label{sec:proof}
 
-The proof follows the five-step structure of Luo \& Wolitzky (2024, Section~4.2). At each step, we identify whether the i.i.d.\ assumption was used and, if so, how belief-robustness or the corrected bound handles the modification.
+The proof follows the five-step structure of Luo \& Wolitzky (2024, Section~4.2). At each step, we identify whether the i.i.d.\ assumption is used and, if so, how belief-robustness or the Markov bound handles the extension.
 
 \subsection{Overview: Where i.i.d.\ Is Actually Used}
 
@@ -9,17 +9,17 @@ The proof follows the five-step structure of Luo \& Wolitzky (2024, Section~4.2)
 \centering
 \begin{tabular}{@{}lcc@{}}
 \toprule
-\textbf{Proof Step} & \textbf{i.i.d.\ used?} & \textbf{Fix needed} \\
+\textbf{Proof Step} & \textbf{i.i.d.\ used?} & \textbf{Markov modification} \\
 \midrule
 Step 0: OT / confound-defeating & No & Replace $Y_0$ with $\tilde\Theta$ \\
 \textbf{Step 1: Lemma 1 (equilibrium)} & \textbf{Yes} & \textbf{SR belief issue} \\
 Step 2: Lemma 2 (KL bound) & \textbf{No} & None \\
 Step 3: Lemma 3 (martingale) & Partially & Ergodicity + filter stability \\
-Step 4: Lemma 4 (combining) & No & Uses corrected BR \\
+Step 4: Lemma 4 (combining) & No & Uses state-contingent BR \\
 \textbf{Step 5: Payoff bound} & \textbf{Yes} & \textbf{Belief-robust or $V_{\mathrm{Markov}}$} \\
 \bottomrule
 \end{tabular}
-\caption{Where the i.i.d.\ assumption enters the proof. Bold rows indicate where the Luo--Wolitzky argument fails under Markov states and correction is needed.}
+\caption{Where the i.i.d.\ assumption enters the proof. Bold rows indicate where the Luo--Wolitzky argument requires modification for Markov states.}
 \label{tab:iid_usage}
 \end{table}
 
@@ -133,7 +133,7 @@ Hence $\#\{\text{distinguishing periods}\} \leq -2\log\mu_0(\omega_{s_1^*})/\eta
 \end{proof}
 
 \begin{remark}
-This is the key surprise of the extension. The initial conjecture was that a mixing-time correction factor $\tau_{\mathrm{mix}}$ would be needed. It is not: the KL chain rule and Bayesian updating identity hold for general stochastic processes. Monte Carlo verification ($N=\KLMonteCarloN$ simulations, $T=\KLMonteCarloPeriods$ periods) confirms that the empirical distribution of distinguishing-period counts is of the same order of magnitude and far below the analytical bound for both Markov and i.i.d.\ processes (Figure~\ref{fig:kl_bound}).
+This step yields a key observation: no mixing-time correction factor $\tau_{\mathrm{mix}}$ is needed. The KL chain rule and Bayesian updating identity hold for general stochastic processes. Monte Carlo verification ($N=\KLMonteCarloN$ simulations, $T=\KLMonteCarloPeriods$ periods) confirms that the empirical distribution of distinguishing-period counts is of the same order of magnitude and far below the analytical bound for both Markov and i.i.d.\ processes (Figure~\ref{fig:kl_bound}).
 \end{remark}
 
 

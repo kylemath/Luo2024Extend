@@ -81,8 +81,7 @@ to Persistent Markovian States}
 \vspace{1.5cm}
 
 {\large
-Kyle Elliott Mathewson\textsuperscript{1} \\[6pt]
-with AI Collaborators
+Kyle Elliott Mathewson\textsuperscript{1}
 }
 
 \vspace{1.5cm}
@@ -97,12 +96,12 @@ with AI Collaborators
 
 \begin{abstract}
 \noindent
-We extend the main result (Theorem~1) of Luo \& Wolitzky (2024), ``Marginal Reputation,'' from i.i.d.\ states to persistent Markovian states. The extension reveals a new phenomenon: when the Stackelberg strategy reveals the state, short-run player beliefs permanently deviate from the stationary distribution, causing the Nash correspondence to become state-contingent. We introduce the concept of \emph{belief-robustness} and present two results. \textbf{Theorem~1\textsuperscript{$\prime$}} (belief-robust case): when short-run best responses are invariant to the filtering belief $F(\cdot|\theta)$, the original commitment payoff $V(s_1^*)$ holds exactly under Markov states with no correction. \textbf{Theorem~1\textsuperscript{$\prime\prime$}} (general case): the \emph{Markov commitment payoff} $V_{\mathrm{Markov}}(s_1^*)$ provides the appropriate bound, with $V_{\mathrm{Markov}} = V(s_1^*)$ if and only if the game is belief-robust. The difference $V(s_1^*) - V_{\mathrm{Markov}}$ quantifies the \emph{effect of persistence in reputation games}---a new economic object measuring how state persistence enables short-run players to condition behavior on the revealed state. For the deterrence game with baseline parameters ($\alpha=\BaseAlpha$, $\beta=\BaseBeta$), this cost is \PayoffOverestimation\% of the i.i.d.\ payoff. Our framework interpolates continuously between i.i.d.\ (Luo--Wolitzky) and perfectly persistent (Pei 2020) states. The paper also documents the human--AI research process, including computational verification across seven analysis modules with eight diagnostic figures.
+We extend the main result (Theorem~1) of Luo \& Wolitzky (2024), ``Marginal Reputation,'' from i.i.d.\ states to persistent Markovian states. The extension reveals a new phenomenon: when the Stackelberg strategy reveals the state, short-run player beliefs permanently deviate from the stationary distribution, causing the Nash correspondence to become state-contingent. We introduce the concept of \emph{belief-robustness} and present two results. \textbf{Theorem~1\textsuperscript{$\prime$}} (belief-robust case): when short-run best responses are invariant to the filtering belief $F(\cdot|\theta)$, the original commitment payoff $V(s_1^*)$ holds exactly under Markov states with no correction. \textbf{Theorem~1\textsuperscript{$\prime\prime$}} (general case): the \emph{Markov commitment payoff} $V_{\mathrm{Markov}}(s_1^*)$ provides the appropriate bound, with $V_{\mathrm{Markov}} = V(s_1^*)$ if and only if the game is belief-robust. The difference $V(s_1^*) - V_{\mathrm{Markov}}$---the \emph{effect of persistence}---can be positive or negative, quantifying how state persistence enables short-run players to condition behavior on the revealed state. For the deterrence game with baseline parameters ($\alpha=\BaseAlpha$, $\beta=\BaseBeta$), the effect of persistence is \PayoffOverestimation\% relative to the Markov payoff. Our framework interpolates continuously between i.i.d.\ (Luo--Wolitzky) and perfectly persistent (Pei 2020) states.
 \end{abstract}
 
 \vspace{0.5cm}
 
-\noindent\textbf{Keywords:} Reputation, repeated games, Markov states, optimal transport, belief-robustness, corrected bounds
+\noindent\textbf{Keywords:} Reputation, repeated games, Markov states, optimal transport, belief-robustness
 
 \vspace{0.5cm}
 
@@ -123,7 +122,6 @@ We extend the main result (Theorem~1) of Luo \& Wolitzky (2024), ``Marginal Repu
 \input{sections/sec_06_supermodular}
 \input{sections/sec_07_example}
 \input{sections/sec_08_interpolation}
-\input{sections/sec_09_methodology}
 \input{sections/sec_10_discussion}
 
 % ========== Appendices ==========
